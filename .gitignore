@@ -1,0 +1,5 @@
+bin/
+lib/
+test-output/
+dk/medicinkortet/
+fmk-data-updater-eclipse_lib/

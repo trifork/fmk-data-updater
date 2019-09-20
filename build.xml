@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!-- the project element's name attribute will be used in the name of the module's jar file -->
+<project name="fmk-data-updater" default="onejar" basedir=".">
+
+    <property name="ivy.checksums" value=""/>
+    
+    <property name="db-name" value="mkt"/>
+	<property name="sql-file" value=""/>
+
+    <property file="build.properties"/>
+    <property name="trifork-common" value="${basedir}/../trifork-common"/>
+
+	<property name="sourceversion" value="1.8"/>
+	<property name="targetversion" value="1.8"/>
+
+	<import file="${trifork-common}/etc/build-common.xml"/>
+	
+
+    <path id="classpath">
+        <fileset dir="lib/build">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement location="${build.dir}"/>
+        <pathelement location="${resources.dir}"/>
+        <pathelement location="${externalresources.dir}"/>
+    	<pathelement location="${basedir}/../fmk/target/medicinkortet12.jar"/>
+    	
+    </path> 
+
+    <path id="testclasspath">
+        <fileset dir="lib/test">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement location="target/instrumented"/>
+        <pathelement location="${build.dir}"/>
+        <pathelement location="target/test"/>
+        <pathelement location="${resources.dir}"/>
+        <pathelement location="${externalresources.dir}"/>
+    </path>
+
+    <path id="compile-test-classpath">
+        <fileset dir="lib/test">
+            <include name="**/*.jar"/>
+        </fileset>
+        <pathelement location="${build.dir}"/>
+        <pathelement location="target/test"/>
+        <pathelement location="${resources.dir}"/>
+        <pathelement location="${externalresources.dir}"/>
+    </path>
+
+    <path id="cp">
+        <fileset dir="lib/build">
+            <include name="*mysql*.jar"/>
+        </fileset>
+    </path>
+    
+    <target name="build" depends="resolve-build, jar">
+    	</target>
+
+    <target name="onejar" depends="build">
+    	<copy todir="lib/build">
+    		<fileset dir="${basedir}/../fmk/lib/build" includes="*.jar"/>
+    		<fileset file="lib/one-jar-ant-task-0.97.jar"/>
+		</copy>
+        <taskdef name="one-jar" classname="com.simontuffs.onejar.ant.OneJarTask"
+                 classpathref="classpath" onerror="report"/>
+
+        <one-jar destfile="target/${ant.project.name}-all.jar" mainmanifest="etc/manifest.mf">
+            <main>
+                <fileset dir="${build.dir}"/>
+            </main>
+            <lib>
+                <fileset dir="lib/build"/>
+            </lib>
+        </one-jar>
+    </target>
+	
+	<target name="resolve-js">
+		<exec executable="cmd" osfamily="windows">
+			<arg value="/C"/>
+		 	<arg value="npm.cmd install"/>
+		</exec>
+		<exec executable="npm" osfamily="unix">
+			<arg value="install"/>
+		</exec>
+	</target>
+
+			
+	
+	<target name="archive">
+		<echo message="Archiving from ${testdir}"> </echo>
+		<delete failonerror="false" file="fmk-data-updater-eclipse.tar"></delete>
+		<tar destfile="fmk-data-updater-eclipse.tar">
+			<tarfileset dir="${testdir}">
+				 <include name="*.properties"/>
+			</tarfileset>
+			<tarfileset dir="node_modules/fmk-dosis-til-tekst-ts/target">
+				<include name="dosistiltekst.js"/>
+			</tarfileset>
+			<tarfileset dir=".">
+				<include name="fmk-data-updater-eclipse.jar"/>
+			</tarfileset>
+			<tarfileset dir=".">
+				<include name="fmk-data-updater-eclipse_lib/*.jar"/>
+				<include name="fmk-data-updater-eclipse_lib/com.trifork-fmk-schema.zip"/>
+				<include name="fmk-data-updater-eclipse_lib/com.trifork-fmk-schema-idws.zip"/>
+				<exclude name="fmk-data-updater-eclipse_lib/*-sources.jar"/>
+				<exclude name="fmk-data-updater-eclipse_lib/*-javadoc.jar"/>
+				<exclude name="fmk-data-updater-eclipse_lib/*_2.jar"/>
+			</tarfileset>
+		</tar>
+	</target>
+	
+	<target name="archive-test1">
+		 <antcall target="archive">
+		        <param name="testdir" value="TEST1"/>
+		  </antcall>
+	</target>
+
+</project>

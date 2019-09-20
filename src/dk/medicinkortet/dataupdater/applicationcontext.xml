@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd">
+
+ <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+  <property name="locations">
+        <list>
+            <value>file:medicinkortet-default-config.properties</value>
+            <value>file:fmk-dataupdater.properties</value>
+            <value>file:ecpr2-service.properties</value>
+        </list>
+    </property>
+  <property name="ignoreUnresolvablePlaceholders" value="true" />
+</bean>	 
+
+	
+  
+
+ 	<import resource="classpath*:/dk/medicinkortet/spring/spring-dao.xml" />
+ 	<import resource="classpath*:/dk/medicinkortet/spring/spring-transactions.xml" />
+ 	<import resource="classpath*:/dk/medicinkortet/spring/applicationcontext.xml" />
+ 	<import resource="classpath*:/dk/medicinkortet/spring/datasource.xml" />
+ 	<import resource="classpath*:/dk/medicinkortet/spring/webservices-facade.xml" />
+ 	<!--  <import resource="classpath*:/dk/medicinkortet/spring/receptserver.xml" /> -->
+    <bean id="dummyPrescriptionService" class="dk.medicinkortet.dataupdater.DummyPrescriptionService" />
+    <bean id="validatePrescriptionMedicationHelper" class="dk.medicinkortet.prescriptions.server.ValidatePrescriptionMedicationHelper">
+		<property name="isActiveValidator" ref="drugMedicationIsActiveValidator" />
+		<property name="priceListVersionValidator" ref="priceListVersionValidator"/>
+		<property name="packageAllowedOnDrugMedicationValidator" ref="packageAllowedOnDrugMedicationValidator"/>
+	</bean>
+	
+ 	<bean class="dk.medicinkortet.dataupdater.DosageEnddateUpdater" />
+ 	<bean class="dk.medicinkortet.dataupdater.MyConfiguration" />
+</beans>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+  <Appenders>
+    <Console name="console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d %X[%p] %c{3} %m%n"/>
+    </Console>
+    <RollingFile name="file" fileName="fmk-data-updater.log"
+                 filePattern="fmk-data-updater.log%d{yyyy-MM-dd}-%i.log">
+      <PatternLayout pattern="%d %X[%p] %c{3} %m%n"/>
+      <Policies>
+         <TimeBasedTriggeringPolicy interval="1"/>
+         <SizeBasedTriggeringPolicy size="500 MB"/>
+      </Policies>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+   
+    <Logger name="dk.medicinkortet.dataupdater" additivity="false" level="debug">
+        <AppenderRef ref="file"/>
+        <AppenderRef ref="console"/>
+    </Logger>
+    
+    <Logger name="dk.medicinkortet.persistence.relations.updater" additivity="false" level="debug">
+        <AppenderRef ref="file"/>
+        <AppenderRef ref="console"/>
+    </Logger>
+
+    <Logger name="org.apache.jcs" level="warn">
+    </Logger>
+
+    <Logger name="org.springframework" level="warn">
+    </Logger>
+
+    <Logger name="org.springframework.jdbc" level="warn">
+        <AppenderRef ref="console"/>
+    </Logger>
+
+    <Logger name="com.mchange.v2" level="warn">
+        <AppenderRef ref="console"/>
+    </Logger>
+
+    <Logger name="com.mchange.v2.c3p0.management.DynamicPooledDataSourceManagerMBean" level="error">
+        <!-- The management class catches exceptions, logs them at WARN level and wraps/rethrows them
+         - the log entry is not needed when we have the exception -->
+        <AppenderRef ref="console"/>
+    </Logger>
+
+    <Logger name="org.springmodules" level="warn">
+    </Logger>
+
+    <Logger name="dk.medicinkortet.prescriptions.server" level="warn">
+    </Logger>
+
+    <Logger name="dk.medicinkortet.ws.logging" level="info" additivity="false">
+        <AppenderRef ref="file"/>
+    </Logger>
+
+    <Logger name="org.springframework.ws" level="info" additivity="false">
+        <AppenderRef ref="file"/>
+    </Logger>
+
+    <!--Logger name="org.springframework.beans" level="debug"/-->
+
+    <Logger name="metrics" level="info" additivity="false">
+      <AppenderRef ref="file"/>
+    </Logger>
+
+    <Root level="info">
+      <AppenderRef ref="console"/>
+    </Root> 
+  </Loggers>
+</Configuration>

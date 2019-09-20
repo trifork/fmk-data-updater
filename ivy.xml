@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ivy-module [
+    <!--
+        Declare entities that can be used as version placeholders instead of repeating the same
+        version and having to maintain and keep them in sync in many places.
+
+        Example of use (note the & and ; that surrounds the entity name):
+         <dependency org="dk.nsi.fmk.advis" name="fmk-advis-modul-client" rev="&fmk.advis.version;"/>
+    -->
+    <!ENTITY spring.version "3.2.18.RELEASE">
+]>
+
+<ivy-module version="2.0">
+    <info module="fmk-data-updater" organisation="trifork" status="integration"/>
+    <configurations>
+      <conf name="build" /> <!-- For running medicinkortet.war in local jetty -->
+      <conf name="test"/> <!-- For running JUnit tests -->
+      <conf name="functest"/> <!-- Unused . Present to allow ivy-report to work.. -->
+      <conf name="deploy"/> <!-- Unused Present to allow ivy-report to work..  -->
+    </configurations>
+    <dependencies>
+    	<dependency org="net.sourceforge.cobertura" name="cobertura" rev="1.9.4.1" conf="test->default"/>
+        <dependency org="commons-io" name="commons-io" rev="2.6" />
+        <dependency org="junit" name="junit" rev="4.11" force="true" conf="test->default"/>
+        <dependency org="xmlunit" name="xmlunit" rev="1.3" conf="test->default"/>
+        
+        <!-- log4j -->
+        <dependency org="org.apache.logging.log4j" name="log4j-api" rev="2.8.2" />
+        <dependency org="org.apache.logging.log4j" name="log4j-core" rev="2.8.2" />
+        <dependency org="org.apache.logging.log4j" name="log4j-web" rev="2.8.2" />
+        <dependency org="org.apache.logging.log4j" name="log4j-slf4j-impl" rev="2.8.2" />
+        <dependency org="org.apache.logging.log4j" name="log4j-1.2-api" rev="2.8.2" />
+        <dependency org="com.lmax" name="disruptor" rev="3.3.6"/>
+        <dependency org="xml-apis" name="xml-apis" rev="1.4.01" force="true" conf="*->runtime"/>
+        
+        
+		<!--  <dependency org="one-jar" name="one-jar-ant-task" rev="0.96"/> -->
+		<dependency org="com.google.protobuf" name="protobuf-java" rev="2.5.0"/>
+		<dependency org="org.json" name="json" rev="20180813" />
+        <dependency org="org.apache.commons" name="not-yet-commons-ssl" rev="0.3.9" transitive="false" />
+		<dependency org="org.testng" name="testng" rev="6.8.5" conf="build,test->*"/>
+		<dependency org="mysql" name="mysql-connector-java" rev="5.1.45"/>
+		<dependency org="com.yammer.metrics" name="metrics-httpclient" rev="2.2.0" />
+		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.1" conf="*->default" />
+		 <dependency org="org.mockito" name="mockito-all" rev="1.8.5" conf="build,test->default" />
+		 
+		 	  <!--  Spring dependencies -->
+        <dependency org="org.springframework" name="spring-context-support" rev="&spring.version;">
+            <exclude org="net.sf.ehcache" />
+        </dependency>
+        <dependency org="org.springframework" name="spring-context" rev="&spring.version;" conf="*->compile" />
+
+        <dependency org="org.springframework" name="spring-jdbc" rev="&spring.version;">
+	            <exclude org="jotm"/>
+	            <exclude org="com.h2database"/>
+	            <exclude org="hsqldb"/>
+	            <exclude org="org.apache.derby"/>
+	            <exclude org="commons-attributes"/>
+	    </dependency>
+		 <dependency org="org.springframework" name="spring-test" rev="&spring.version;" conf="build,test->default"/>
+
+        <dependency org="javax.servlet" name="servlet-api" rev="2.4" conf="build,test->*"/> <!-- Bemærk! Skal kun med for at bygge. T4 har sin egen. -->
+		 
+    </dependencies>
+</ivy-module>
