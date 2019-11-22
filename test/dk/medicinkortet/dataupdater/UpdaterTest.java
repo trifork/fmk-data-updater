@@ -103,7 +103,7 @@ public class UpdaterTest extends SpringTest {
 		assertFalse(dtvo.getEnd().hasAnything());
 		
         // ACT
-		updater.update(false);
+		updater.update(false, null);
         
         // ASSERT
 		DrugMedicationCompleteVO drugMedication2 = invocator.getDrugMedication(getDrugMedicationService, dmId, LocalDateTime.now());
@@ -158,7 +158,7 @@ public class UpdaterTest extends SpringTest {
 		assertFalse(dtvo.getEnd().hasAnything());
 		
         // ACT
-		updater.update(false);
+		updater.update(false, null);
         
         // ASSERT
 		
@@ -212,7 +212,7 @@ public class UpdaterTest extends SpringTest {
 		assertFalse(dtvo.getEnd().hasAnything());
 		
         // ACT
-		updater.update(false);
+		updater.update(false, null);
         
         // ASSERT
 		DrugMedicationCompleteVO drugMedication2 = invocator.getDrugMedication(getDrugMedicationService, dmId, LocalDateTime.now());
@@ -263,7 +263,7 @@ public class UpdaterTest extends SpringTest {
 		assertFalse(dtvo.getEnd().hasAnything());
 		
         // ACT
-		updater.update(true);
+		updater.update(true, null);
         
         // ASSERT
 		DrugMedicationCompleteVO drugMedication2 = invocator.getDrugMedication(getDrugMedicationService, dmId, LocalDateTime.now());

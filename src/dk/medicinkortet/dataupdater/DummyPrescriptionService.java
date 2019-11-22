@@ -188,12 +188,6 @@ public class DummyPrescriptionService implements PrescriptionService {
 	}
 
 	@Override
-	public ReplacePrescriptionResponse replacePrescription(ReplacePrescriptionRequest req) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public SearchMedicationsResult searchMedications(PatientWithoutCPR patient, boolean isPersonWithoutCPR,
 			AuthorisedHealthcareProfessionalVO issuer, OrganisationVO issuerOrganisation) {
 		// TODO Auto-generated method stub
@@ -273,6 +267,12 @@ public class DummyPrescriptionService implements PrescriptionService {
 
 	@Override
 	public DumpRestorePersonResult dumpPerson(PersonIdentifierVO patientCpr) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ReplacePrescriptionResponse replacePrescription(ReplacePrescriptionRequest req) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -23,7 +23,8 @@
         <pathelement location="${build.dir}"/>
         <pathelement location="${resources.dir}"/>
         <pathelement location="${externalresources.dir}"/>
-    	<pathelement location="${basedir}/../fmk/target/medicinkortet12.jar"/>
+        <pathelement location="${basedir}/../fmk/target/medicinkortet12.war"/>
+        <pathelement location="${basedir}/../fmk/lib/build/dk.nsi.fmk.recept-fmk-recept-modul-common.jar"/>
     	
     </path> 
 
@@ -36,6 +37,8 @@
         <pathelement location="target/test"/>
         <pathelement location="${resources.dir}"/>
         <pathelement location="${externalresources.dir}"/>
+    	<pathelement location="${basedir}/../fmk/target/medicinkortet12.war"/>
+    	<pathelement location="${basedir}/../fmk/lib/build/dk.nsi.fmk.recept-fmk-recept-modul-common.jar"/>
     </path>
 
     <path id="compile-test-classpath">
@@ -46,6 +49,8 @@
         <pathelement location="target/test"/>
         <pathelement location="${resources.dir}"/>
         <pathelement location="${externalresources.dir}"/>
+    	<pathelement location="${basedir}/../fmk/target/medicinkortet12.war"/>
+		<pathelement location="${basedir}/../fmk/lib/build/dk.nsi.fmk.recept-fmk-recept-modul-common.jar"/>
     </path>
 
     <path id="cp">
@@ -114,6 +119,11 @@
 	<target name="archive-test1">
 		 <antcall target="archive">
 		        <param name="testdir" value="TEST1"/>
+		  </antcall>
+	</target>
+	<target name="archive-test2">
+		 <antcall target="archive">
+		        <param name="testdir" value="TEST2"/>
 		  </antcall>
 	</target>
 

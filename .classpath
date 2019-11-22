@@ -82,8 +82,8 @@
 	<classpathentry kind="lib" path="lib/build/org.apache.logging.log4j-log4j-core.jar"/>
 	<classpathentry kind="lib" path="lib/build/org.apache.logging.log4j-log4j-web.jar"/>
 	<classpathentry kind="lib" path="lib/build/javax.servlet-javax.servlet-api.jar"/>
-	<classpathentry kind="lib" path="/fmk/target/medicinkortet12.war"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/fmk"/>
-	<classpathentry kind="lib" path="/fmk/lib/build/dk.nsi.fmk.recept-fmk-recept-modul-common.jar"/>
+	<classpathentry kind="lib" path="/fmk-fixedversion/lib/build/dk.nsi.fmk.recept-fmk-recept-modul-common.jar"/>
+	<classpathentry kind="lib" path="/fmk-fixedversion/target/medicinkortet12.war"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/fmk-fixedversion"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
