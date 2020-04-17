@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="org.springframework-spring-aop.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-aop.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-beans.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-beans.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-context-support-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-context-support-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-context-support-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-context-support-sources.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-context-support.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-context-support.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-context.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-context.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-core.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-expression.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-expression.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-jdbc-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-jdbc-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-jdbc-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-jdbc-sources.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-jdbc.jar" scope="COMPILE">
+		<srcroot url="jar://$MODULE_DIR$/lib/build/org.springframework-spring-jdbc-sources.jar!/"/>
+		<relative-module-src project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-jdbc-sources.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-jdbc.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-tx.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-tx.jar!/"/>
+	</lib>
+	<lib name="aopalliance-aopalliance.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/aopalliance-aopalliance.jar!/"/>
+	</lib>
+	<lib name="bouncycastle-bcmail-jdk14.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/bouncycastle-bcmail-jdk14.jar!/"/>
+	</lib>
+	<lib name="bouncycastle-bcprov-jdk14.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/bouncycastle-bcprov-jdk14.jar!/"/>
+	</lib>
+	<lib name="c3p0-c3p0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/c3p0-c3p0.jar!/"/>
+	</lib>
+	<lib name="com.beust-jcommander.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.beust-jcommander.jar!/"/>
+	</lib>
+	<lib name="com.fasterxml.jackson.core-jackson-annotations.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.fasterxml.jackson.core-jackson-annotations.jar!/"/>
+	</lib>
+	<lib name="com.fasterxml.jackson.core-jackson-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.fasterxml.jackson.core-jackson-core.jar!/"/>
+	</lib>
+	<lib name="com.fasterxml.jackson.core-jackson-databind.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.fasterxml.jackson.core-jackson-databind.jar!/"/>
+	</lib>
+	<lib name="com.google.inject-guice.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.google.inject-guice.jar!/"/>
+	</lib>
+	<lib name="com.google.protobuf-protobuf-java-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.google.protobuf-protobuf-java-javadoc.jar!/"/>
+	</lib>
+	<lib name="com.google.protobuf-protobuf-java-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.google.protobuf-protobuf-java-sources.jar!/"/>
+	</lib>
+	<lib name="com.google.protobuf-protobuf-java.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.google.protobuf-protobuf-java.jar!/"/>
+	</lib>
+	<lib name="com.lowagie-itext.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.lowagie-itext.jar!/"/>
+	</lib>
+	<lib name="com.yammer.metrics-metrics-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.yammer.metrics-metrics-core.jar!/"/>
+	</lib>
+	<lib name="com.yammer.metrics-metrics-httpclient-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.yammer.metrics-metrics-httpclient-javadoc.jar!/"/>
+	</lib>
+	<lib name="com.yammer.metrics-metrics-httpclient-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.yammer.metrics-metrics-httpclient-sources.jar!/"/>
+	</lib>
+	<lib name="com.yammer.metrics-metrics-httpclient.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/com.yammer.metrics-metrics-httpclient.jar!/"/>
+	</lib>
+	<lib name="commons-beanutils-commons-beanutils.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/commons-beanutils-commons-beanutils.jar!/"/>
+	</lib>
+	<lib name="commons-codec-commons-codec.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/commons-codec-commons-codec.jar!/"/>
+	</lib>
+	<lib name="commons-collections-commons-collections.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/commons-collections-commons-collections.jar!/"/>
+	</lib>
+	<lib name="commons-digester-commons-digester.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/commons-digester-commons-digester.jar!/"/>
+	</lib>
+	<lib name="commons-io-commons-io-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/commons-io-commons-io-javadoc.jar!/"/>
+	</lib>
+	<lib name="commons-io-commons-io-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/commons-io-commons-io-sources.jar!/"/>
+	</lib>
+	<lib name="commons-io-commons-io.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/commons-io-commons-io.jar!/"/>
+	</lib>
+	<lib name="commons-lang-commons-lang.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/commons-lang-commons-lang.jar!/"/>
+	</lib>
+	<lib name="commons-logging-commons-logging.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/commons-logging-commons-logging.jar!/"/>
+	</lib>
+	<lib name="eclipse-jdtcore.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/eclipse-jdtcore.jar!/"/>
+	</lib>
+	<lib name="hsqldb-hsqldb.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/hsqldb-hsqldb.jar!/"/>
+	</lib>
+	<lib name="javax.activation-activation.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/javax.activation-activation.jar!/"/>
+	</lib>
+	<lib name="javax.cache-cache-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/javax.cache-cache-api.jar!/"/>
+	</lib>
+	<lib name="javax.mail-mail.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/javax.mail-mail.jar!/"/>
+	</lib>
+	<lib name="jfree-jcommon.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/jfree-jcommon.jar!/"/>
+	</lib>
+	<lib name="jfree-jfreechart.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/jfree-jfreechart.jar!/"/>
+	</lib>
+	<lib name="junit-junit.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/junit-junit.jar!/"/>
+	</lib>
+	<lib name="net.sf.jasperreports-jasperreports.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/net.sf.jasperreports-jasperreports.jar!/"/>
+	</lib>
+	<lib name="org.apache.ant-ant-launcher.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.apache.ant-ant-launcher.jar!/"/>
+	</lib>
+	<lib name="org.apache.ant-ant.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.apache.ant-ant.jar!/"/>
+	</lib>
+	<lib name="org.apache.commons-not-yet-commons-ssl.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.apache.commons-not-yet-commons-ssl.jar!/"/>
+	</lib>
+	<lib name="org.apache.derby-derby.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.apache.derby-derby.jar!/"/>
+	</lib>
+	<lib name="org.apache.derby-derbyclient.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.apache.derby-derbyclient.jar!/"/>
+	</lib>
+	<lib name="org.apache.httpcomponents-httpclient.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.apache.httpcomponents-httpclient.jar!/"/>
+	</lib>
+	<lib name="org.apache.httpcomponents-httpcore.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.apache.httpcomponents-httpcore.jar!/"/>
+	</lib>
+	<lib name="org.bouncycastle-bcmail-jdk14.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.bouncycastle-bcmail-jdk14.jar!/"/>
+	</lib>
+	<lib name="org.bouncycastle-bcprov-jdk14.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.bouncycastle-bcprov-jdk14.jar!/"/>
+	</lib>
+	<lib name="org.bouncycastle-bctsp-jdk14.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.bouncycastle-bctsp-jdk14.jar!/"/>
+	</lib>
+	<lib name="org.codehaus.fabric3.api-commonj.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.codehaus.fabric3.api-commonj.jar!/"/>
+	</lib>
+	<lib name="org.freemarker-freemarker.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.freemarker-freemarker.jar!/"/>
+	</lib>
+	<lib name="org.hamcrest-hamcrest-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.hamcrest-hamcrest-core.jar!/"/>
+	</lib>
+	<lib name="org.json-json.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.json-json.jar!/"/>
+	</lib>
+	<lib name="org.quartz-scheduler-quartz.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.quartz-scheduler-quartz.jar!/"/>
+	</lib>
+	<lib name="org.testng-testng-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.testng-testng-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.testng-testng-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.testng-testng-sources.jar!/"/>
+	</lib>
+	<lib name="org.testng-testng.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.testng-testng.jar!/"/>
+	</lib>
+	<lib name="org.yaml-snakeyaml.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.yaml-snakeyaml.jar!/"/>
+	</lib>
+	<lib name="oro-oro.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/oro-oro.jar!/"/>
+	</lib>
+	<lib name="velocity-velocity.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/velocity-velocity.jar!/"/>
+	</lib>
+	<lib name="xml-apis-xml-apis.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/xml-apis-xml-apis.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-test.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.springframework-spring-test.jar!/"/>
+	</lib>
+	<lib name="org.apache.logging.log4j-log4j-1.2-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.apache.logging.log4j-log4j-1.2-api.jar!/"/>
+	</lib>
+	<lib name="org.apache.logging.log4j-log4j-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.apache.logging.log4j-log4j-api.jar!/"/>
+	</lib>
+	<lib name="org.apache.logging.log4j-log4j-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.apache.logging.log4j-log4j-core.jar!/"/>
+	</lib>
+	<lib name="org.apache.logging.log4j-log4j-web.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/org.apache.logging.log4j-log4j-web.jar!/"/>
+	</lib>
+	<lib name="javax.servlet-javax.servlet-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/build/javax.servlet-javax.servlet-api.jar!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.recept-fmk-recept-modul-common.jar" scope="PROVIDED">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.recept-fmk-recept-modul-common.jar!/"/>
+	</lib>
+	<lib name="medicinkortet12.war" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/target/medicinkortet12.war!/"/>
+	</lib>
+</component>

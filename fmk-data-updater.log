@@ -1,0 +1,13 @@
+2020-04-17 11:59:50,165 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair fixing mc with PID: 22
+2020-04-17 11:59:50,167 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair TEST: Repairing mcVersion with PID: '22' Values: ModifiedBy:'' ModifiedDateTime:'2020-04-15T11:59:48' nonClinicalModPid:'24' nonClinicalModTime:'2020-04-16T11:59:48' nonClinicalRepPid:'null' nonClinicalRepTime:'null'
+2020-04-17 11:59:50,167 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair Total: 1
+2020-04-17 11:59:50,167 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair Updated: 0
+2020-04-17 11:59:50,167 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair Updated attempted but failed: 0
+2020-04-17 11:59:50,167 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair Exceptions: 0
+2020-04-17 11:59:50,170 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair fixing mc with PID: 22
+2020-04-17 11:59:50,172 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair Repairing mcVersion with PID: '22' Values: ModifiedBy:'' ModifiedDateTime:'2020-04-15T11:59:48' nonClinicalModPid:'24' nonClinicalModTime:'2020-04-16T11:59:48' nonClinicalRepPid:'null' nonClinicalRepTime:'null'
+2020-04-17 11:59:50,186 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair Total: 2
+2020-04-17 11:59:50,186 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair Updated: 1
+2020-04-17 11:59:50,186 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair Updated attempted but failed: 0
+2020-04-17 11:59:50,186 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair Exceptions: 0
+2020-04-17 11:59:50,186 {}[INFO] medicinkortet.dataupdater.NonClinicalModificatorRepair Sending auditlog to: {CPR:0605088575} for pid: 22
