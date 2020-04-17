@@ -3,6 +3,7 @@ package dk.medicinkortet.dataupdater;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+import dk.medicinkortet.services.vo.AuditLogVO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -34,16 +35,22 @@ public class Main {
 		boolean testMode =  (args.length > 1 && args[1].equals("test"));
 		String action =  args.length > 0 ? args[0] : null;
 		String[] cprs = args.length > 2 ? args[2].split(",") : null;
-				
-		 RequestContext.create(
-	                SecurityCredentials.ACCESS_TYPE_CONSOLE, "dataupdater_job", null, LocalDateTime.now());
-			RequestContext.setValidatedRole(ValidatedRole.roleFor(Role.System, Arrays.asList(Permission.Laegemiddelordination, Permission.SundhedsfagligOpslag)));
+
+		RequestContext.create(SecurityCredentials.ACCESS_TYPE_CONSOLE, "dataupdater_job", null, LocalDateTime.now());
+		RequestContext.setValidatedRole(ValidatedRole.roleFor(Role.System, Arrays.asList(Permission.Laegemiddelordination, Permission.SundhedsfagligOpslag)));
 
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"/dk/medicinkortet/dataupdater/applicationcontext.xml"});
 		
 		if("dosageenddate".equals(action)) {
 			DosageEnddateUpdater upd = context.getBean(DosageEnddateUpdater.class);
 			upd.update(testMode, cprs);
+		} else if ("nonClinicalRepair".equals(action)) {
+			if (cprs != null) {
+				logger.error("nonClinicalRepair doesn't support CPR list");
+				return;
+			}
+			NonClinicalModificatorRepair ncm = context.getBean(NonClinicalModificatorRepair.class);
+			ncm.update(testMode);
 		} else {
 			logger.error("Unknown action parameter " + action);
 		}

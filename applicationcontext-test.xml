@@ -10,7 +10,6 @@
 <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
   <property name="locations">
         <list>
-            
             <value>file:medicinkortet-default-config.properties</value>
             <value>file:fmk-dataupdater.properties</value>
         </list>

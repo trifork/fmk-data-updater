@@ -1,11 +1,10 @@
 package dk.medicinkortet.dataupdater;
 
-import javax.servlet.ServletContext;
-
 import org.springframework.context.annotation.Bean;
-import org.springframework.mock.web.MockServletContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mock.web.MockServletContext;
+
+import javax.servlet.ServletContext;
 
 @Configuration
 public class MyConfiguration {

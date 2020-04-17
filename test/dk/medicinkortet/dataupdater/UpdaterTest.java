@@ -10,8 +10,14 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import dk.medicinkortet.dao.vo.ModificateValue;
+import dk.medicinkortet.services.impl.ConsentService;
+import dk.medicinkortet.services.req_resp.ConsentRequest;
+import dk.medicinkortet.services.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.testng.annotations.BeforeMethod;
@@ -19,18 +25,12 @@ import org.testng.annotations.Test;
 
 import dk.medicinkortet.authentication.SecurityCredentials;
 import dk.medicinkortet.authentication.ValidatedRole;
-import dk.medicinkortet.dataupdater.DosageEnddateUpdater;
 import dk.medicinkortet.requestcontext.RequestContext;
 import dk.medicinkortet.services.impl.GetDrugMedicationService;
 import dk.medicinkortet.services.impl.createdrugmedications.CreateDrugMedicationServiceImpl;
 import dk.medicinkortet.services.req_resp.CreateDrugmedicationRequest;
 import dk.medicinkortet.services.req_resp.CreateDrugmedicationResponse;
 import dk.medicinkortet.services.req_resp.UpdateResponse;
-import dk.medicinkortet.services.vo.BeginEndDatesVO;
-import dk.medicinkortet.services.vo.DrugMedicationCompleteVO;
-import dk.medicinkortet.services.vo.LocalDateOrDateTime;
-import dk.medicinkortet.services.vo.Permission;
-import dk.medicinkortet.services.vo.Role;
 import dk.medicinkortet.services.vo.dosage.DosageDayVO;
 import dk.medicinkortet.services.vo.dosage.DosageTimeVO;
 import dk.medicinkortet.services.vo.dosage.DosageTimesVO;
@@ -48,6 +48,8 @@ public class UpdaterTest extends SpringTest {
 	@Autowired
 	CreateDrugMedicationServiceImpl createDrugMedicationService;
 	@Autowired
+	ConsentService consentService;
+	@Autowired
 	GetDrugMedicationService getDrugMedicationService;
 	@Autowired
 	TestServiceInvocationHelper invocator;
@@ -55,6 +57,8 @@ public class UpdaterTest extends SpringTest {
 	JdbcTemplate jdbcTemplate;
 	@Autowired
 	DosageEnddateUpdater updater;
+	@Autowired
+	NonClinicalModificatorRepair nonClinicalRepair;
 	@Autowired
 	TimeServiceForTest timeService;
 	
@@ -272,5 +276,60 @@ public class UpdaterTest extends SpringTest {
         
         // Check that the drugmedication version has NOT been updated
         assertEquals(drugMedication1.getDrugMedicationOverview().getVersion().getNonSequentialVersion(), drugMedication2.getDrugMedicationOverview().getVersion().getNonSequentialVersion());
+	}
+
+	@Test
+	public void testNonClinicalRepair() {
+		//Father CPR: 0505577353
+		//Child CPR: 0605088575
+
+		PersonBaseVO.PersonIdentifierVO father = PersonBaseVO.PersonIdentifierVO.fromCPR("0505577353");
+		PersonBaseVO.PersonIdentifierVO child = PersonBaseVO.PersonIdentifierVO.fromCPR("0605088575");
+
+		RequestContext.create(SecurityCredentials.ACCESS_TYPE_CONSOLE, "dataupdater_job", null, LocalDateTime.now());
+		RequestContext.setValidatedRole(ValidatedRole.roleFor(Role.System, Arrays.asList(Permission.Laegemiddelordination, Permission.SundhedsfagligOpslag)));
+
+		timeService.freezeTime(LocalDateTime.now().plusDays(-2));
+		RequestContext.get().setPersonCPR(child);
+		final CreateDrugmedicationRequest drugMedicationRequest;
+		try {
+			drugMedicationRequest = testRequestCreator.createDrugMedicationRequest1(child);
+			drugMedicationRequest.setPersonIdentifier(child);
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+
+		UpdateResponse<CreateDrugmedicationResponse> response = invocator.createDrugMedication(createDrugMedicationService, drugMedicationRequest);
+		Long dmId = response.getResponse().getElements().iterator().next().getDrugmedicationIdentifier();
+
+		timeService.incrementMinutes(60*24);
+
+		ConsentRequest req = new ConsentRequest();
+		ModificatorVO fatherModificator = ModificatorVO.makeOther(new ModificatorOtherPersonVO(father, "Mads", null, "Andersen"), Role.ParentAuthority, timeService.currentLocalDateTime());
+		req.addDrugMedicationIdentifier(new ModificateValue<>(fatherModificator, dmId), null);
+		req.setPersonIdentifier(child);
+		req.setMedicineCardIdentifier(MedicineCardIdentifierVO.newPersonIdentifier(child));
+
+
+		List<Permission> totalPermissions = new ArrayList<>();
+		totalPermissions.add(Permission.Privatmarkering);
+		RequestContext.setValidatedRole(
+				ValidatedRole.roleFor(
+						Role.ParentAuthority,
+						totalPermissions));
+		RequestContext.get().setRequestedRole(Role.ParentAuthority.getSchemaName());
+
+		invocator.removeConsent(consentService, req);
+
+		jdbcTemplate.update("Update MedicineCards SET " +
+				"ModifiedDate = ModifiedNonclinicalByDateTime, " +
+				"ModifiedNonclinicalByDateTime = NULL, " +
+				"HashedModifiedNonclinicalByPID = NULL, " +
+				"ModifiedBy = '0505577353' " +
+				"WHERE ModifiedNonclinicalByDateTime IS NOT NULL"); //Mimic the error in DB.
+
+		nonClinicalRepair.update(true);
+
+		nonClinicalRepair.update(false);
 	}
 }

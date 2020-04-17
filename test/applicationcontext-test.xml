@@ -27,4 +27,5 @@
 	</bean>
 	
   	<bean class="dk.medicinkortet.dataupdater.DosageEnddateUpdater" />
+	<bean class="dk.medicinkortet.dataupdater.NonClinicalModificatorRepair" />
 </beans>

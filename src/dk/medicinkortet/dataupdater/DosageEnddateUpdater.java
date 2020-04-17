@@ -1,21 +1,5 @@
 package dk.medicinkortet.dataupdater;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
-
-import dk.medicinkortet.authentication.SecurityCredentials;
-import dk.medicinkortet.authentication.ValidatedRole;
 import dk.medicinkortet.dao.vo.ModificateValue;
 import dk.medicinkortet.dao.vo.UpdateDrugmedicationVO;
 import dk.medicinkortet.persistence.mk.datafacade.MedicineCardDataFacade;
@@ -23,22 +7,26 @@ import dk.medicinkortet.persistence.mk.datafacade.MedicineCardModificationFacade
 import dk.medicinkortet.persistence.mk.mysql_impl.DAOHolder;
 import dk.medicinkortet.persistence.mk.mysql_impl.MyPatientDataFacade;
 import dk.medicinkortet.persistence.mk.mysql_impl.dao.DrugMedicationDAO;
-import dk.medicinkortet.persistence.mk.mysql_impl.dao.DrugMedicationDAOImpl;
-import dk.medicinkortet.persistence.mk.mysql_impl.dao.OrganisationDAOImpl;
 import dk.medicinkortet.persistence.stamdata.datafacade.StamdataFacade;
-import dk.medicinkortet.requestcontext.RequestContext;
 import dk.medicinkortet.services.helpers.DosageStructureHelper;
 import dk.medicinkortet.services.vo.DrugMedicationOverview;
-import dk.medicinkortet.services.vo.ModificatorOtherPersonVO;
 import dk.medicinkortet.services.vo.ModificatorVO;
-import dk.medicinkortet.services.vo.OrganisationType;
-import dk.medicinkortet.services.vo.OrganisationVO;
-import dk.medicinkortet.services.vo.Permission;
-import dk.medicinkortet.services.vo.Role;
 import dk.medicinkortet.services.vo.PersonBaseVO.PersonIdentifierVO;
 import dk.medicinkortet.services.vo.dosage.DosageTimesVO;
 import dk.medicinkortet.utils.StringUtil;
 import dk.medicinkortet.utils.TimeService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 @Component
 public class DosageEnddateUpdater {

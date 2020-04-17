@@ -1,15 +1,10 @@
 package dk.medicinkortet.dataupdater;
 
-import javax.annotation.Resource;
-
+import dk.medicinkortet.utils.TimeServiceForTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import dk.medicinkortet.utils.TimeServiceForTest;
 
 @ContextConfiguration(
         initializers = dk.medicinkortet.spring.initializer.ConfigurationInitializer.class, 

@@ -1,14 +1,6 @@
 package dk.medicinkortet.dataupdater;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.springframework.stereotype.Component;
-
+import dk.medicinkortet.dao.vo.ContextMetadataVO;
 import dk.medicinkortet.dao.vo.EffectuationOrPrescriptionOrderVO;
 import dk.medicinkortet.dao.vo.ModificateValue;
 import dk.medicinkortet.exceptions.PrescriptionCommunicationException;
@@ -24,19 +16,13 @@ import dk.medicinkortet.services.req_resp.CreateOrderRequest.Prescription;
 import dk.medicinkortet.services.req_resp.CreatePharmacyEffectuationRequest;
 import dk.medicinkortet.services.req_resp.StartEffectuationRequest;
 import dk.medicinkortet.services.req_resp.UndoEffectuationRequest.UndoEffectuationObject;
-import dk.medicinkortet.services.vo.AuthorisationVO;
-import dk.medicinkortet.services.vo.AuthorisedHealthcareProfessionalVO;
-import dk.medicinkortet.services.vo.ModificatorVO;
-import dk.medicinkortet.services.vo.OrganisationVO;
+import dk.medicinkortet.services.vo.*;
 import dk.medicinkortet.services.vo.PersonBaseVO.PersonIdentifierVO;
-import dk.medicinkortet.services.vo.PricelistVersionVO;
-import dk.medicinkortet.services.vo.prescriptions.vo.CreatedPharmacyEffectuationVO;
-import dk.medicinkortet.services.vo.prescriptions.vo.InvalidatePrescriptionVO;
-import dk.medicinkortet.services.vo.prescriptions.vo.PrescriptionMedication;
-import dk.medicinkortet.services.vo.prescriptions.vo.PrescriptionsWithOwnerVO;
-import dk.medicinkortet.services.vo.prescriptions.vo.StartEffectuationResult;
-import dk.nsi.fmk.recepter.common.proto.services.Services.ReplacePrescriptionRequest;
-import dk.nsi.fmk.recepter.common.proto.services.Services.ReplacePrescriptionResponse;
+import dk.medicinkortet.services.vo.prescriptions.vo.*;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Component
 public class DummyPrescriptionService implements PrescriptionService {
@@ -115,7 +101,7 @@ public class DummyPrescriptionService implements PrescriptionService {
 	}
 
 	@Override
-	public void validatePrescriptions(PatientDataFacade pdf, Collection<Long> ids)
+	public void validatePrescriptions(PatientDataFacade pdf, Collection<Long> ids, ContextMetadataVO contextMetadata)
 			throws PrescriptionDoesNotExistException {
 		// TODO Auto-generated method stub
 		
@@ -221,6 +207,11 @@ public class DummyPrescriptionService implements PrescriptionService {
 	}
 
 	@Override
+	public dk.nsi.fmk.recepter.common.proto.services.Services.ReplacePrescriptionResponse replacePrescription(dk.nsi.fmk.recepter.common.proto.services.Services.ReplacePrescriptionRequest req) {
+		return null;
+	}
+
+	@Override
 	public void administrativeDeletePrescription(PersonIdentifierVO personCpr, long prescriptionMedicationId) {
 		// TODO Auto-generated method stub
 		
@@ -267,12 +258,6 @@ public class DummyPrescriptionService implements PrescriptionService {
 
 	@Override
 	public DumpRestorePersonResult dumpPerson(PersonIdentifierVO patientCpr) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ReplacePrescriptionResponse replacePrescription(ReplacePrescriptionRequest req) {
 		// TODO Auto-generated method stub
 		return null;
 	}
