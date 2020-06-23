@@ -1,20 +1,18 @@
 package dk.medicinkortet.dataupdater;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-
-import dk.medicinkortet.services.vo.AuditLogVO;
+import dk.medicinkortet.authentication.SecurityCredentials;
+import dk.medicinkortet.authentication.ValidatedRole;
+import dk.medicinkortet.requestcontext.RequestContext;
+import dk.medicinkortet.services.vo.Permission;
+import dk.medicinkortet.services.vo.Role;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 
-import dk.medicinkortet.authentication.SecurityCredentials;
-import dk.medicinkortet.authentication.ValidatedRole;
-import dk.medicinkortet.requestcontext.RequestContext;
-import dk.medicinkortet.services.vo.Permission;
-import dk.medicinkortet.services.vo.Role;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @ContextConfiguration("/dk/medicinkortet/dataupdater/applicationcontext.xml")
 public class Main {
@@ -24,11 +22,11 @@ public class Main {
 	public static void main(String[] args) {
 	
 		if(args.length < 2) {
-			logger.error("Usage: fmk-data-updater <action> [test|update] [cpr1,cpr2..,cprn]");
+			logger.error("Usage: fmk-data-updater <action> [test|update] [cpr1,cpr2..,cprn]?");
 			return;
 		}
 		if(!args[1].equals("test") && !args[1].equals("update")) {
-			logger.error("Usage: fmk-data-updater <action> [test|update] [cpr1,cpr2..,cprn]");
+			logger.error("Usage: fmk-data-updater <action> [test|update] [cpr1,cpr2..,cprn]?");
 			return;
 		}
 		

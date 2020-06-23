@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/fmk-data-updater.iml" filepath="$PROJECT_DIR$/fmk-data-updater.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fmk-fixedversion.iml" filepath="$PROJECT_DIR$/fmk-fixedversion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/fmk-data-updater.iml" filepath="$PROJECT_DIR$/.idea/fmk-data-updater.iml" />
+      <module fileurl="file://$PROJECT_DIR$/medicinkortet-trunk.iml" filepath="$PROJECT_DIR$/medicinkortet-trunk.iml" />
     </modules>
   </component>
 </project>

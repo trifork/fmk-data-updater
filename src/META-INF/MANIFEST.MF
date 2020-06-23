@@ -1,3 +1,299 @@
 Manifest-Version: 1.0
 Main-Class: dk.medicinkortet.dataupdater.Main
+Class-Path: com.trifork.idws-xua-proxy-idws-xua-proxy-helper.jar com.tri
+ fork-fmk-schema-testtool-classes.jar com.trifork-fmk-schema-classes.jar
+  org.mockito-mockito-core.jar org.glassfish.jersey.ext-jersey-spring3.j
+ ar org.apache.logging.log4j-log4j-core.jar org.glassfish.jersey.contain
+ ers-jersey-container-servlet-sources.jar c3p0-c3p0.jar org.apache.geron
+ imo.specs-geronimo-jta_1.1_spec.jar com.google.inject-guice.jar com.fas
+ terxml.jackson.core-jackson-core.jar trifork-trifork-common.jar com.tri
+ fork-xmlobject.jar jaxen-jaxen.jar org.apache.santuario-xmlsec.jar com.
+ trifork-websecurity.jar com.googlecode.protobuf-java-format-protobuf-ja
+ va-format.jar org.opensaml-opensaml.jar org.opensaml-openws-javadoc.jar
+  com.fasterxml.jackson.core-jackson-databind.jar org.springframework-sp
+ ring-context-support-javadoc.jar com.google.code.gson-gson.jar dk.itst.
+ oiosaml-oiosaml.java_idws.jar org.apache.httpcomponents-httpclient.jar 
+ com.trifork-fmk-schema-idws.zip xalan-serializer.jar org.glassfish.hk2.
+ external-aopalliance-repackaged.jar org.codehaus.fabric3.api-commonj.ja
+ r velocity-velocity.jar com.google.protobuf-protobuf-java.jar org.glass
+ fish.hk2-hk2-config.jar org.springframework-spring-jdbc-sources.jar com
+ .trifork-sdmmkt.dump.sql.zip org.glassfish.hk2-hk2.jar org.glassfish.je
+ rsey.core-jersey-server.jar org.quartz-scheduler-quartz.jar org.glassfi
+ sh.jersey.ext-jersey-entity-filtering.jar org.apache.ant-ant.jar dk.nsi
+ .fmk.auditlogmodul-fmk-auditlog-modul-client.jar oro-oro.jar c3p0-c3p0.
+ jar stax-stax.jar jaxen-jaxen.jar junit-junit.jar xalan-xalan.jar org.j
+ son-json.jar stax-stax-api.jar wsdl4j-wsdl4j.jar org.brotli-dec.jar org
+ .tukaani-xz.jar javax.mail-mail.jar org.lz4-lz4-java.jar xalan-serializ
+ er.jar com.lowagie-itext.jar dk.sosi.seal-seal.jar org.testng-testng.ja
+ r org.zeromq-jeromq.jar stax-stax-sources.jar velocity-velocity.jar xer
+ ces-xercesImpl.jar xml-apis-xml-apis.jar com.jamonapi-jamon.jar com.lma
+ x-disruptor.jar org.apache.ant-ant.jar org.yaml-snakeyaml.jar com.openc
+ sv-opencsv.jar joda-time-joda-time.jar org.opensaml-openws.jar org.slf4
+ j-slf4j-api.jar org.slf4j-slf4j-ext.jar com.beust-jcommander.jar net.ja
+ va.dev.jna-jna.jar com.trifork-xmlobject.jar commons-io-commons-io.jar 
+ javax.cache-cache-api.jar org.aspectj-aspectjrt.jar org.glassfish.hk2-h
+ k2.jar org.joda-joda-convert.jar org.json-json-javadoc.jar org.json-jso
+ n-sources.jar org.jvnet-tiger-types.jar org.opensaml-opensaml.jar org.o
+ wasp.esapi-esapi.jar com.google.guava-guava.jar com.trifork-fmk-schema.
+ zip dk.sds.xua-saml-h-util.jar org.osgi-org.osgi.core.jar trifork-trifo
+ rk-common.jar aopalliance-aopalliance.jar com.fasterxml-classmate.jar c
+ om.google.inject-guice.jar com.sun.mail-javax.mail.jar com.trifork-webs
+ ecurity.jar dk.sds-ecpr2-server-api.jar dk.sosi.seal-luna-dummy.jar jav
+ ax.mail-mail-javadoc.jar javax.mail-mail-sources.jar javax.xml.bind-jax
+ b-api.jar org.glassfish.jaxb-txw2.jar org.javassist-javassist.jar org.o
+ bjenesis-objenesis.jar org.opensaml-xmltooling.jar portlet-api-portlet-
+ api.jar com.trifork-mkt.dump.sql.zip net.bytebuddy-byte-buddy.jar org.a
+ pache.neethi-neethi.jar org.glassfish-javax.json.jar org.jctools-jctool
+ s-core.jar org.jvnet.staxex-stax-ex.jar org.mockito-mockito-core.jar or
+ g.slf4j-jcl-over-slf4j.jar uk.com.robust-it-cloning.jar com.github.lube
+ n-zstd-jni.jar com.google.code.gson-gson.jar com.lowagie-itext-javadoc.
+ jar com.lowagie-itext-sources.jar com.trifork-fmk-datamodel.jar commons
+ -lang-commons-lang.jar commons-pool-commons-pool.jar dk.sosi.seal-seal-
+ sources.jar javax.inject-javax.inject.jar org.apache.axis-axis-saaj.jar
+  org.aspectj-aspectjweaver.jar org.fishwife-jrugged-core.jar org.freema
+ rker-freemarker.jar org.glassfish.hk2-hk2-api.jar org.testng-testng-jav
+ adoc.jar org.testng-testng-sources.jar xerces-xercesImpl-javadoc.jar xe
+ rces-xercesImpl-sources.jar xml-resolver-xml-resolver.jar com.sun.xml.b
+ ind-jaxb-impl.jar org.fusesource.jansi-jansi.jar org.glassfish.hk2-hk2-
+ core.jar org.hamcrest-hamcrest-core.jar com.opencsv-opencsv-javadoc.jar
+  com.opencsv-opencsv-sources.jar com.trifork-fmk-schema-dist.zip com.tr
+ ifork-fmk-schema-idws.zip com.trifork-sdmmkt.dump.sql.zip commons-codec
+ -commons-codec.jar javax.activation-activation.jar javax.annotation-jsr
+ 250-api.jar javax.ws.rs-javax.ws.rs-api.jar joda-time-joda-time-javadoc
+ .jar joda-time-joda-time-sources.jar net.sf.ehcache-ehcache-core.jar or
+ g.apache.ant-ant-launcher.jar org.apache.santuario-xmlsec.jar org.glass
+ fish.hk2-hk2-utils.jar org.opensaml-openws-javadoc.jar org.opensaml-ope
+ nws-sources.jar org.quartz-scheduler-quartz.jar com.github.waffle-waffl
+ e-jna.jar com.trifork-fmk-schema-admin.zip net.java.dev.jna-jna-javadoc
+ .jar net.java.dev.jna-jna-sources.jar org.apache.ws.security-wss4j.jar 
+ org.apache.xmlbeans-xmlbeans.jar org.glassfish.hk2-hk2-config.jar com.t
+ rifork-certtest.dump.sql.zip com.trifork-fmk-schema-source.zip commons-
+ io-commons-io-javadoc.jar commons-io-commons-io-sources.jar net.java.de
+ v.jna-jna-platform.jar org.aspectj-aspectjrt-javadoc.jar org.aspectj-as
+ pectjrt-sources.jar org.glassfish.hk2-class-model.jar org.glassfish.hk2
+ -hk2-locator.jar org.opensaml-opensaml-javadoc.jar org.opensaml-opensam
+ l-sources.jar org.owasp.esapi-esapi-javadoc.jar org.owasp.esapi-esapi-s
+ ources.jar org.springframework-spring-tx.jar org.xerial.snappy-snappy-j
+ ava.jar com.trifork-fmk-schema-classes.jar net.bytebuddy-byte-buddy-age
+ nt.jar org.apache.commons-commons-csv.jar org.apache.kafka-kafka-client
+ s.jar org.codehaus.woodstox-wstx-asl.jar org.glassfish.hk2-config-types
+ .jar org.glassfish.hk2-hk2-runlevel.jar org.springframework-spring-aop.
+ jar org.springframework-spring-oxm.jar org.springframework-spring-web.j
+ ar com.google.code.findbugs-jsr305.jar com.trifork-fmk-schema-idws-xua.
+ zip com.trifork-fmk-schema-testtool.zip com.trifork-tas_online.dump.sql
+ .zip com.unboundid-unboundid-ldapsdk.jar com.yammer.metrics-metrics-cor
+ e.jar commons-logging-commons-logging.jar javax.servlet-javax.servlet-a
+ pi.jar javax.validation-validation-api.jar javax.xml.bind-jaxb-api-java
+ doc.jar javax.xml.bind-jaxb-api-sources.jar org.apache-extras.beanshell
+ -bsh.jar org.apache.commons-commons-text.jar org.bouncycastle-bcpkix-jd
+ k15on.jar org.bouncycastle-bcprov-jdk15on.jar org.codehaus.woodstox-sta
+ x2-api.jar org.glassfish.hk2-spring-bridge.jar org.glassfish.jaxb-jaxb-
+ runtime.jar org.jboss.logging-jboss-logging.jar org.opensaml-xmltooling
+ -javadoc.jar org.opensaml-xmltooling-sources.jar org.springframework-sp
+ ring-core.jar org.springframework-spring-jdbc.jar org.springframework-s
+ pring-test.jar dk.nsi.fmk.advis-fmk-advis-modul.zip org.apache.commons-
+ commons-lang3.jar org.codehaus.fabric3.api-commonj.jar org.springframew
+ ork-spring-beans.jar com.google.code.gson-gson-javadoc.jar com.google.c
+ ode.gson-gson-sources.jar com.google.protobuf-protobuf-java.jar commons
+ -lang-commons-lang-javadoc.jar commons-lang-commons-lang-sources.jar dk
+ .itst.oiosaml-oiosaml.java_idws.jar org.aspectj-aspectjweaver-javadoc.j
+ ar org.aspectj-aspectjweaver-sources.jar org.hibernate-hibernate-valida
+ tor.jar org.springframework-spring-webmvc.jar org.springframework.ws-sp
+ ring-oxm.jar org.springframework.ws-spring-xml.jar trifork-fmk-dosistil
+ tekst-wrapper.jar com.conversantmedia-disruptor-jdk7.jar com.sun.xml.bi
+ nd-jaxb-impl-javadoc.jar com.sun.xml.bind-jaxb-impl-sources.jar dk.itst
+ .oiosaml-oiosaml-trust_idws.jar dk.nsi.fmk.recept-fmk-recept-modul.zip 
+ org.apache.httpcomponents-httpcore.jar org.apache.logging.log4j-log4j-a
+ pi.jar org.apache.logging.log4j-log4j-web.jar org.springframework-sprin
+ g-context.jar com.sun.xml.fastinfoset-FastInfoset.jar commons-beanutils
+ -commons-beanutils.jar javax.annotation-jsr250-api-sources.jar net.sf.e
+ hcache-ehcache-core-javadoc.jar net.sf.ehcache-ehcache-core-sources.jar
+  org.apache.commons-commons-compress.jar org.apache.logging.log4j-log4j
+ -core.jar org.apache.santuario-xmlsec-javadoc.jar org.apache.santuario-
+ xmlsec-sources.jar com.fasterxml.woodstox-woodstox-core.jar com.trifork
+ -fmk-schema-admin-classes.jar org.apache.httpcomponents-httpclient.jar 
+ org.mariadb.jdbc-mariadb-java-client.jar com.sun.istack-istack-commons-
+ runtime.jar com.yammer.metrics-metrics-httpclient.jar commons-fileuploa
+ d-commons-fileupload.jar commons-httpclient-commons-httpclient.jar dk.n
+ si.fmk.admin-fmk-admin-modul-core.zip javax.activation-javax.activation
+ -api.jar javax.annotation-javax.annotation-api.jar net.java.dev.jna-jna
+ -platform-javadoc.jar net.java.dev.jna-jna-platform-sources.jar org.apa
+ che.ws.commons.axiom-axiom-api.jar org.apache.ws.commons.axiom-axiom-do
+ m.jar org.springframework-spring-expression.jar org.springframework.ws-
+ spring-ws-core.jar com.github.ben-manes.caffeine-caffeine.jar org.apach
+ e.commons-not-yet-commons-ssl.jar org.apache.kafka-kafka-clients-javado
+ c.jar org.apache.kafka-kafka-clients-sources.jar org.apache.logging.log
+ 4j-log4j-1.2-api.jar org.apache.ws.commons-ws-commons-java5.jar org.apa
+ che.ws.commons.axiom-axiom-impl.jar org.apache.ws.commons.schema-XmlSch
+ ema.jar org.springframework-spring-aop-javadoc.jar org.springframework-
+ spring-aop-sources.jar com.fasterxml.jackson.core-jackson-core.jar com.
+ trifork-fmk-schema-testtool-classes.jar commons-collections-commons-col
+ lections.jar dk.nsi.fmk.admin-fmk-admin-modul-client.jar dk.nsi.fmk.adm
+ in-fmk-admin-modul-common.jar dk.nsi.fmk.advis-fmk-advis-modul-client.j
+ ar dk.nsi.fmk.advis-fmk-advis-modul-common.jar dk.nsi.fmk.recept-fmk-re
+ cept-modul-core.zip org.apache.commons-commons-collections4.jar org.bou
+ ncycastle-bcpkix-jdk15on-javadoc.jar org.bouncycastle-bcpkix-jdk15on-so
+ urces.jar org.bouncycastle-bcprov-jdk15on-javadoc.jar org.bouncycastle-
+ bcprov-jdk15on-sources.jar org.glassfish.hk2-osgi-resource-locator.jar 
+ org.glassfish.hk2.external-javax.inject.jar org.glassfish.jersey.core-j
+ ersey-client.jar org.glassfish.jersey.core-jersey-common.jar org.glassf
+ ish.jersey.core-jersey-server.jar org.glassfish.jersey.ext-jersey-sprin
+ g3.jar org.springframework-spring-jdbc-javadoc.jar org.springframework-
+ spring-jdbc-sources.jar org.apache.commons-commons-lang3-javadoc.jar or
+ g.apache.commons-commons-lang3-sources.jar com.google.protobuf-protobuf
+ -java-javadoc.jar com.google.protobuf-protobuf-java-sources.jar dk.nsi.
+ fmk.recept-fmk-recept-modul-common.jar org.apache.logging.log4j-log4j-s
+ lf4j-impl.jar org.eclipse.persistence-javax.persistence.jar trifork-fmk
+ -dosistiltekst-wrapper-nashorn.jar org.apache.logging.log4j-log4j-api-j
+ avadoc.jar org.apache.logging.log4j-log4j-api-sources.jar org.apache.lo
+ gging.log4j-log4j-web-javadoc.jar org.apache.logging.log4j-log4j-web-so
+ urces.jar org.springframework-spring-context-support.jar com.fasterxml.
+ jackson.core-jackson-databind.jar commons-beanutils-commons-beanutils-j
+ avadoc.jar commons-beanutils-commons-beanutils-sources.jar commons-conf
+ iguration-commons-configuration.jar dk.nsi.fmk.auditlogmodul-fmk-auditl
+ og-modul.zip dk.nsi.fmk.stamdata-fmk-stamdata-modul-core.zip org.apache
+ .commons-commons-compress-javadoc.jar org.apache.commons-commons-compre
+ ss-sources.jar org.apache.logging.log4j-log4j-core-javadoc.jar org.apac
+ he.logging.log4j-log4j-core-sources.jar org.glassfish.jersey.media-jers
+ ey-media-jaxb.jar org.glassfish.jersey.media-jersey-media-moxy.jar org.
+ mariadb.jdbc-mariadb-java-client-javadoc.jar org.mariadb.jdbc-mariadb-j
+ ava-client-sources.jar com.yammer.metrics-metrics-httpclient-javadoc.ja
+ r com.yammer.metrics-metrics-httpclient-sources.jar commons-fileupload-
+ commons-fileupload-javadoc.jar commons-fileupload-commons-fileupload-so
+ urces.jar org.apache.ws.commons.axiom-axiom-api-sources.jar org.apache.
+ ws.commons.axiom-axiom-dom-sources.jar org.glassfish.hk2.external-asm-a
+ ll-repackaged.jar org.springframework.ws-spring-ws-core-sources.jar com
+ .fasterxml.jackson.core-jackson-annotations.jar org.apache.logging.log4
+ j-log4j-1.2-api-javadoc.jar org.apache.logging.log4j-log4j-1.2-api-sour
+ ces.jar org.apache.ws.commons.axiom-axiom-impl-sources.jar org.apache.w
+ s.commons.schema-XmlSchema-sources.jar com.fasterxml.jackson.core-jacks
+ on-core-javadoc.jar com.fasterxml.jackson.core-jackson-core-sources.jar
+  org.apache.geronimo.specs-geronimo-jta_1.1_spec.jar org.glassfish.jers
+ ey.ext-jersey-spring3-javadoc.jar org.glassfish.jersey.ext-jersey-sprin
+ g3-sources.jar org.jboss.spec.javax.jms-jboss-jms-api_1.1_spec.jar com.
+ trifork.idws-xua-proxy-idws-xua-proxy-helper.jar org.glassfish.jersey.e
+ xt-jersey-entity-filtering.jar org.apache.logging.log4j-log4j-slf4j-imp
+ l-javadoc.jar org.apache.logging.log4j-log4j-slf4j-impl-sources.jar org
+ .glassfish.hk2.external-aopalliance-repackaged.jar dk.nsi.fmk.auditlogm
+ odul-fmk-auditlog-modul-client.jar dk.nsi.fmk.auditlogmodul-fmk-auditlo
+ g-modul-common.jar org.springframework-spring-context-support-javadoc.j
+ ar org.springframework-spring-context-support-sources.jar com.fasterxml
+ .jackson.core-jackson-databind-javadoc.jar com.fasterxml.jackson.core-j
+ ackson-databind-sources.jar commons-configuration-commons-configuration
+ -javadoc.jar commons-configuration-commons-configuration-sources.jar or
+ g.eclipse.persistence-org.eclipse.persistence.asm.jar org.apache.geroni
+ mo.specs-geronimo-javamail_1.4_spec.jar org.apache.geronimo.specs-geron
+ imo-stax-api_1.0_spec.jar org.eclipse.persistence-org.eclipse.persisten
+ ce.core.jar org.eclipse.persistence-org.eclipse.persistence.moxy.jar or
+ g.glassfish.jersey.bundles.repackaged-jersey-guava.jar org.glassfish.je
+ rsey.media-jersey-media-moxy-javadoc.jar org.glassfish.jersey.media-jer
+ sey-media-moxy-sources.jar com.fasterxml.jackson.core-jackson-annotatio
+ ns-javadoc.jar com.fasterxml.jackson.core-jackson-annotations-sources.j
+ ar dk.nsi.fmk.moduleframework-fmk-module-framework-client.jar dk.nsi.fm
+ k.moduleframework-fmk-module-framework-common.jar org.apache.geronimo.s
+ pecs-geronimo-activation_1.1_spec.jar com.fasterxml.jackson.dataformat-
+ jackson-dataformat-xml.jar com.fasterxml.jackson.dataformat-jackson-dat
+ aformat-yaml.jar com.googlecode.protobuf-java-format-protobuf-java-form
+ at.jar com.trifork.idws-xua-proxy-idws-xua-proxy-helper-javadoc.jar com
+ .trifork.idws-xua-proxy-idws-xua-proxy-helper-sources.jar dk.medicinkor
+ t.internalpersonid-fmk-internalpersonid-lib.jar org.glassfish.jersey.co
+ ntainers-jersey-container-servlet.jar com.fasterxml.jackson.dataformat-
+ jackson-dataformat-smile.jar com.fasterxml.jackson.module-jackson-modul
+ e-jaxb-annotations.jar org.glassfish.jersey.containers-jersey-container
+ -servlet-core.jar com.googlecode.protobuf-java-format-protobuf-java-for
+ mat-javadoc.jar com.googlecode.protobuf-java-format-protobuf-java-forma
+ t-sources.jar org.glassfish.jersey.containers-jersey-container-servlet-
+ javadoc.jar org.glassfish.jersey.containers-jersey-container-servlet-so
+ urces.jar javax.ws.rs-javax.ws.rs-api.jar org.apache.ant-ant-launcher.j
+ ar javax.activation-activation.jar org.glassfish.jersey.containers-jers
+ ey-container-servlet-javadoc.jar org.aspectj-aspectjweaver.jar commons-
+ fileupload-commons-fileupload.jar org.hamcrest-hamcrest-core.jar org.sl
+ f4j-slf4j-api.jar org.glassfish.hk2-hk2-utils.jar org.springframework-s
+ pring-context.jar org.springframework.ws-spring-xml.jar org.glassfish.j
+ ersey.containers-jersey-container-servlet-core.jar org.testng-testng-ja
+ vadoc.jar dk.sosi.seal-seal.jar org.glassfish.jersey.containers-jersey-
+ container-servlet.jar com.lowagie-itext-javadoc.jar com.unboundid-unbou
+ ndid-ldapsdk.jar org.springframework-spring-aop.jar org.apache.geronimo
+ .specs-geronimo-javamail_1.4_spec.jar org.apache.geronimo.specs-geronim
+ o-stax-api_1.0_spec.jar com.lmax-disruptor.jar org.freemarker-freemarke
+ r.jar org.springframework-spring-webmvc.jar dk.itst.oiosaml-oiosaml-tru
+ st_idws.jar org.springframework-spring-web.jar commons-logging-commons-
+ logging.jar org.opensaml-openws.jar dk.nsi.fmk.auditlogmodul-fmk-auditl
+ og-modul.zip org.glassfish.jersey.bundles.repackaged-jersey-guava.jar o
+ rg.springframework.ws-spring-oxm.jar com.fasterxml.jackson.core-jackson
+ -databind-sources.jar trifork-fmk-dosistiltekst-wrapper-nashorn.jar org
+ .opensaml-xmltooling-sources.jar org.glassfish.jersey.media-jersey-medi
+ a-moxy-sources.jar dk.nsi.fmk.auditlogmodul-fmk-auditlog-modul-common.j
+ ar org.apache.ws.commons.axiom-axiom-dom.jar commons-io-commons-io.jar 
+ org.glassfish.hk2.external-javax.inject.jar oro-oro.jar net.bytebuddy-b
+ yte-buddy.jar stax-stax.jar commons-lang-commons-lang-sources.jar org.m
+ ariadb.jdbc-mariadb-java-client.jar org.owasp.esapi-esapi-sources.jar o
+ rg.glassfish.hk2-hk2-api.jar com.trifork-fmk-schema-admin-classes.jar d
+ k.sds.xua-saml-h-util.jar org.opensaml-opensaml-javadoc.jar org.springf
+ ramework-spring-test.jar org.glassfish.jersey.ext-jersey-spring3-source
+ s.jar commons-codec-commons-codec.jar commons-configuration-commons-con
+ figuration-javadoc.jar org.bouncycastle-bcprov-jdk15on-javadoc.jar dk.n
+ si.fmk.moduleframework-fmk-module-framework-client.jar org.glassfish.hk
+ 2-hk2-core.jar commons-io-commons-io-javadoc.jar org.json-json.jar org.
+ bouncycastle-bcprov-jdk15on-sources.jar com.trifork-fmk-datamodel.jar o
+ rg.glassfish.hk2-hk2-locator.jar org.apache.ws.commons.axiom-axiom-impl
+ .jar org.bouncycastle-bcprov-jdk15on.jar org.opensaml-opensaml-sources.
+ jar org.opensaml-openws-sources.jar xerces-xercesImpl.jar com.trifork-f
+ mk-minlog-categories.jar medicinkortet-proto.jar javax.annotation-jsr25
+ 0-api-sources.jar javax.cache-cache-api.jar org.apache.neethi-neethi.ja
+ r org.apache.ws.commons.schema-XmlSchema.jar dk.nsi.fmk.advis-fmk-advis
+ -modul.zip com.yammer.metrics-metrics-core.jar org.springframework-spri
+ ng-jdbc-javadoc.jar stax-stax-sources.jar dk.nsi.fmk.recept-fmk-recept-
+ modul-common.jar commons-pool-commons-pool.jar junit-junit.jar com.lowa
+ gie-itext-sources.jar org.glassfish.jersey.media-jersey-media-moxy.jar 
+ dk.medicinkort.internalpersonid-fmk-internalpersonid-lib.jar commons-io
+ -commons-io-sources.jar org.apache.geronimo.specs-geronimo-activation_1
+ .1_spec.jar trifork-fmk-dosistiltekst-wrapper.jar commons-beanutils-com
+ mons-beanutils.jar com.jamonapi-jamon.jar org.apache.xmlbeans-xmlbeans.
+ jar org.springframework-spring-aop-javadoc.jar org.apache.kafka-kafka-c
+ lients.jar org.testng-testng.jar org.glassfish.jersey.media-jersey-medi
+ a-moxy-javadoc.jar javax.mail-mail.jar joda-time-joda-time.jar org.yaml
+ -snakeyaml.jar com.yammer.metrics-metrics-httpclient-javadoc.jar org.ap
+ ache.logging.log4j-log4j-api.jar org.glassfish.hk2-osgi-resource-locato
+ r.jar javax.xml.bind-jaxb-api.jar org.testng-testng-sources.jar org.apa
+ che.commons-commons-compress.jar org.apache.ws.security-wss4j.jar org.s
+ pringframework-spring-jdbc.jar com.opencsv-opencsv.jar dk.nsi.fmk.modul
+ eframework-fmk-module-framework-common.jar net.sf.ehcache-ehcache-core.
+ jar commons-lang-commons-lang-javadoc.jar org.objenesis-objenesis.jar c
+ ommons-httpclient-commons-httpclient.jar org.owasp.esapi-esapi.jar org.
+ apache.httpcomponents-httpcore.jar org.springframework-spring-context-s
+ upport.jar dk.nsi.fmk.recept-fmk-recept-modul-core.zip com.sun.xml.bind
+ -jaxb-impl.jar org.apache.commons-not-yet-commons-ssl.jar org.springfra
+ mework.ws-spring-ws-test.jar org.glassfish.hk2-hk2-runlevel.jar org.ope
+ nsaml-xmltooling.jar dk.nsi.fmk.stamdata-fmk-stamdata-modul-core.zip or
+ g.springframework-spring-core.jar org.springframework-spring-beans.jar 
+ org.glassfish.jersey.core-jersey-client.jar org.glassfish.hk2-spring-br
+ idge.jar org.springframework-spring-oxm.jar dk.sds-ecpr2-server-api.jar
+  commons-collections-commons-collections.jar org.aspectj-aspectjrt.jar 
+ org.bouncycastle-bcpkix-jdk15on.jar wsdl4j-wsdl4j.jar org.apache.common
+ s-commons-lang3.jar net.sf.ehcache-ehcache-core-sources.jar com.google.
+ code.findbugs-jsr305.jar org.apache.axis-axis-saaj.jar org.springframew
+ ork-spring-context-support-sources.jar com.fasterxml.jackson.core-jacks
+ on-annotations.jar org.apache.commons-commons-collections4.jar net.sf.e
+ hcache-ehcache-core-javadoc.jar aopalliance-aopalliance.jar org.hamcres
+ t-hamcrest-core.jar org.apache.ws.commons.axiom-axiom-api.jar commons-c
+ onfiguration-commons-configuration-sources.jar com.yammer.metrics-metri
+ cs-httpclient.jar com.beust-jcommander.jar org.owasp.esapi-esapi-javado
+ c.jar xalan-xalan.jar dk.nsi.fmk.advis-fmk-advis-modul-client.jar com.f
+ asterxml.jackson.core-jackson-databind-javadoc.jar com.trifork-mkt.dump
+ .sql.zip org.springframework-spring-aop-sources.jar xml-apis-xml-apis.j
+ ar org.apache.logging.log4j-log4j-web.jar javax.annotation-jsr250-api.j
+ ar dk.nsi.fmk.admin-fmk-admin-modul-common.jar org.codehaus.woodstox-ws
+ tx-asl.jar org.apache.logging.log4j-log4j-1.2-api.jar org.springframewo
+ rk-spring-expression.jar dk.nsi.fmk.admin-fmk-admin-modul-client.jar co
+ m.lowagie-itext.jar org.glassfish.jersey.ext-jersey-spring3-javadoc.jar
+  uk.com.robust-it-cloning.jar commons-lang-commons-lang.jar org.glassfi
+ sh.jersey.core-jersey-common.jar javax.servlet-javax.servlet-api.jar co
+ m.sun.istack-istack-commons-runtime.jar commons-configuration-commons-c
+ onfiguration.jar org.glassfish.jersey.media-jersey-media-jaxb.jar com.t
+ rifork-fmk-schema.zip org.glassfish.hk2-config-types.jar xml-resolver-x
+ ml-resolver.jar dk.nsi.fmk.advis-fmk-advis-modul-common.jar org.springf
+ ramework-spring-tx.jar com.yammer.metrics-metrics-httpclient-sources.ja
+ r org.springframework.ws-spring-ws-core.jar org.opensaml-xmltooling-jav
+ adoc.jar org.glassfish.hk2-class-model.jar
 

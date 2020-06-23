@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$/../fmk-fixedversion">
+		<testFolder url="file://$MODULE_DIR$/../fmk-fixedversion/test"/>
+	</contentEntry>
+	<lib name="org.apache.httpcomponents-httpclient.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.httpcomponents-httpclient.jar!/"/>
+	</lib>
+	<lib name="org.apache.httpcomponents-httpcore.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.httpcomponents-httpcore.jar!/"/>
+	</lib>
+	<lib name="aopalliance-aopalliance.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/aopalliance-aopalliance.jar!/"/>
+	</lib>
+	<lib name="c3p0-c3p0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/c3p0-c3p0.jar!/"/>
+	</lib>
+	<lib name="com.jamonapi-jamon.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.jamonapi-jamon.jar!/"/>
+	</lib>
+	<lib name="com.lowagie-itext.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.lowagie-itext.jar!/"/>
+	</lib>
+	<lib name="commons-codec-commons-codec.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-codec-commons-codec.jar!/"/>
+	</lib>
+	<lib name="commons-io-commons-io.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-io-commons-io.jar!/"/>
+	</lib>
+	<lib name="commons-logging-commons-logging.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-logging-commons-logging.jar!/"/>
+	</lib>
+	<lib name="commons-pool-commons-pool.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-pool-commons-pool.jar!/"/>
+	</lib>
+	<lib name="javax.activation-activation.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/javax.activation-activation.jar!/"/>
+	</lib>
+	<lib name="javax.mail-mail.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/javax.mail-mail.jar!/"/>
+	</lib>
+	<lib name="jaxen-jaxen.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/jaxen-jaxen.jar!/"/>
+	</lib>
+	<lib name="org.mariadb.jdbc-mariadb-java-client.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.mariadb.jdbc-mariadb-java-client.jar!/"/>
+	</lib>
+	<lib name="org.apache.geronimo.specs-geronimo-activation_1.1_spec.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.geronimo.specs-geronimo-activation_1.1_spec.jar!/"/>
+	</lib>
+	<lib name="org.apache.geronimo.specs-geronimo-javamail_1.4_spec.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.geronimo.specs-geronimo-javamail_1.4_spec.jar!/"/>
+	</lib>
+	<lib name="org.apache.geronimo.specs-geronimo-stax-api_1.0_spec.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.geronimo.specs-geronimo-stax-api_1.0_spec.jar!/"/>
+	</lib>
+	<lib name="org.apache.neethi-neethi.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.neethi-neethi.jar!/"/>
+	</lib>
+	<lib name="org.apache.ws.commons.axiom-axiom-api.jar" scope="COMPILE">
+		<srcroot url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.apache.ws.commons.axiom-axiom-api-sources.jar!/"/>
+		<relative-module-src project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.ws.commons.axiom-axiom-api-sources.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.ws.commons.axiom-axiom-api.jar!/"/>
+	</lib>
+	<lib name="org.apache.ws.commons.axiom-axiom-dom.jar" scope="COMPILE">
+		<srcroot url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.apache.ws.commons.axiom-axiom-dom-sources.jar!/"/>
+		<relative-module-src project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.ws.commons.axiom-axiom-dom-sources.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.ws.commons.axiom-axiom-dom.jar!/"/>
+	</lib>
+	<lib name="org.apache.ws.commons.axiom-axiom-impl.jar" scope="COMPILE">
+		<srcroot url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.apache.ws.commons.axiom-axiom-impl-sources.jar!/"/>
+		<relative-module-src project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.ws.commons.axiom-axiom-impl-sources.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.ws.commons.axiom-axiom-impl.jar!/"/>
+	</lib>
+	<lib name="org.codehaus.woodstox-wstx-asl.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.codehaus.woodstox-wstx-asl.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-aop.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-aop.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-beans.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-beans.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-context.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-context.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-core.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-jdbc.jar" scope="COMPILE">
+		<srcroot url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-jdbc-sources.jar!/"/>
+		<relative-module-src project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-jdbc-sources.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-jdbc.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-web.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-web.jar!/"/>
+	</lib>
+	<lib name="trifork-trifork-common.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/trifork-trifork-common.jar!/"/>
+	</lib>
+	<lib name="wsdl4j-wsdl4j.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/wsdl4j-wsdl4j.jar!/"/>
+	</lib>
+	<lib name="xalan-xalan.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/xalan-xalan.jar!/"/>
+	</lib>
+	<lib name="xerces-xercesImpl.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/xerces-xercesImpl.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-webmvc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-webmvc.jar!/"/>
+	</lib>
+	<lib name="com.sun.xml.bind-jaxb-impl.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.sun.xml.bind-jaxb-impl.jar!/"/>
+	</lib>
+	<lib name="javax.xml.bind-jaxb-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/javax.xml.bind-jaxb-api.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-tx.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-tx.jar!/"/>
+	</lib>
+	<lib name="org.aspectj-aspectjweaver.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.aspectj-aspectjweaver.jar!/"/>
+	</lib>
+	<lib name="javax.annotation-jsr250-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/javax.annotation-jsr250-api.jar!/"/>
+	</lib>
+	<lib name="joda-time-joda-time.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/joda-time-joda-time.jar!/"/>
+	</lib>
+	<lib name="com.trifork-xmlobject.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.trifork-xmlobject.jar!/"/>
+	</lib>
+	<lib name="commons-lang-commons-lang.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-lang-commons-lang.jar!/"/>
+	</lib>
+	<lib name="com.trifork-websecurity.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.trifork-websecurity.jar!/"/>
+	</lib>
+	<lib name="com.google.protobuf-protobuf-java.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.google.protobuf-protobuf-java.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-expression.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-expression.jar!/"/>
+	</lib>
+	<lib name="medicinkortet-proto.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/protobuf/medicinkortet-proto.jar!/"/>
+	</lib>
+	<lib name="dk.sosi.seal-seal.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.sosi.seal-seal.jar!/"/>
+	</lib>
+	<lib name="xml-apis-xml-apis.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/xml-apis-xml-apis.jar!/"/>
+	</lib>
+	<lib name="commons-httpclient-commons-httpclient.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-httpclient-commons-httpclient.jar!/"/>
+	</lib>
+	<lib name="net.sf.ehcache-ehcache-core.jar" scope="COMPILE">
+		<srcroot url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/net.sf.ehcache-ehcache-core-sources.jar!/"/>
+		<relative-module-src project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/net.sf.ehcache-ehcache-core-sources.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/net.sf.ehcache-ehcache-core.jar!/"/>
+		<relative-module-javadoc project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/net.sf.ehcache-ehcache-core-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.slf4j-slf4j-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.slf4j-slf4j-api.jar!/"/>
+	</lib>
+	<lib name="org.apache.santuario-xmlsec.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.santuario-xmlsec.jar!/"/>
+	</lib>
+	<lib name="com.trifork-fmk-datamodel.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.trifork-fmk-datamodel.jar!/"/>
+	</lib>
+	<lib name="org.testng-testng.jar" scope="COMPILE">
+		<srcroot url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.testng-testng-sources.jar!/"/>
+		<relative-module-src project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.testng-testng-sources.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.testng-testng.jar!/"/>
+	</lib>
+	<lib name="org.apache.commons-commons-compress.jar" scope="COMPILE">
+		<srcroot url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.apache.commons-commons-compress-sources.jar!/"/>
+		<relative-module-src project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.commons-commons-compress-sources.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.commons-commons-compress.jar!/"/>
+	</lib>
+	<lib name="org.springframework.ws-spring-ws-core.jar" scope="COMPILE">
+		<srcroot url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.springframework.ws-spring-ws-core-sources.jar!/"/>
+		<relative-module-src project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework.ws-spring-ws-core-sources.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework.ws-spring-ws-core.jar!/"/>
+	</lib>
+	<lib name="org.springframework.ws-spring-xml.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework.ws-spring-xml.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-oxm.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-oxm.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-context-support.jar" scope="COMPILE">
+		<srcroot url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-context-support-sources.jar!/"/>
+		<relative-module-src project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-context-support-sources.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-context-support.jar!/"/>
+	</lib>
+	<lib name="org.json-json.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.json-json.jar!/"/>
+	</lib>
+	<lib name="com.fasterxml.jackson.core-jackson-databind.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.fasterxml.jackson.core-jackson-databind.jar!/"/>
+	</lib>
+	<lib name="com.fasterxml.jackson.core-jackson-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.fasterxml.jackson.core-jackson-core.jar!/"/>
+	</lib>
+	<lib name="com.fasterxml.jackson.core-jackson-annotations.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.fasterxml.jackson.core-jackson-annotations.jar!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.moduleframework-fmk-module-framework-client.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.moduleframework-fmk-module-framework-client.jar!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.moduleframework-fmk-module-framework-common.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.moduleframework-fmk-module-framework-common.jar!/"/>
+	</lib>
+	<lib name="com.yammer.metrics-metrics-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.yammer.metrics-metrics-core.jar!/"/>
+	</lib>
+	<lib name="com.yammer.metrics-metrics-httpclient.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.yammer.metrics-metrics-httpclient.jar!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.recept-fmk-recept-modul-common.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.recept-fmk-recept-modul-common.jar!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.advis-fmk-advis-modul-client.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.advis-fmk-advis-modul-client.jar!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.advis-fmk-advis-modul-common.jar" scope="COMPILE">
+		<srcroot url="file:///fmk-advis-modul"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.advis-fmk-advis-modul-common.jar!/"/>
+	</lib>
+	<lib name="com.beust-jcommander.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.beust-jcommander.jar!/"/>
+	</lib>
+	<lib name="com.fasterxml.jackson.core-jackson-databind-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.fasterxml.jackson.core-jackson-databind-javadoc.jar!/"/>
+	</lib>
+	<lib name="com.fasterxml.jackson.core-jackson-databind-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.fasterxml.jackson.core-jackson-databind-sources.jar!/"/>
+	</lib>
+	<lib name="com.google.inject-guice.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.google.inject-guice.jar!/"/>
+	</lib>
+	<lib name="com.lowagie-itext-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.lowagie-itext-javadoc.jar!/"/>
+	</lib>
+	<lib name="com.lowagie-itext-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.lowagie-itext-sources.jar!/"/>
+	</lib>
+	<lib name="com.trifork-fmk-schema.zip" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.trifork-fmk-schema.zip!/"/>
+	</lib>
+	<lib name="com.trifork-mkt.dump.sql.zip" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.trifork-mkt.dump.sql.zip!/"/>
+	</lib>
+	<lib name="com.trifork-sdmmkt.dump.sql.zip" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.trifork-sdmmkt.dump.sql.zip!/"/>
+	</lib>
+	<lib name="com.unboundid-unboundid-ldapsdk.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.unboundid-unboundid-ldapsdk.jar!/"/>
+	</lib>
+	<lib name="com.yammer.metrics-metrics-httpclient-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.yammer.metrics-metrics-httpclient-javadoc.jar!/"/>
+	</lib>
+	<lib name="com.yammer.metrics-metrics-httpclient-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.yammer.metrics-metrics-httpclient-sources.jar!/"/>
+	</lib>
+	<lib name="commons-collections-commons-collections.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-collections-commons-collections.jar!/"/>
+	</lib>
+	<lib name="commons-configuration-commons-configuration.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-configuration-commons-configuration.jar!/"/>
+	</lib>
+	<lib name="commons-fileupload-commons-fileupload.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-fileupload-commons-fileupload.jar!/"/>
+	</lib>
+	<lib name="commons-io-commons-io-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-io-commons-io-javadoc.jar!/"/>
+	</lib>
+	<lib name="commons-io-commons-io-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-io-commons-io-sources.jar!/"/>
+	</lib>
+	<lib name="commons-lang-commons-lang-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-lang-commons-lang-javadoc.jar!/"/>
+	</lib>
+	<lib name="commons-lang-commons-lang-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-lang-commons-lang-sources.jar!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.advis-fmk-advis-modul.zip" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.advis-fmk-advis-modul.zip!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.auditlogmodul-fmk-auditlog-modul-client.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.auditlogmodul-fmk-auditlog-modul-client.jar!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.auditlogmodul-fmk-auditlog-modul-common.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.auditlogmodul-fmk-auditlog-modul-common.jar!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.auditlogmodul-fmk-auditlog-modul.zip" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.auditlogmodul-fmk-auditlog-modul.zip!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.recept-fmk-recept-modul-core.zip" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.recept-fmk-recept-modul-core.zip!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.stamdata-fmk-stamdata-modul-core.zip" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.stamdata-fmk-stamdata-modul-core.zip!/"/>
+	</lib>
+	<lib name="javax.annotation-jsr250-api-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/javax.annotation-jsr250-api-sources.jar!/"/>
+	</lib>
+	<lib name="javax.cache-cache-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/javax.cache-cache-api.jar!/"/>
+	</lib>
+	<lib name="junit-junit.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/junit-junit.jar!/"/>
+	</lib>
+	<lib name="net.sf.ehcache-ehcache-core-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/net.sf.ehcache-ehcache-core-javadoc.jar!/"/>
+	</lib>
+	<lib name="net.sf.ehcache-ehcache-core-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/net.sf.ehcache-ehcache-core-sources.jar!/"/>
+	</lib>
+	<lib name="org.apache.ant-ant-launcher.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.ant-ant-launcher.jar!/"/>
+	</lib>
+	<lib name="org.apache.ant-ant.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.ant-ant.jar!/"/>
+	</lib>
+	<lib name="org.apache.axis-axis-saaj.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.axis-axis-saaj.jar!/"/>
+	</lib>
+	<lib name="org.apache.geronimo.specs-geronimo-jta_1.1_spec.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.geronimo.specs-geronimo-jta_1.1_spec.jar!/"/>
+	</lib>
+	<lib name="org.apache.ws.security-wss4j.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.ws.security-wss4j.jar!/"/>
+	</lib>
+	<lib name="org.codehaus.fabric3.api-commonj.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.codehaus.fabric3.api-commonj.jar!/"/>
+	</lib>
+	<lib name="org.freemarker-freemarker.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.freemarker-freemarker.jar!/"/>
+	</lib>
+	<lib name="org.hamcrest-hamcrest-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.hamcrest-hamcrest-core.jar!/"/>
+	</lib>
+	<lib name="org.opensaml-opensaml.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.opensaml-opensaml.jar!/"/>
+	</lib>
+	<lib name="org.quartz-scheduler-quartz.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.quartz-scheduler-quartz.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-aop-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-aop-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-aop-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-aop-sources.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-context-support-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-context-support-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-context-support-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-context-support-sources.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-jdbc-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-jdbc-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-jdbc-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-jdbc-sources.jar!/"/>
+	</lib>
+	<lib name="org.springframework.ws-spring-oxm.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework.ws-spring-oxm.jar!/"/>
+	</lib>
+	<lib name="org.testng-testng-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.testng-testng-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.testng-testng-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.testng-testng-sources.jar!/"/>
+	</lib>
+	<lib name="org.yaml-snakeyaml.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.yaml-snakeyaml.jar!/"/>
+	</lib>
+	<lib name="oro-oro.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/oro-oro.jar!/"/>
+	</lib>
+	<lib name="stax-stax-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/stax-stax-sources.jar!/"/>
+	</lib>
+	<lib name="stax-stax.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/stax-stax.jar!/"/>
+	</lib>
+	<lib name="velocity-velocity.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/velocity-velocity.jar!/"/>
+	</lib>
+	<lib name="xalan-serializer.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/xalan-serializer.jar!/"/>
+	</lib>
+	<lib name="xml-resolver-xml-resolver.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/xml-resolver-xml-resolver.jar!/"/>
+	</lib>
+	<lib name="commons-configuration-commons-configuration-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-configuration-commons-configuration-javadoc.jar!/"/>
+	</lib>
+	<lib name="commons-configuration-commons-configuration-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-configuration-commons-configuration-sources.jar!/"/>
+	</lib>
+	<lib name="dk.itst.oiosaml-oiosaml-trust_idws.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.itst.oiosaml-oiosaml-trust_idws.jar!/"/>
+	</lib>
+	<lib name="dk.itst.oiosaml-oiosaml.java_idws.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.itst.oiosaml-oiosaml.java_idws.jar!/"/>
+	</lib>
+	<lib name="org.apache.commons-not-yet-commons-ssl.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.commons-not-yet-commons-ssl.jar!/"/>
+	</lib>
+	<lib name="org.opensaml-opensaml-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.opensaml-opensaml-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.opensaml-opensaml-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.opensaml-opensaml-sources.jar!/"/>
+	</lib>
+	<lib name="org.opensaml-openws-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.opensaml-openws-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.opensaml-openws-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.opensaml-openws-sources.jar!/"/>
+	</lib>
+	<lib name="org.opensaml-openws.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.opensaml-openws.jar!/"/>
+	</lib>
+	<lib name="org.opensaml-xmltooling-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.opensaml-xmltooling-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.opensaml-xmltooling-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.opensaml-xmltooling-sources.jar!/"/>
+	</lib>
+	<lib name="org.opensaml-xmltooling.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.opensaml-xmltooling.jar!/"/>
+	</lib>
+	<lib name="org.owasp.esapi-esapi-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.owasp.esapi-esapi-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.owasp.esapi-esapi-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.owasp.esapi-esapi-sources.jar!/"/>
+	</lib>
+	<lib name="org.owasp.esapi-esapi.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.owasp.esapi-esapi.jar!/"/>
+	</lib>
+	<lib name="org.bouncycastle-bcprov-jdk15on-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.bouncycastle-bcprov-jdk15on-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.bouncycastle-bcprov-jdk15on-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.bouncycastle-bcprov-jdk15on-sources.jar!/"/>
+	</lib>
+	<lib name="org.bouncycastle-bcprov-jdk15on.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.bouncycastle-bcprov-jdk15on.jar!/"/>
+	</lib>
+	<lib name="org.aspectj-aspectjrt.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.aspectj-aspectjrt.jar!/"/>
+	</lib>
+	<lib name="org.springframework-spring-test.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.springframework-spring-test.jar!/"/>
+	</lib>
+	<lib name="org.bouncycastle-bcpkix-jdk15on.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.bouncycastle-bcpkix-jdk15on.jar!/"/>
+	</lib>
+	<lib name="org.springframework.ws-spring-ws-test.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/test/org.springframework.ws-spring-ws-test.jar!/"/>
+	</lib>
+	<lib name="com.trifork-fmk-schema-classes.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/test/com.trifork-fmk-schema-classes.jar!/"/>
+	</lib>
+	<lib name="org.apache.xmlbeans-xmlbeans.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/test/org.apache.xmlbeans-xmlbeans.jar!/"/>
+	</lib>
+	<lib name="com.trifork-fmk-minlog-categories.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/test/com.trifork-fmk-minlog-categories.jar!/"/>
+	</lib>
+	<lib name="com.googlecode.protobuf-java-format-protobuf-java-format.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.googlecode.protobuf-java-format-protobuf-java-format.jar!/"/>
+	</lib>
+	<lib name="org.apache.logging.log4j-log4j-api.jar" scope="COMPILE">
+		<srcroot url="file://C:/Users/hma/AppData/Local/Temp/.org.sf.feeling.decompiler1578486173234/source/log4j-api-2.8.2-sources.jar"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.logging.log4j-log4j-api.jar!/"/>
+	</lib>
+	<lib name="org.apache.logging.log4j-log4j-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.logging.log4j-log4j-core.jar!/"/>
+	</lib>
+	<lib name="org.apache.logging.log4j-log4j-web.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.logging.log4j-log4j-web.jar!/"/>
+	</lib>
+	<lib name="com.lmax-disruptor.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.lmax-disruptor.jar!/"/>
+	</lib>
+	<lib name="com.trifork-fmk-schema-admin-classes.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.trifork-fmk-schema-admin-classes.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.bundles.repackaged-jersey-guava.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.bundles.repackaged-jersey-guava.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.containers-jersey-container-servlet-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.containers-jersey-container-servlet-core.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.containers-jersey-container-servlet-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.containers-jersey-container-servlet-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.containers-jersey-container-servlet-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.containers-jersey-container-servlet-sources.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.containers-jersey-container-servlet.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.containers-jersey-container-servlet.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.core-jersey-client.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.core-jersey-client.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.core-jersey-common.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.core-jersey-common.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.core-jersey-server.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.core-jersey-server.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.ext-jersey-entity-filtering.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.ext-jersey-entity-filtering.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.ext-jersey-spring3-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.ext-jersey-spring3-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.ext-jersey-spring3-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.ext-jersey-spring3-sources.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.ext-jersey-spring3.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.ext-jersey-spring3.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.media-jersey-media-jaxb.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.media-jersey-media-jaxb.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.media-jersey-media-moxy-javadoc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.media-jersey-media-moxy-javadoc.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.media-jersey-media-moxy-sources.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.media-jersey-media-moxy-sources.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.jersey.media-jersey-media-moxy.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.jersey.media-jersey-media-moxy.jar!/"/>
+	</lib>
+	<lib name="javax.ws.rs-javax.ws.rs-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/javax.ws.rs-javax.ws.rs-api.jar!/"/>
+	</lib>
+	<lib name="trifork-fmk-dosistiltekst-wrapper.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/trifork-fmk-dosistiltekst-wrapper.jar!/"/>
+	</lib>
+	<lib name="com.google.code.gson-gson.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.google.code.gson-gson.jar!/"/>
+	</lib>
+	<lib name="com.trifork-fmk-schema-testtool-classes.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.trifork-fmk-schema-testtool-classes.jar!/"/>
+	</lib>
+	<lib name="org.apache.kafka-kafka-clients.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.kafka-kafka-clients.jar!/"/>
+	</lib>
+	<lib name="org.apache.logging.log4j-log4j-1.2-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.logging.log4j-log4j-1.2-api.jar!/"/>
+	</lib>
+	<lib name="com.trifork-fmk-schema-idws.zip" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.trifork-fmk-schema-idws.zip!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2-hk2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2-hk2.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2-hk2-utils.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2-hk2-utils.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2-class-model.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2-class-model.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2-config-types.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2-config-types.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2-hk2-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2-hk2-api.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2-hk2-config.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2-hk2-config.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2-hk2-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2-hk2-core.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2-hk2-locator.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2-hk2-locator.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2-hk2-runlevel.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2-hk2-runlevel.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2-osgi-resource-locator.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2-osgi-resource-locator.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2-spring-bridge.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2-spring-bridge.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2.external-aopalliance-repackaged.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2.external-aopalliance-repackaged.jar!/"/>
+	</lib>
+	<lib name="org.glassfish.hk2.external-javax.inject.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.glassfish.hk2.external-javax.inject.jar!/"/>
+	</lib>
+	<lib name="javax.servlet-javax.servlet-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/test/javax.servlet-javax.servlet-api.jar!/"/>
+	</lib>
+	<lib name="trifork-fmk-dosistiltekst-wrapper-nashorn.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/trifork-fmk-dosistiltekst-wrapper-nashorn.jar!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.admin-fmk-admin-modul-common.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.admin-fmk-admin-modul-common.jar!/"/>
+	</lib>
+	<lib name="dk.nsi.fmk.admin-fmk-admin-modul-client.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.nsi.fmk.admin-fmk-admin-modul-client.jar!/"/>
+	</lib>
+	<lib name="dk.medicinkort.internalpersonid-fmk-internalpersonid-lib.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.medicinkort.internalpersonid-fmk-internalpersonid-lib.jar!/"/>
+	</lib>
+	<lib name="com.trifork.idws-xua-proxy-idws-xua-proxy-helper.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.trifork.idws-xua-proxy-idws-xua-proxy-helper.jar!/"/>
+	</lib>
+	<lib name="dk.sds.xua-saml-h-util.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.sds.xua-saml-h-util.jar!/"/>
+	</lib>
+	<lib name="org.mockito-mockito-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/test/org.mockito-mockito-core.jar!/"/>
+	</lib>
+	<lib name="net.bytebuddy-byte-buddy.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/test/net.bytebuddy-byte-buddy.jar!/"/>
+	</lib>
+	<lib name="org.objenesis-objenesis.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/test/org.objenesis-objenesis.jar!/"/>
+	</lib>
+	<lib name="lib/test/org.hamcrest-hamcrest-core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/test/org.hamcrest-hamcrest-core.jar!/"/>
+	</lib>
+	<lib name="uk.com.robust-it-cloning.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/uk.com.robust-it-cloning.jar!/"/>
+	</lib>
+	<lib name="org.apache.commons-commons-lang3.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.commons-commons-lang3.jar!/"/>
+	</lib>
+	<lib name="org.apache.ws.commons.schema-XmlSchema.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.ws.commons.schema-XmlSchema.jar!/"/>
+	</lib>
+	<lib name="com.sun.istack-istack-commons-runtime.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.sun.istack-istack-commons-runtime.jar!/"/>
+	</lib>
+	<lib name="dk.sds-ecpr2-server-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/dk.sds-ecpr2-server-api.jar!/"/>
+	</lib>
+	<lib name="com.opencsv-opencsv.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.opencsv-opencsv.jar!/"/>
+	</lib>
+	<lib name="org.apache.commons-commons-collections4.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/org.apache.commons-commons-collections4.jar!/"/>
+	</lib>
+	<lib name="commons-beanutils-commons-beanutils.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/commons-beanutils-commons-beanutils.jar!/"/>
+	</lib>
+	<lib name="com.google.code.findbugs-jsr305.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/../fmk-fixedversion/lib/build/com.google.code.findbugs-jsr305.jar!/"/>
+	</lib>
+</component>

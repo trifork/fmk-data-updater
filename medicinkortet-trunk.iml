@@ -206,28 +206,35 @@
     <libelement value="jar://$MODULE_DIR$/../fmk-fixedversion/lib/test/org.objenesis-objenesis.jar!/" />
     <libelement value="jar://$MODULE_DIR$/../fmk-fixedversion/lib/test/org.hamcrest-hamcrest-core.jar!/" />
     <libelement value="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/uk.com.robust-it-cloning.jar!/" />
-    <libelement value="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/dk.sds-ecpr2-schemas.jar!/" />
     <libelement value="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.apache.commons-commons-lang3.jar!/" />
     <libelement value="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.apache.ws.commons.schema-XmlSchema.jar!/" />
     <libelement value="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/com.sun.istack-istack-commons-runtime.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/dk.sds-ecpr2-server-api.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/com.opencsv-opencsv.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.apache.commons-commons-collections4.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/commons-beanutils-commons-beanutils.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/com.google.code.findbugs-jsr305.jar!/" />
     <src_description expected_position="1">
       <src_folder value="file://$MODULE_DIR$/../fmk-fixedversion/src" expected_position="1" />
       <src_folder value="file://$MODULE_DIR$/../fmk-fixedversion/target/gensrc" expected_position="2" />
       <src_folder value="file://$MODULE_DIR$/../fmk-fixedversion/test" expected_position="3" />
     </src_description>
   </component>
-  <component name="FacetManager">
-    <facet type="Python" name="Python">
-      <configuration sdkName="" />
-    </facet>
-  </component>
   <component name="NewModuleRootManager">
-    <output url="file://$MODULE_DIR$/../fmk-fixedversion/bin" />
-    <exclude-output />
+    <output url="file://$MODULE_DIR$/../fmk-fixedversion/target" />
+    <output-test url="file://$MODULE_DIR$/../fmk-fixedversion/bin" />
     <content url="file://$MODULE_DIR$/../fmk-fixedversion">
       <sourceFolder url="file://$MODULE_DIR$/../fmk-fixedversion/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../fmk-fixedversion/target/gensrc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../fmk-fixedversion/test" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../fmk-fixedversion/test" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/../fmk-fixedversion/test/dk/medicinkortet/services/namespace20150101" />
+      <excludeFolder url="file://$MODULE_DIR$/../fmk-fixedversion/test/dk/medicinkortet/services/namespace20150101E1" />
+      <excludeFolder url="file://$MODULE_DIR$/../fmk-fixedversion/test/dk/medicinkortet/services/namespace20150101E2" />
+      <excludeFolder url="file://$MODULE_DIR$/../fmk-fixedversion/test/dk/medicinkortet/services/namespace20150101E4" />
+      <excludeFolder url="file://$MODULE_DIR$/../fmk-fixedversion/test/dk/medicinkortet/services/namespace20150101E5" />
+      <excludeFolder url="file://$MODULE_DIR$/../fmk-fixedversion/test/dk/medicinkortet/services/namespace20150601" />
+      <excludeFolder url="file://$MODULE_DIR$/../fmk-fixedversion/test/dk/medicinkortet/services/namespace20150601E2" />
+      <excludeFolder url="file://$MODULE_DIR$/../fmk-fixedversion/test/dk/medicinkortet/services/namespace20150601E3" />
+      <excludeFolder url="file://$MODULE_DIR$/../fmk-fixedversion/test/dk/medicinkortet/services/namespace20150601E5" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -2101,15 +2108,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="dk.sds-ecpr2-schemas.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/dk.sds-ecpr2-schemas.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="org.apache.commons-commons-lang3.jar">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.apache.commons-commons-lang3.jar!/" />
@@ -2137,14 +2135,50 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library>
-        <CLASSES />
+      <library name="dk.sds-ecpr2-server-api.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/dk.sds-ecpr2-server-api.jar!/" />
+        </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/../fmk-fixedversion/node_modules" />
-        </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/../fmk-fixedversion/node_modules" recursive="false" type="SOURCES" />
+        <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library name="com.opencsv-opencsv.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/com.opencsv-opencsv.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="org.apache.commons-commons-collections4.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/org.apache.commons-commons-collections4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-beanutils-commons-beanutils.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/commons-beanutils-commons-beanutils.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="com.google.code.findbugs-jsr305.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../fmk-fixedversion/lib/build/com.google.code.findbugs-jsr305.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="build" level="project" />
   </component>
 </module>

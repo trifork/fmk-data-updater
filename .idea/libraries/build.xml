@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="build">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../fmk-fixedversion/lib/build" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../fmk-fixedversion/lib/build" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../fmk-fixedversion/lib/build" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../fmk-fixedversion/lib/build" recursive="false" type="SOURCES" />
+  </library>
+</component>

@@ -1,13 +1,15 @@
 package dk.medicinkortet.dataupdater;
 
+import dk.medicinkortet.authentication.SecurityCredentials;
+import dk.medicinkortet.authentication.ValidatedRole;
 import dk.medicinkortet.persistence.auditlog.datafacade.AuditLoggerFacade;
 import dk.medicinkortet.persistence.mysql_helpers.CustomJdbcTemplate;
 import dk.medicinkortet.requestcontext.RequestContext;
-import dk.medicinkortet.services.vo.AuditLogVO;
-import dk.medicinkortet.services.vo.Constants;
-import dk.medicinkortet.services.vo.PersonBaseVO;
+import dk.medicinkortet.services.vo.*;
 import dk.medicinkortet.utils.DateUtils;
 import dk.medicinkortet.utils.Tuple;
+import dk.medicinkortet.ws.requestpurpose.RequestPurposeVO;
+import dk.medicinkortet.ws.whitelisting.WhitelistingVO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bouncycastle.ocsp.Req;
@@ -35,6 +37,13 @@ public class NonClinicalModificatorRepair {
 	private int countExceptions = 0;
 
 	public void update(boolean testMode) {
+
+		try {
+			logger.info("Sleeping for 30 seconds to let boot complete");
+			Thread.sleep(30*1000);
+		} catch (Exception e) {
+			logger.error("Sleeping failed.");
+		}
 
 		String sql = "SELECT DISTINCT(mc.MedicineCardPID), ipid.PersonIdentifier, ipid.PersonIdentifierSource FROM MedicineCards mc " +
 				"INNER JOIN InternalPersonIds ipid ON mc.InternalPersonId = ipid.InternalPersonId " +
@@ -80,23 +89,47 @@ public class NonClinicalModificatorRepair {
 		logger.info("Exceptions: " + countExceptions);
 
 		if (RequestContext.isSet() && !testMode) {
+			RequestContext.setWhitelistingVO(new WhitelistingVO(
+					new CallingSystemIdentificationVO(),
+					new CallingOrganisationIdentificationVO(
+							"Sundhedsdatastyrelsen",
+							"Fejlrettelse, Sundhedsdatastyrelsen",
+							new OrgUsingId(Constants.ADM_IDENTIFIER, OrgUsingId.OrgUsingIdNameFormatType.CVRNUMBER)),
+					"System"
+					));
+			RequestContext.get().setUserName("System Bruger");
 			RequestContext.get().setOrganisationName("Fejlrettelse, Sundhedsdatastyrelsen");
-			RequestContext.get().setUserName("System");
-			RequestContext.get().setUserLastName("Bruger");
 			RequestContext.get().setCvr(Constants.ADM_IDENTIFIER);
+			RequestContext.setRequestPurpose(new RequestPurposeVO("Rettelse af fejl data"));
+			RequestContext.setValidatedRole(new ValidatedRole(Role.System, new ArrayList<>()));
+			RequestContext.get().setValidatedRole(Role.System);
+			RequestContext.get().setAccessType(SecurityCredentials.ACCESS_TYPE_CONSOLE);
+			RequestContext.get().setSystem("FMK Data-repair");
+			RequestContext.get().setSystemVersion("1");
+			RequestContext.get().setRequestedRole("System");
+			RequestContext.get().setLevel(0);
+			RequestContext.get().setRemoteAddress("LocalSystem");
+			RequestContext.get().setServiceVersion("1.0.0");
+			RequestContext.get().setMinlogCriticality(null);
+
+
 
 			for (Tuple<Long, PersonBaseVO.PersonIdentifierVO> entry : results) {
 				if (!repairedSuccessfully.contains(entry.getFirst())) {
 					continue; //Don't auditlog those that failed to update
 				}
 				logger.info("Sending auditlog to: " + entry.getSecond() + " for pid: " + entry.getFirst());
-				RequestContext.get().setPersonIdentifierFromRequest(entry.getSecond());
 				RequestContext.get().setPersonCPR(entry.getSecond());
+				RequestContext.get().setSubjectCpr(PersonBaseVO.PersonIdentifierVO.fromCPR("0000000000")); //TODO: REPLACE ME?!?
+				RequestContext.get().setPersonIdentifierFromRequest(entry.getSecond());
+				RequestContext.get().setRequestSpecificParameters("NonClinicalRepair-"+entry.getFirst());
+				RequestContext.get().setAdditionalUserInfo("FMK-NonClinicalRepair-"+entry.getFirst());
+				RequestContext.get().setLocalDateTime(LocalDateTime.now());
 				long timestamp = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli();
 				RequestContext.get().setMessageId(entry.getFirst() + "-NC-REPAIR-" + timestamp);
 				RequestContext.get().setMinLogId(entry.getFirst() + "-NC-REPAIR-" + timestamp);
 				try {
-					auditLogger.log("ws.updateMedicineCard", 0L);
+					auditLogger.log("ws.updateMedicineCard", 1L);
 				} catch (Exception e) {
 					logger.error("Failed to send auditlog for nonClinical repair. PID:" + entry.getFirst() + " Person:" + entry.getSecond());
 				}
