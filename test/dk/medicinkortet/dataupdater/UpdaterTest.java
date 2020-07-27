@@ -16,7 +16,8 @@ import java.util.List;
 
 import dk.medicinkortet.dao.vo.ModificateValue;
 import dk.medicinkortet.services.impl.ConsentService;
-import dk.medicinkortet.services.req_resp.ConsentRequest;
+import dk.medicinkortet.services.impl.createdrugmedications.UpdateDrugMedicationService;
+import dk.medicinkortet.services.req_resp.*;
 import dk.medicinkortet.services.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,9 +29,6 @@ import dk.medicinkortet.authentication.ValidatedRole;
 import dk.medicinkortet.requestcontext.RequestContext;
 import dk.medicinkortet.services.impl.GetDrugMedicationService;
 import dk.medicinkortet.services.impl.createdrugmedications.CreateDrugMedicationServiceImpl;
-import dk.medicinkortet.services.req_resp.CreateDrugmedicationRequest;
-import dk.medicinkortet.services.req_resp.CreateDrugmedicationResponse;
-import dk.medicinkortet.services.req_resp.UpdateResponse;
 import dk.medicinkortet.services.vo.dosage.DosageDayVO;
 import dk.medicinkortet.services.vo.dosage.DosageTimeVO;
 import dk.medicinkortet.services.vo.dosage.DosageTimesVO;
@@ -48,6 +46,8 @@ public class UpdaterTest extends SpringTest {
 	@Autowired
 	CreateDrugMedicationServiceImpl createDrugMedicationService;
 	@Autowired
+	UpdateDrugMedicationService updateDrugMedicationService;
+	@Autowired
 	ConsentService consentService;
 	@Autowired
 	GetDrugMedicationService getDrugMedicationService;
@@ -59,6 +59,8 @@ public class UpdaterTest extends SpringTest {
 	DosageEnddateUpdater updater;
 	@Autowired
 	NonClinicalModificatorRepair nonClinicalRepair;
+	@Autowired
+	SourceLocalRepair sourceLocalRepair;
 	@Autowired
 	TimeServiceForTest timeService;
 	
@@ -331,5 +333,72 @@ public class UpdaterTest extends SpringTest {
 		nonClinicalRepair.update(true);
 
 		nonClinicalRepair.update(false);
+	}
+
+	@Test
+	public void testSourceLocalRepair() {
+		PersonBaseVO.PersonIdentifierVO child = PersonBaseVO.PersonIdentifierVO.fromCPR("1111111118");
+
+		RequestContext.create(SecurityCredentials.ACCESS_TYPE_CONSOLE, "dataupdater_job", null, LocalDateTime.now());
+		RequestContext.setValidatedRole(ValidatedRole.roleFor(Role.System, Arrays.asList(Permission.Laegemiddelordination, Permission.SundhedsfagligOpslag)));
+
+		timeService.freezeTime(LocalDateTime.now().plusDays(-2));
+		RequestContext.get().setPersonCPR(child);
+		final CreateDrugmedicationRequest drugMedicationRequest;
+		try {
+			drugMedicationRequest = testRequestCreator.createDrugMedicationRequest1(child);
+			drugMedicationRequest.setPersonIdentifier(child);
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+
+		UpdateResponse<CreateDrugmedicationResponse> response = invocator.createDrugMedication(createDrugMedicationService, drugMedicationRequest);
+		response.getResponse().getElements().iterator().next().getDrugmedicationIdentifier();
+
+		timeService.incrementMinutes(60*24);
+
+		jdbcTemplate.update("UPDATE Drugs SET DrugIdSource = 'Local'"); //Mimic the error in DB.
+		jdbcTemplate.update("UPDATE Drugs SET ATCCodeSource = 'Local'"); //Mimic the error in DB.
+		jdbcTemplate.update("UPDATE Drugs SET DrugFormCode = 'Local'"); //Mimic the error in DB.
+		jdbcTemplate.update("UPDATE DrugMedications SET IndicationCodeSource = 'Local'"); //Mimic the error in DB.
+
+		sourceLocalRepair.runRepair(true);
+
+		sourceLocalRepair.runRepair(false);
+	}
+
+	@Test
+	public void testSourceLocalRepairNotLatestVersion() throws ParseException {
+		PersonBaseVO.PersonIdentifierVO child = PersonBaseVO.PersonIdentifierVO.fromCPR("1111111118");
+
+		RequestContext.create(SecurityCredentials.ACCESS_TYPE_CONSOLE, "dataupdater_job", null, LocalDateTime.now());
+		RequestContext.setValidatedRole(ValidatedRole.roleFor(Role.System, Arrays.asList(Permission.Laegemiddelordination, Permission.SundhedsfagligOpslag)));
+
+		timeService.freezeTime(LocalDateTime.now().plusDays(-2));
+		RequestContext.get().setPersonCPR(child);
+		final CreateDrugmedicationRequest drugMedicationRequest;
+		try {
+			drugMedicationRequest = testRequestCreator.createDrugMedicationRequest1(child);
+			drugMedicationRequest.setPersonIdentifier(child);
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+
+		UpdateResponse<CreateDrugmedicationResponse> response = invocator.createDrugMedication(createDrugMedicationService, drugMedicationRequest);
+		long dmId = response.getResponse().getElements().iterator().next().getDrugmedicationIdentifier();
+
+		timeService.incrementMinutes(60*24);
+
+		jdbcTemplate.update("UPDATE Drugs SET DrugIdSource = 'Local'"); //Mimic the error in DB.
+		jdbcTemplate.update("UPDATE Drugs SET ATCCodeSource = 'Local'"); //Mimic the error in DB.
+		jdbcTemplate.update("UPDATE Drugs SET DrugFormCode = 'Local'"); //Mimic the error in DB.
+		jdbcTemplate.update("UPDATE DrugMedications SET IndicationCodeSource = 'Local'"); //Mimic the error in DB.
+
+		UpdateDrugmedicationRequestBase.UpdateDrugmedicationRequest updateRequest = testRequestCreator.createUpdateDrugMedicationRequest(child, dmId);
+		invocator.updateDrugMedication(updateDrugMedicationService, updateRequest);
+
+		sourceLocalRepair.runRepair(true);
+
+		sourceLocalRepair.runRepair(false);
 	}
 }

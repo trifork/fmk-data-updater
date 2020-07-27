@@ -39,8 +39,8 @@ public class NonClinicalModificatorRepair {
 	public void update(boolean testMode) {
 
 		try {
-			logger.info("Sleeping for 30 seconds to let boot complete");
-			Thread.sleep(30*1000);
+			logger.info("Sleeping for 10 seconds to let boot complete");
+			Thread.sleep(10*1000);
 		} catch (Exception e) {
 			logger.error("Sleeping failed.");
 		}

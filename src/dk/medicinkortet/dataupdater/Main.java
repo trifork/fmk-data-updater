@@ -49,7 +49,10 @@ public class Main {
 			}
 			NonClinicalModificatorRepair ncm = context.getBean(NonClinicalModificatorRepair.class);
 			ncm.update(testMode);
-		} else {
+		} else if("sourceLocalRepair".equals(action)) {
+			SourceLocalRepair local = context.getBean(SourceLocalRepair.class);
+			local.runRepair(testMode);
+		}else {
 			logger.error("Unknown action parameter " + action);
 		}
 	
