@@ -10,7 +10,6 @@ import dk.medicinkortet.persistence.mk.datafacade.MedicineCardDataFacade;
 import dk.medicinkortet.persistence.mk.datafacade.MedicineCardModificationFacade;
 import dk.medicinkortet.persistence.mk.mysql_impl.DAOHolder;
 import dk.medicinkortet.persistence.mk.mysql_impl.MyPatientDataFacade;
-import dk.medicinkortet.persistence.mk.mysql_impl.dao.DrugMedicationDAO;
 import dk.medicinkortet.persistence.mysql_helpers.CustomJdbcTemplate;
 import dk.medicinkortet.persistence.stamdata.datafacade.StamdataFacade;
 import dk.medicinkortet.persistence.stamdata.mysql_impl.dao.StamDataDAO;
@@ -98,7 +97,7 @@ public class SourceLocalRepair {
 					LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
 					long drugPID = rs.getLong("d.DrugPID");
 					String atcCode = rs.getString("d.ATCCode");
-					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDmPID() == dmPID && e.getDmDrugPID() == drugPID).findFirst().orElse(null);
+					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
 					if (currentUpdate != null) {
 						currentUpdate.setAtcCode(atcCode);
 					} else {
@@ -123,7 +122,7 @@ public class SourceLocalRepair {
 					LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
 					long drugPID = rs.getLong("d.DrugPID");
 					String formCode = rs.getString("d.DrugFormCode");
-					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDmPID() == dmPID && e.getDmDrugPID() == drugPID).findFirst().orElse(null);
+					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
 					if (currentUpdate != null) {
 						currentUpdate.setFormCode(formCode);
 					} else {
@@ -148,12 +147,74 @@ public class SourceLocalRepair {
 					LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
 					long drugPID = rs.getLong("d.DrugPID");
 					Integer indication = rs.getInt("dm.IndicationCode");
-					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDmPID() == dmPID && e.getDmDrugPID() == drugPID).findFirst().orElse(null);
+					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
 					if (currentUpdate != null) {
 						currentUpdate.setIndicationCode(indication);
 					} else {
 						itemsToFix.add(new LocalUpdate(person, dmPID, dmIdentifier, drugPID, dmVersion, indication, dmValidTo));
 					}
+				});
+
+		String sqlEffectuationsDrugId = "select ipid.PersonIdentifier, ipid.PersonIdentifierSource, dm.*, d.*"
+				+ " FROM Effectuations eff"
+				+ " INNER JOIN DrugMedications dm ON eff.DrugMedicationPID = dm.DrugMedicationPID"
+				+ " INNER JOIN MedicineCards mc on dm.MedicineCardPID=mc.MedicineCardPID "
+				+ " INNER JOIN InternalPersonIds ipid on mc.InternalPersonId = ipid.InternalPersonId "
+				+ " INNER JOIN Drugs d on eff.DrugPID = d.DrugPID "
+				+ " WHERE d.DrugId IS NOT NULL AND d.DrugIdSource = 'Local' AND d.DrugId IN (SELECT DISTINCT(DrugID) FROM " + jdbcTemplate.getSdmDatabase() + ".Laegemiddel)";
+
+		jdbcTemplate.query(sqlEffectuationsDrugId,
+				rs -> {
+					PersonIdentifierVO person = new PersonIdentifierVO(rs.getString("PersonIdentifier"), PersonIdentifierVO.Source.fromValue(rs.getString("PersonIdentifierSource")));
+					long effecPID = rs.getLong("dm.EffectuationPID");
+					long effectuationId = rs.getLong("eff.EffectuationID");
+					long drugPID = rs.getLong("d.DrugPID");
+					long drugId = rs.getLong("d.DrugId");
+					itemsToFix.add(new LocalUpdate(person, effecPID, effectuationId, drugPID, drugId));
+				});
+
+		String sqlEffectuationsDrugATC = "select ipid.PersonIdentifier, ipid.PersonIdentifierSource, dm.*, d.*"
+				+ " FROM Effectuations eff"
+				+ " INNER JOIN DrugMedications dm ON eff.DrugMedicationPID = dm.DrugMedicationPID"
+				+ " INNER JOIN MedicineCards mc on dm.MedicineCardPID=mc.MedicineCardPID "
+				+ " INNER JOIN InternalPersonIds ipid on mc.InternalPersonId = ipid.InternalPersonId "
+				+ " INNER JOIN Drugs d on eff.DrugPID = d.DrugPID "
+				+ " WHERE d.ATCCode IS NOT NULL AND d.ATCCodeSource = 'Local' AND d.ATCCode IN (SELECT DISTINCT(ATC) FROM " + jdbcTemplate.getSdmDatabase() + ".ATC)";
+
+		jdbcTemplate.query(sqlEffectuationsDrugATC,
+				rs -> {
+					PersonIdentifierVO person = new PersonIdentifierVO(rs.getString("PersonIdentifier"), PersonIdentifierVO.Source.fromValue(rs.getString("PersonIdentifierSource")));
+					long effecPID = rs.getLong("dm.EffectuationPID");
+					long effectuationId = rs.getLong("eff.EffectuationID");
+					long drugPID = rs.getLong("d.DrugPID");
+					String atcCode = rs.getString("d.ATCCode");
+					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
+					if (currentUpdate != null) {
+						currentUpdate.setAtcCode(atcCode);
+					}
+					itemsToFix.add(new LocalUpdate(person, effecPID, effectuationId, drugPID, atcCode));
+				});
+
+		String sqlEffectuationsDrugForm = "select ipid.PersonIdentifier, ipid.PersonIdentifierSource, dm.*, d.*"
+				+ " FROM Effectuations eff"
+				+ " INNER JOIN DrugMedications dm ON eff.DrugMedicationPID = dm.DrugMedicationPID"
+				+ " INNER JOIN MedicineCards mc on dm.MedicineCardPID=mc.MedicineCardPID "
+				+ " INNER JOIN InternalPersonIds ipid on mc.InternalPersonId = ipid.InternalPersonId "
+				+ " INNER JOIN Drugs d on eff.DrugPID = d.DrugPID "
+				+ " WHERE d.DrugFormCode IS NOT NULL AND d.DrugFormCodeSource = 'Local' AND d.DrugId IN (SELECT DISTINCT(Kode) FROM " + jdbcTemplate.getSdmDatabase() + ".Formbetegnelse)";
+
+		jdbcTemplate.query(sqlEffectuationsDrugForm,
+				rs -> {
+					PersonIdentifierVO person = new PersonIdentifierVO(rs.getString("PersonIdentifier"), PersonIdentifierVO.Source.fromValue(rs.getString("PersonIdentifierSource")));
+					long effecPID = rs.getLong("dm.EffectuationPID");
+					long effectuationId = rs.getLong("eff.EffectuationID");
+					long drugPID = rs.getLong("d.DrugPID");
+					String formCode = rs.getString("d.DrugFormCode");
+					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
+					if (currentUpdate != null) {
+						currentUpdate.setFormCode(formCode);
+					}
+					itemsToFix.add(new LocalUpdate(person, effecPID, effectuationId, formCode, drugPID));
 				});
 
 		logger.info("SourceLocalRepair, found " + itemsToFix.size() + " items to repair.");
@@ -180,12 +241,17 @@ public class SourceLocalRepair {
 		for (LocalUpdate item : itemsToFix) {
 
 			logger.info("Work item: " + item.getPerson().toString() +
-					" DM: " + item.getDmIdentifier() + ":" + item.getDmVersion() + " " +
+					(item.getDmIdentifier() != null && item.getDmVersion() != null ?
+					(" DM: " + item.getDmIdentifier() + ":" + item.getDmVersion() + " ") :
+					(" Effec: " + item.getEffecId() + " ")) +
 					item.getFixingString());
 
 			if (!testMode) {
 				try {
-					if (item.getDmValidTo().isAfter(timeService.currentLocalDateTime())) {
+					if (item.getDmVersion() != null &&
+							item.getDmValidTo() != null &&
+							item.getDmIdentifier() != null &&
+							item.getDmValidTo().isAfter(timeService.currentLocalDateTime())) {
 						logger.info("Fixing latest version of DM: " + item.getDmIdentifier() + ":" + item.getDmVersion() +
 								" creating new version and sending advis.");
 
@@ -255,7 +321,7 @@ public class SourceLocalRepair {
 					countExceptions++;
 					countTotal++;
 					logger.error("Error creating new DM version! - " +
-							item.getPerson().toString() + " : " + item.getDmDrugPID() +
+							item.getPerson().toString() + " : " + item.getDrugPID() +
 							" : " + item.getDmIdentifier() + " : " + item.getFixingString(), e);
 					continue; //Don't try and repair the current version, that'll cause problems
 				}
@@ -269,14 +335,16 @@ public class SourceLocalRepair {
 					if (item.getIndicationCode() != null) {
 						fixSourceLocalOnDrugMedication(item);
 					}
+
 					personsUpdated.add(item.getPerson());
+
 					countFixed++;
 					countTotal++;
 				} catch (Exception e) {
 					countExceptions++;
 					countTotal++;
 					logger.error("Error repairing older version! - " +
-							item.getPerson().toString() + " : " + item.getDmDrugPID() +
+							item.getPerson().toString() + " : " + item.getDrugPID() +
 							" : " + item.getDmIdentifier() + " : " + item.getFixingString(), e);
 				}
 			}
@@ -315,7 +383,7 @@ public class SourceLocalRepair {
 
 		updateSql += " WHERE DrugPID = ?";
 
-		jdbcTemplate.update(updateSql, item.getDmDrugPID());
+		jdbcTemplate.update(updateSql, item.getDrugPID());
 	}
 
 	private void updateSourceLocalOnIndication(FreeTextAndCodeVO indication, LocalUpdate item) {
@@ -350,7 +418,7 @@ public class SourceLocalRepair {
 				form.setSource(new PriceListSourceVO(stamDrug.validFrom, medicinePrices));
 				drug.setForm(form);
 			} else {
-				logger.warn("Unable to fix Drug for DrugPID: " + item.getDmDrugPID() + " couldn't find stamDrug for drugId: " + item.getDrugId());
+				logger.warn("Unable to fix Drug for DrugPID: " + item.getDrugPID() + " couldn't find stamDrug for drugId: " + item.getDrugId());
 			}
 			drugMedicationOverview.setDrug(drug);
 			return;
@@ -369,7 +437,7 @@ public class SourceLocalRepair {
 					atc.setSource(new PriceListSourceVO(atc.getValidFrom(), medicinePrices));
 					drug.setAtc(atc);
 				} else {
-					logger.warn("Unable to fix ATC for DrugPID: " + item.getDmDrugPID() + " couldn't find ATC: " + item.getAtcCode());
+					logger.warn("Unable to fix ATC for DrugPID: " + item.getDrugPID() + " couldn't find ATC: " + item.getAtcCode());
 				}
 			}
 		}
@@ -386,7 +454,7 @@ public class SourceLocalRepair {
 					form.setSource(new PriceListSourceVO(form.getValidFrom(), medicinePrices));
 					drug.setForm(form);
 				} else {
-					logger.warn("Unable to fix FormCode for DrugPID: " + item.getDmDrugPID() + " couldn't find FormCode: " + item.getAtcCode());
+					logger.warn("Unable to fix FormCode for DrugPID: " + item.getDrugPID() + " couldn't find FormCode: " + item.getAtcCode());
 				}
 			}
 		}
@@ -448,12 +516,19 @@ public class SourceLocalRepair {
 	}
 
 	private static class LocalUpdate {
-		//Things to track
+		//Shared
 		private final PersonIdentifierVO person;
-		private final long dmPID;
-		private final long dmIdentifier;
-		private final long dmDrugPID;
-		private final long dmVersion;
+		private Long drugPID;
+
+		//Things to track for DrugMedication
+		private Long dmPID;
+		private Long dmIdentifier;
+		private Long dmVersion;
+
+		//Things to track for effectuations
+		private Long effecPID;
+		private Long effecId;
+
 
 		//Things to update (possibly)
 		private Long drugId;
@@ -462,50 +537,77 @@ public class SourceLocalRepair {
 		private Integer indicationCode;
 
 		//Updating latest version?
-		private final LocalDateTime dmValidTo;
+		private LocalDateTime dmValidTo;
 
 		//Fix DrugId
-		public LocalUpdate(PersonIdentifierVO person, long dmPID, long dmIdentifier, long dmDrugPID, long dmVersion, long dmDrugId, LocalDateTime dmValidTo) {
+		public LocalUpdate(PersonIdentifierVO person, long dmPID, long dmIdentifier, long drugPID, long dmVersion, long dmDrugId, LocalDateTime dmValidTo) {
 			this.person = person;
 			this.dmPID = dmPID;
 			this.dmIdentifier = dmIdentifier;
-			this.dmDrugPID = dmDrugPID;
+			this.drugPID = drugPID;
 			this.dmVersion = dmVersion;
 			this.drugId = dmDrugId;
 			this.dmValidTo = dmValidTo;
 		}
 
 		//Fix ATC Code
-		public LocalUpdate(PersonIdentifierVO person, long dmPID, long dmIdentifier, long dmDrugPID, long dmVersion, String atcCode, LocalDateTime dmValidTo) {
+		public LocalUpdate(PersonIdentifierVO person, long dmPID, long dmIdentifier, long drugPID, long dmVersion, String atcCode, LocalDateTime dmValidTo) {
 			this.person = person;
 			this.dmPID = dmPID;
 			this.dmIdentifier = dmIdentifier;
-			this.dmDrugPID = dmDrugPID;
+			this.drugPID = drugPID;
 			this.dmVersion = dmVersion;
 			this.atcCode = atcCode;
 			this.dmValidTo = dmValidTo;
 		}
 
 		//Fix FormCode
-		public LocalUpdate(PersonIdentifierVO person, long dmPID, long dmIdentifier, long dmDrugPID, long dmVersion, LocalDateTime dmValidTo, String formCode) {
+		public LocalUpdate(PersonIdentifierVO person, long dmPID, long dmIdentifier, long drugPID, long dmVersion, LocalDateTime dmValidTo, String formCode) {
 			this.person = person;
 			this.dmPID = dmPID;
 			this.dmIdentifier = dmIdentifier;
-			this.dmDrugPID = dmDrugPID;
+			this.drugPID = drugPID;
 			this.dmVersion = dmVersion;
 			this.formCode = formCode;
 			this.dmValidTo = dmValidTo;
 		}
 
 		//Fix Indication
-		public LocalUpdate(PersonIdentifierVO person, long dmPID, long dmIdentifier, long dmDrugPID, long dmVersion, int indicationCode, LocalDateTime dmValidTo) {
+		public LocalUpdate(PersonIdentifierVO person, long dmPID, long dmIdentifier, long drugPID, long dmVersion, int indicationCode, LocalDateTime dmValidTo) {
 			this.person = person;
 			this.dmPID = dmPID;
 			this.dmIdentifier = dmIdentifier;
-			this.dmDrugPID = dmDrugPID;
+			this.drugPID = drugPID;
 			this.dmVersion = dmVersion;
 			this.indicationCode = indicationCode;
 			this.dmValidTo = dmValidTo;
+		}
+
+		//Fix effectuated Drug id.
+		public LocalUpdate(PersonIdentifierVO person, long effecPID, long effectuationId, long drugPID, long drugId) {
+			this.person = person;
+			this.effecPID = effecPID;
+			this.effecId = effectuationId;
+			this.drugPID = drugPID;
+			this.drugId = drugId;
+		}
+
+		//Fix effected drug atc
+		public LocalUpdate(PersonIdentifierVO person, long effecPID, long effectuationId, long drugPID, String atcCode) {
+			this.person = person;
+			this.effecPID = effecPID;
+			this.effecId = effectuationId;
+			this.drugPID = drugPID;
+			this.atcCode = atcCode;
+		}
+
+		//Fix effected drug FormCode
+		public LocalUpdate(PersonIdentifierVO person, long effecPID, long effectuationId, String formCode, long drugPID) {
+			this.person = person;
+			this.effecPID = effecPID;
+			this.effecId = effectuationId;
+			this.drugPID = drugPID;
+			this.formCode = formCode;
 		}
 
 		public void setAtcCode(String atcCode) {
@@ -524,19 +626,19 @@ public class SourceLocalRepair {
 			return person;
 		}
 
-		public long getDmPID() {
+		public Long getDmPID() {
 			return dmPID;
 		}
 
-		public long getDmIdentifier() {
+		public Long getDmIdentifier() {
 			return dmIdentifier;
 		}
 
-		public long getDmDrugPID() {
-			return dmDrugPID;
+		public Long getDrugPID() {
+			return drugPID;
 		}
 
-		public long getDmVersion() {
+		public Long getDmVersion() {
 			return dmVersion;
 		}
 
@@ -558,6 +660,14 @@ public class SourceLocalRepair {
 
 		public LocalDateTime getDmValidTo() {
 			return dmValidTo;
+		}
+
+		public Long getEffecPID() {
+			return effecPID;
+		}
+
+		public Long getEffecId() {
+			return effecId;
 		}
 
 		public String getFixingString() {
