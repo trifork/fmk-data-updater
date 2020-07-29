@@ -38,13 +38,6 @@ public class NonClinicalModificatorRepair {
 
 	public void update(boolean testMode) {
 
-		try {
-			logger.info("Sleeping for 10 seconds to let boot complete");
-			Thread.sleep(10*1000);
-		} catch (Exception e) {
-			logger.error("Sleeping failed.");
-		}
-
 		String sql = "SELECT DISTINCT(mc.MedicineCardPID), ipid.PersonIdentifier, ipid.PersonIdentifierSource FROM MedicineCards mc " +
 				"INNER JOIN InternalPersonIds ipid ON mc.InternalPersonId = ipid.InternalPersonId " +
 				"INNER JOIN DrugMedications dm ON mc.MedicineCardPID = dm.MedicineCardPID " +
@@ -104,7 +97,7 @@ public class NonClinicalModificatorRepair {
 			RequestContext.setValidatedRole(new ValidatedRole(Role.System, new ArrayList<>()));
 			RequestContext.get().setValidatedRole(Role.System);
 			RequestContext.get().setAccessType(SecurityCredentials.ACCESS_TYPE_CONSOLE);
-			RequestContext.get().setSystem("FMK Data-repair");
+			RequestContext.get().setSystem("FMK Data-repair: NC");
 			RequestContext.get().setSystemVersion("1");
 			RequestContext.get().setRequestedRole("System");
 			RequestContext.get().setLevel(0);

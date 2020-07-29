@@ -60,73 +60,253 @@ public class SourceLocalRepair {
 		countFixed = 0;
 		countExceptions = 0;
 
-		//Find Drugs with wrong source local on DrugId
-		String sqlDrugId = "select ipid.PersonIdentifier, ipid.PersonIdentifierSource, dm.*, d.*"
-				+ " FROM DrugMedications dm "
-				+ " INNER JOIN MedicineCards mc on dm.MedicineCardPID=mc.MedicineCardPID "
-				+ " INNER JOIN InternalPersonIds ipid on mc.InternalPersonId = ipid.InternalPersonId "
-				+ " INNER JOIN Drugs d on dm.DrugPID = d.DrugPID "
-				+ " WHERE d.DrugId IS NOT NULL AND d.DrugIdSource = 'Local' AND d.DrugId IN (SELECT DISTINCT(DrugID) FROM " + jdbcTemplate.getSdmDatabase() + ".Laegemiddel)";
+		//Find Drugs with wrong source local on some element, and find the parent it's linked to.
+		String sqlBase = "SELECT "
+				+ " d.*,"
+				//Select Person
+				+ " coalesce(ipidDm.PersonIdentifier, ipidEff.PersonIdentifier, "
+				+ " ipidEffPack.PersonIdentifier, ipidDD.PersonIdentifier, ipidDD2.PersonIdentifier) as personIdentifier,"
+				+ " coalesce(ipidDm.PersonIdentifierSource, ipidEff.PersonIdentifierSource,"
+				+ " ipidEffPack.PersonIdentifierSource, ipidDD.PersonIdentifierSource, ipidDD2.PersonIdentifierSource) as personIdentifierSource,"
+				//Select PID working on
+				+ " coalesce(dm.DrugMedicationPID, eff.EffectuationPID, "
+				+ " pack.PackagePID, packDrug.PackagedDrugPID, plannedDrug.PlannedDispensingPID) as workingPID,"
+				//Boolean working table for logger
+				+ " dm.DrugMedicationPID IS NOT NULL AS isDm,"
+				+ " eff.EffectuationPID IS NOT NULL AS isEff,"
+				+ " pack.DrugPID IS NOT NULL AS isPack,"
+				+ " packDrug.Drug IS NOT NULL AS isPackedDrug,"
+				+ " plannedDrug.SubstitutedDrugPID IS NOT NULL AS isPlanned,"
+				//Get DM in case we need to update+advis
+				+ " dm.* "
+				//Start with problem table
+				+ " FROM Drugs d "
+				//Is it a DrugMedication?
+				+ " LEFT JOIN DrugMedications dm on d.DrugPID = dm.DrugPID "
+				+ " LEFT JOIN MedicineCards mcdm on dm.MedicineCardPID = mcdm.MedicineCardPID "
+				+ " LEFT JOIN InternalPersonIds ipidDm on mcdm.InternalPersonId = ipidDm.InternalPersonId "
+				//Is is an Effectuation?
+				+ " LEFT JOIN Effectuations eff on d.DrugPID = eff.DrugPID "
+				+ " LEFT JOIN DrugMedications effDm on eff.DrugMedicationPID = effDm.DrugMedicationPID "
+				+ " LEFT JOIN MedicineCards mcEff on effDm.MedicineCardPID = mcEff.MedicineCardPID "
+				+ " LEFT JOIN InternalPersonIds ipidEff on mcEff.InternalPersonId = ipidEff.InternalPersonId "
+				//Is it a Package?
+				+ " LEFT JOIN Packages pack on d.DrugPID = pack.DrugPID "
+				+ " LEFT JOIN Effectuations effPack on pack.PackagePID = effPack.PackagePID "
+				+ " LEFT JOIN DrugMedications effPackDm on effPack.DrugMedicationPID = effPackDm.DrugMedicationPID "
+				+ " LEFT JOIN MedicineCards mcEffPack on effPackDm.MedicineCardPID = mcEffPack.MedicineCardPID "
+				+ " LEFT JOIN InternalPersonIds ipidEffPack on mcEffPack.InternalPersonId = ipidEffPack.InternalPersonId "
+				//Is is a PackagedDrug? (DD)
+				+ " LEFT JOIN PackagedDrug packDrug on d.DrugPID = packDrug.Drug "
+				+ " LEFT JOIN DoseDispensingPeriods ddPeriod on packDrug.DoseDispensingPeriodIdentifier = ddPeriod.DoseDispensingPeriodIdentifier AND ddPeriod.ValidTo > now()"
+				+ " LEFT JOIN DoseDispensingCards ddCard on ddPeriod.DoseDispensingCardIdentifier = ddCard.DoseDispensingCardIdentifier"
+				+" AND ddCard.ValidFrom <= ddPeriod.ValidFrom AND ddCard.ValidTo > ddPeriod.ValidFrom"
+				+ " LEFT JOIN InternalPersonIds ipidDD on ddCard.InternalPersonId = ipidDD.InternalPersonId "
+				//Is it a PlannedDispensing (substituded drug)?
+				+ " LEFT JOIN PlannedDispensings plannedDrug on d.DrugPID = plannedDrug.SubstitutedDrugPID "
+				+ " LEFT JOIN DoseDispensingCards ddCardPlanned on ddPeriod.DoseDispensingCardIdentifier = ddCardPlanned.DoseDispensingCardIdentifier"
+				+ " AND ddCardPlanned.ValidFrom <= plannedDrug.ValidFrom AND ddCardPlanned.ValidTo > plannedDrug.ValidFrom"
+				+ " LEFT JOIN InternalPersonIds ipidDD2 on ddCardPlanned.InternalPersonId = ipidDD2.InternalPersonId";
 
-		List<LocalUpdate> itemsToFix = jdbcTemplate.query(sqlDrugId,
-				(rs, rowNum) -> {
-					PersonIdentifierVO person = new PersonIdentifierVO(rs.getString("PersonIdentifier"), PersonIdentifierVO.Source.fromValue(rs.getString("PersonIdentifierSource")));
-					long dmPID = rs.getLong("dm.DrugMedicationPID");
-					long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
-					long dmVersion = rs.getLong("dm.Version");
-					LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
+		String sqlDrugId = sqlBase
+				+ " WHERE d.DrugId IS NOT NULL AND d.DrugIdSource = 'Local' AND d.DrugId IN (SELECT DISTINCT(DrugID) FROM " +
+				jdbcTemplate.getSdmDatabase() + ".Laegemiddel)";
+
+		List<LocalUpdate> itemsToFix = new ArrayList<>();
+
+		jdbcTemplate.query(sqlDrugId,
+				rs -> {
 					long drugPID = rs.getLong("d.DrugPID");
-					long drugId = rs.getLong("d.DrugId");
-					return new LocalUpdate(person, dmPID, dmIdentifier, drugPID, dmVersion, drugId, dmValidTo);
+
+					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
+					if (currentUpdate != null) {
+						//Ignore, this is because of duplicated.
+					} else {
+						LocalUpdate update = new LocalUpdate();
+
+						boolean isDm = rs.getBoolean("isDm");
+						boolean isEff = rs.getBoolean("isEff");
+						boolean isPack = rs.getBoolean("isPack");
+						boolean isPackagedDrug = rs.getBoolean("isPackedDrug");
+						boolean isPlanned = rs.getBoolean("isPlanned");
+
+
+						if (isDm) {
+							long dmPID = rs.getLong("dm.DrugMedicationPID");
+							long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
+							long dmVersion = rs.getLong("dm.Version");
+							LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
+							update.setDmPID(dmPID);
+							update.setDmIdentifier(dmIdentifier);
+							update.setDmVersion(dmVersion);
+							update.setDmValidTo(dmValidTo);
+							update.setDrugLinkedToTable("DrugMedications");
+						} else if (isEff) {
+							update.setDrugLinkedToTable("Effectuations");
+						} else if (isPack) {
+							update.setDrugLinkedToTable("Packages");
+						} else if (isPackagedDrug) {
+							update.setDrugLinkedToTable("PackagedDrug");
+						} else if (isPlanned) {
+							update.setDrugLinkedToTable("PlannedDispensings");
+						} else {
+							logger.warn("NOT fixing DrugId DrugPID: " + drugPID + " couldn't determine table its linked to");
+							return;
+						}
+
+						String personIdentifier = rs.getString("personIdentifier");
+						String source = rs.getString("personIdentifierSource");
+						logger.info("Found work for person: " + personIdentifier + ":" + source);
+
+						if (personIdentifier == null || source == null) {
+							logger.info("Person not found!, PID: " + drugPID + " DM,Eff,Pack,Packaged,Planned?: " + isDm + " " + isEff + " " + isPack + " " + isPackagedDrug + " " + isPlanned);
+							return;
+						}
+
+						PersonIdentifierVO person = new PersonIdentifierVO(personIdentifier,
+								PersonIdentifierVO.Source.fromValue(source));
+
+						long drugId = rs.getLong("d.DrugId");
+						long workingPID = rs.getLong("workingPID");
+						update.setPerson(person);
+						update.setDrugPID(drugPID);
+						update.setDrugId(drugId);
+						update.setWorkingPID(workingPID);
+
+						itemsToFix.add(update);
+					}
 				});
 
 		//Find Drugs with wrong source local on ATC
-		String sqlATC = "select ipid.PersonIdentifier, ipid.PersonIdentifierSource, dm.*, d.*"
-				+ " FROM DrugMedications dm "
-				+ " INNER JOIN MedicineCards mc on dm.MedicineCardPID=mc.MedicineCardPID "
-				+ " INNER JOIN InternalPersonIds ipid on mc.InternalPersonId = ipid.InternalPersonId "
-				+ " INNER JOIN Drugs d on dm.DrugPID = d.DrugPID "
-				+ " WHERE d.ATCCode IS NOT NULL AND d.ATCCodeSource = 'Local' AND d.ATCCode IN (SELECT DISTINCT(ATC) FROM " + jdbcTemplate.getSdmDatabase() + ".ATC)";
+		String sqlATC = sqlBase
+				+ " WHERE d.ATCCode IS NOT NULL AND d.ATCCodeSource = 'Local' AND d.ATCCode IN (SELECT DISTINCT(ATC) FROM " +
+				jdbcTemplate.getSdmDatabase() + ".ATC)";
 
 		jdbcTemplate.query(sqlATC,
 				rs -> {
-					PersonIdentifierVO person = new PersonIdentifierVO(rs.getString("PersonIdentifier"), PersonIdentifierVO.Source.fromValue(rs.getString("PersonIdentifierSource")));
-					long dmPID = rs.getLong("dm.DrugMedicationPID");
-					long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
-					long dmVersion = rs.getLong("dm.Version");
-					LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
 					long drugPID = rs.getLong("d.DrugPID");
-					String atcCode = rs.getString("d.ATCCode");
+					String atc = rs.getString("d.ATCCode");
+
 					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
 					if (currentUpdate != null) {
-						currentUpdate.setAtcCode(atcCode);
+						currentUpdate.setAtcCode(atc);
 					} else {
-						itemsToFix.add(new LocalUpdate(person, dmPID, dmIdentifier, drugPID, dmVersion, atcCode, dmValidTo));
+						LocalUpdate update = new LocalUpdate();
+
+						boolean isDm = rs.getBoolean("isDm");
+						boolean isEff = rs.getBoolean("isEff");
+						boolean isPack = rs.getBoolean("isPack");
+						boolean isPackagedDrug = rs.getBoolean("isPackedDrug");
+						boolean isPlanned = rs.getBoolean("isPlanned");
+
+						if (isDm) {
+							long dmPID = rs.getLong("dm.DrugMedicationPID");
+							long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
+							long dmVersion = rs.getLong("dm.Version");
+							LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
+							update.setDmPID(dmPID);
+							update.setDmIdentifier(dmIdentifier);
+							update.setDmVersion(dmVersion);
+							update.setDmValidTo(dmValidTo);
+							update.setDrugLinkedToTable("DrugMedications");
+						} else if (isEff) {
+							update.setDrugLinkedToTable("Effectuations");
+						} else if (isPack) {
+							update.setDrugLinkedToTable("Packages");
+						} else if (isPackagedDrug) {
+							update.setDrugLinkedToTable("PackagedDrug");
+						} else if (isPlanned) {
+							update.setDrugLinkedToTable("PlannedDispensings");
+						} else {
+							logger.warn("NOT fixing ATC for DrugPID: " + drugPID + " couldn't determine table its linked to");
+							return;
+						}
+
+						String personIdentifier = rs.getString("personIdentifier");
+						String source = rs.getString("personIdentifierSource");
+						logger.info("Found work for person: " + personIdentifier + ":" + source);
+
+						if (personIdentifier == null || source == null) {
+							logger.info("Person not found!, PID: " + drugPID + " DM,Eff,Pack,Packaged,Planned?: " + isDm + " " + isEff + " " + isPack + " " + isPackagedDrug + " " + isPlanned);
+							return;
+						}
+
+						PersonIdentifierVO person = new PersonIdentifierVO(personIdentifier,
+								PersonIdentifierVO.Source.fromValue(source));
+
+						long workingPID = rs.getLong("workingPID");
+						update.setPerson(person);
+						update.setDrugPID(drugPID);
+						update.setAtcCode(atc);
+						update.setWorkingPID(workingPID);
+
+						itemsToFix.add(update);
 					}
 				});
 
 		//Find Drugs with wrong source local on FormCode
-		String sqlFormCode = "select ipid.PersonIdentifier, ipid.PersonIdentifierSource, dm.*, d.*"
-				+ " FROM DrugMedications dm "
-				+ " INNER JOIN MedicineCards mc on dm.MedicineCardPID=mc.MedicineCardPID "
-				+ " INNER JOIN InternalPersonIds ipid on mc.InternalPersonId = ipid.InternalPersonId "
-				+ " INNER JOIN Drugs d on dm.DrugPID = d.DrugPID "
-				+ " WHERE d.DrugFormCode IS NOT NULL AND d.DrugFormCodeSource = 'Local' AND d.DrugId IN (SELECT DISTINCT(Kode) FROM " + jdbcTemplate.getSdmDatabase() + ".Formbetegnelse)";
+		String sqlFormCode = sqlBase
+				+ " WHERE d.DrugFormCode IS NOT NULL AND d.DrugFormCodeSource = 'Local' AND d.DrugId IN (SELECT DISTINCT(Kode) FROM " +
+				jdbcTemplate.getSdmDatabase() + ".Formbetegnelse)";
 
 		jdbcTemplate.query(sqlFormCode,
 				rs -> {
-					PersonIdentifierVO person = new PersonIdentifierVO(rs.getString("PersonIdentifier"), PersonIdentifierVO.Source.fromValue(rs.getString("PersonIdentifierSource")));
-					long dmPID = rs.getLong("dm.DrugMedicationPID");
-					long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
-					long dmVersion = rs.getLong("dm.Version");
-					LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
 					long drugPID = rs.getLong("d.DrugPID");
 					String formCode = rs.getString("d.DrugFormCode");
+
 					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
 					if (currentUpdate != null) {
 						currentUpdate.setFormCode(formCode);
 					} else {
-						itemsToFix.add(new LocalUpdate(person, dmPID, dmIdentifier, drugPID, dmVersion, dmValidTo, formCode));
+						LocalUpdate update = new LocalUpdate();
+
+						boolean isDm = rs.getBoolean("isDm");
+						boolean isEff = rs.getBoolean("isEff");
+						boolean isPack = rs.getBoolean("isPack");
+						boolean isPackagedDrug = rs.getBoolean("isPackedDrug");
+						boolean isPlanned = rs.getBoolean("isPlanned");
+
+						if (isDm) {
+							long dmPID = rs.getLong("dm.DrugMedicationPID");
+							long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
+							long dmVersion = rs.getLong("dm.Version");
+							LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
+							update.setDmPID(dmPID);
+							update.setDmIdentifier(dmIdentifier);
+							update.setDmVersion(dmVersion);
+							update.setDmValidTo(dmValidTo);
+							update.setDrugLinkedToTable("DrugMedications");
+						} else if (isEff) {
+							update.setDrugLinkedToTable("Effectuations");
+						} else if (isPack) {
+							update.setDrugLinkedToTable("Packages");
+						} else if (isPackagedDrug) {
+							update.setDrugLinkedToTable("PackagedDrug");
+						} else if (isPlanned) {
+							update.setDrugLinkedToTable("PlannedDispensings");
+						} else {
+							logger.warn("NOT fixing FormCode for DrugPID: " + drugPID + " couldn't determine table its linked to");
+							return;
+						}
+
+						String personIdentifier = rs.getString("personIdentifier");
+						String source = rs.getString("personIdentifierSource");
+
+						if (personIdentifier == null || source == null) {
+							logger.info("Person not found!, PID: " + drugPID + " DM,Eff,Pack,Packaged,Planned?: " + isDm + " " + isEff + " " + isPack + " " + isPackagedDrug + " " + isPlanned);
+							return;
+						}
+
+						PersonIdentifierVO person = new PersonIdentifierVO(personIdentifier,
+								PersonIdentifierVO.Source.fromValue(source));
+
+						long workingPID = rs.getLong("workingPID");
+						update.setPerson(person);
+						update.setDrugPID(drugPID);
+						update.setAtcCode(formCode);
+						update.setWorkingPID(workingPID);
+
+						itemsToFix.add(update);
 					}
 				});
 
@@ -151,70 +331,18 @@ public class SourceLocalRepair {
 					if (currentUpdate != null) {
 						currentUpdate.setIndicationCode(indication);
 					} else {
-						itemsToFix.add(new LocalUpdate(person, dmPID, dmIdentifier, drugPID, dmVersion, indication, dmValidTo));
+						LocalUpdate update = new LocalUpdate();
+						update.setPerson(person);
+						update.setDmPID(dmPID);
+						update.setDmIdentifier(dmIdentifier);
+						update.setDmVersion(dmVersion);
+						update.setDmValidTo(dmValidTo);
+						update.setDrugPID(drugPID);
+						update.setIndicationCode(indication);
+						update.setWorkingPID(dmPID);
+						update.setDrugLinkedToTable("DrugMedications");
+						itemsToFix.add(update);
 					}
-				});
-
-		String sqlEffectuationsDrugId = "select ipid.PersonIdentifier, ipid.PersonIdentifierSource, dm.*, d.*"
-				+ " FROM Effectuations eff"
-				+ " INNER JOIN DrugMedications dm ON eff.DrugMedicationPID = dm.DrugMedicationPID"
-				+ " INNER JOIN MedicineCards mc on dm.MedicineCardPID=mc.MedicineCardPID "
-				+ " INNER JOIN InternalPersonIds ipid on mc.InternalPersonId = ipid.InternalPersonId "
-				+ " INNER JOIN Drugs d on eff.DrugPID = d.DrugPID "
-				+ " WHERE d.DrugId IS NOT NULL AND d.DrugIdSource = 'Local' AND d.DrugId IN (SELECT DISTINCT(DrugID) FROM " + jdbcTemplate.getSdmDatabase() + ".Laegemiddel)";
-
-		jdbcTemplate.query(sqlEffectuationsDrugId,
-				rs -> {
-					PersonIdentifierVO person = new PersonIdentifierVO(rs.getString("PersonIdentifier"), PersonIdentifierVO.Source.fromValue(rs.getString("PersonIdentifierSource")));
-					long effecPID = rs.getLong("dm.EffectuationPID");
-					long effectuationId = rs.getLong("eff.EffectuationID");
-					long drugPID = rs.getLong("d.DrugPID");
-					long drugId = rs.getLong("d.DrugId");
-					itemsToFix.add(new LocalUpdate(person, effecPID, effectuationId, drugPID, drugId));
-				});
-
-		String sqlEffectuationsDrugATC = "select ipid.PersonIdentifier, ipid.PersonIdentifierSource, dm.*, d.*"
-				+ " FROM Effectuations eff"
-				+ " INNER JOIN DrugMedications dm ON eff.DrugMedicationPID = dm.DrugMedicationPID"
-				+ " INNER JOIN MedicineCards mc on dm.MedicineCardPID=mc.MedicineCardPID "
-				+ " INNER JOIN InternalPersonIds ipid on mc.InternalPersonId = ipid.InternalPersonId "
-				+ " INNER JOIN Drugs d on eff.DrugPID = d.DrugPID "
-				+ " WHERE d.ATCCode IS NOT NULL AND d.ATCCodeSource = 'Local' AND d.ATCCode IN (SELECT DISTINCT(ATC) FROM " + jdbcTemplate.getSdmDatabase() + ".ATC)";
-
-		jdbcTemplate.query(sqlEffectuationsDrugATC,
-				rs -> {
-					PersonIdentifierVO person = new PersonIdentifierVO(rs.getString("PersonIdentifier"), PersonIdentifierVO.Source.fromValue(rs.getString("PersonIdentifierSource")));
-					long effecPID = rs.getLong("dm.EffectuationPID");
-					long effectuationId = rs.getLong("eff.EffectuationID");
-					long drugPID = rs.getLong("d.DrugPID");
-					String atcCode = rs.getString("d.ATCCode");
-					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
-					if (currentUpdate != null) {
-						currentUpdate.setAtcCode(atcCode);
-					}
-					itemsToFix.add(new LocalUpdate(person, effecPID, effectuationId, drugPID, atcCode));
-				});
-
-		String sqlEffectuationsDrugForm = "select ipid.PersonIdentifier, ipid.PersonIdentifierSource, dm.*, d.*"
-				+ " FROM Effectuations eff"
-				+ " INNER JOIN DrugMedications dm ON eff.DrugMedicationPID = dm.DrugMedicationPID"
-				+ " INNER JOIN MedicineCards mc on dm.MedicineCardPID=mc.MedicineCardPID "
-				+ " INNER JOIN InternalPersonIds ipid on mc.InternalPersonId = ipid.InternalPersonId "
-				+ " INNER JOIN Drugs d on eff.DrugPID = d.DrugPID "
-				+ " WHERE d.DrugFormCode IS NOT NULL AND d.DrugFormCodeSource = 'Local' AND d.DrugId IN (SELECT DISTINCT(Kode) FROM " + jdbcTemplate.getSdmDatabase() + ".Formbetegnelse)";
-
-		jdbcTemplate.query(sqlEffectuationsDrugForm,
-				rs -> {
-					PersonIdentifierVO person = new PersonIdentifierVO(rs.getString("PersonIdentifier"), PersonIdentifierVO.Source.fromValue(rs.getString("PersonIdentifierSource")));
-					long effecPID = rs.getLong("dm.EffectuationPID");
-					long effectuationId = rs.getLong("eff.EffectuationID");
-					long drugPID = rs.getLong("d.DrugPID");
-					String formCode = rs.getString("d.DrugFormCode");
-					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
-					if (currentUpdate != null) {
-						currentUpdate.setFormCode(formCode);
-					}
-					itemsToFix.add(new LocalUpdate(person, effecPID, effectuationId, formCode, drugPID));
 				});
 
 		logger.info("SourceLocalRepair, found " + itemsToFix.size() + " items to repair.");
@@ -240,10 +368,10 @@ public class SourceLocalRepair {
 
 		for (LocalUpdate item : itemsToFix) {
 
-			logger.info("Work item: " + item.getPerson().toString() +
-					(item.getDmIdentifier() != null && item.getDmVersion() != null ?
-					(" DM: " + item.getDmIdentifier() + ":" + item.getDmVersion() + " ") :
-					(" Effec: " + item.getEffecId() + " ")) +
+			logger.info("Person: " +item.getPerson().toString() +
+					" Work item: "  +
+					" DrugPID: " + item.getDrugPID() + " " +
+					" LinkedTo: " + item.getDrugLinkedToTable() + " with PID: " + item.getWorkingPID() + " " +
 					item.getFixingString());
 
 			if (!testMode) {
@@ -358,6 +486,7 @@ public class SourceLocalRepair {
 		updateSql += " WHERE DrugMedicationPID = ?";
 
 		jdbcTemplate.update(updateSql, item.getIndicationCode(), item.getDmPID());
+		logger.info("UPDATED DrugMedication with identifier: " + item.getDmIdentifier() + " and PID: " + item.getDmPID());
 	}
 
 	private void fixSourceLocalOnDrug(LocalUpdate item) {
@@ -384,6 +513,7 @@ public class SourceLocalRepair {
 		updateSql += " WHERE DrugPID = ?";
 
 		jdbcTemplate.update(updateSql, item.getDrugPID());
+		logger.info("UPDATED DrugPID: " + item.getDrugPID());
 	}
 
 	private void updateSourceLocalOnIndication(FreeTextAndCodeVO indication, LocalUpdate item) {
@@ -478,7 +608,7 @@ public class SourceLocalRepair {
 		RequestContext.setValidatedRole(new ValidatedRole(Role.System, new ArrayList<>()));
 		RequestContext.get().setValidatedRole(Role.System);
 		RequestContext.get().setAccessType(SecurityCredentials.ACCESS_TYPE_CONSOLE);
-		RequestContext.get().setSystem("FMK Data-repair");
+		RequestContext.get().setSystem("FMK Data-repair: SL");
 		RequestContext.get().setSystemVersion("1");
 		RequestContext.get().setRequestedRole("System");
 		RequestContext.get().setLevel(0);
@@ -488,7 +618,7 @@ public class SourceLocalRepair {
 
 		for (PersonIdentifierVO entry : personsUpdated) {
 
-			logger.info("Sending auditlog to: " + entry + " for pid: " + entry);
+			logger.info("Sending auditlog to: " + entry + " for repair");
 			RequestContext.get().setPersonCPR(entry);
 			RequestContext.get().setSubjectCpr(PersonIdentifierVO.fromCPR("0000000000")); //TODO: REPLACE ME?!?
 			RequestContext.get().setPersonIdentifierFromRequest(entry);
@@ -517,18 +647,15 @@ public class SourceLocalRepair {
 
 	private static class LocalUpdate {
 		//Shared
-		private final PersonIdentifierVO person;
+		private PersonIdentifierVO person;
 		private Long drugPID;
+		private Long workingPID;
+		private String drugLinkedToTable;
 
 		//Things to track for DrugMedication
 		private Long dmPID;
 		private Long dmIdentifier;
 		private Long dmVersion;
-
-		//Things to track for effectuations
-		private Long effecPID;
-		private Long effecId;
-
 
 		//Things to update (possibly)
 		private Long drugId;
@@ -539,75 +666,52 @@ public class SourceLocalRepair {
 		//Updating latest version?
 		private LocalDateTime dmValidTo;
 
-		//Fix DrugId
-		public LocalUpdate(PersonIdentifierVO person, long dmPID, long dmIdentifier, long drugPID, long dmVersion, long dmDrugId, LocalDateTime dmValidTo) {
+		public void setPerson(PersonIdentifierVO person) {
 			this.person = person;
-			this.dmPID = dmPID;
-			this.dmIdentifier = dmIdentifier;
-			this.drugPID = drugPID;
-			this.dmVersion = dmVersion;
-			this.drugId = dmDrugId;
-			this.dmValidTo = dmValidTo;
 		}
 
-		//Fix ATC Code
-		public LocalUpdate(PersonIdentifierVO person, long dmPID, long dmIdentifier, long drugPID, long dmVersion, String atcCode, LocalDateTime dmValidTo) {
-			this.person = person;
-			this.dmPID = dmPID;
-			this.dmIdentifier = dmIdentifier;
+		public void setDrugPID(Long drugPID) {
 			this.drugPID = drugPID;
-			this.dmVersion = dmVersion;
-			this.atcCode = atcCode;
-			this.dmValidTo = dmValidTo;
 		}
 
-		//Fix FormCode
-		public LocalUpdate(PersonIdentifierVO person, long dmPID, long dmIdentifier, long drugPID, long dmVersion, LocalDateTime dmValidTo, String formCode) {
-			this.person = person;
-			this.dmPID = dmPID;
-			this.dmIdentifier = dmIdentifier;
-			this.drugPID = drugPID;
-			this.dmVersion = dmVersion;
-			this.formCode = formCode;
-			this.dmValidTo = dmValidTo;
+		public Long getWorkingPID() {
+			return workingPID;
 		}
 
-		//Fix Indication
-		public LocalUpdate(PersonIdentifierVO person, long dmPID, long dmIdentifier, long drugPID, long dmVersion, int indicationCode, LocalDateTime dmValidTo) {
-			this.person = person;
-			this.dmPID = dmPID;
-			this.dmIdentifier = dmIdentifier;
-			this.drugPID = drugPID;
-			this.dmVersion = dmVersion;
-			this.indicationCode = indicationCode;
-			this.dmValidTo = dmValidTo;
+		public void setWorkingPID(Long workingPID) {
+			this.workingPID = workingPID;
 		}
 
-		//Fix effectuated Drug id.
-		public LocalUpdate(PersonIdentifierVO person, long effecPID, long effectuationId, long drugPID, long drugId) {
-			this.person = person;
-			this.effecPID = effecPID;
-			this.effecId = effectuationId;
-			this.drugPID = drugPID;
+		public String getDrugLinkedToTable() {
+			return drugLinkedToTable;
+		}
+
+		public void setDrugLinkedToTable(String drugLinkedToTable) {
+			this.drugLinkedToTable = drugLinkedToTable;
+		}
+
+		public void setDmPID(Long dmPID) {
+			this.dmPID = dmPID;
+		}
+
+		public void setDmIdentifier(Long dmIdentifier) {
+			this.dmIdentifier = dmIdentifier;
+		}
+
+		public void setDmVersion(Long dmVersion) {
+			this.dmVersion = dmVersion;
+		}
+
+		public void setDrugId(Long drugId) {
 			this.drugId = drugId;
 		}
 
-		//Fix effected drug atc
-		public LocalUpdate(PersonIdentifierVO person, long effecPID, long effectuationId, long drugPID, String atcCode) {
-			this.person = person;
-			this.effecPID = effecPID;
-			this.effecId = effectuationId;
-			this.drugPID = drugPID;
-			this.atcCode = atcCode;
+		public void setIndicationCode(Integer indicationCode) {
+			this.indicationCode = indicationCode;
 		}
 
-		//Fix effected drug FormCode
-		public LocalUpdate(PersonIdentifierVO person, long effecPID, long effectuationId, String formCode, long drugPID) {
-			this.person = person;
-			this.effecPID = effecPID;
-			this.effecId = effectuationId;
-			this.drugPID = drugPID;
-			this.formCode = formCode;
+		public void setDmValidTo(LocalDateTime dmValidTo) {
+			this.dmValidTo = dmValidTo;
 		}
 
 		public void setAtcCode(String atcCode) {
@@ -616,10 +720,6 @@ public class SourceLocalRepair {
 
 		public void setFormCode(String formCode) {
 			this.formCode = formCode;
-		}
-
-		public void setIndicationCode(int indicationCode) {
-			this.indicationCode = indicationCode;
 		}
 
 		public PersonIdentifierVO getPerson() {
@@ -660,14 +760,6 @@ public class SourceLocalRepair {
 
 		public LocalDateTime getDmValidTo() {
 			return dmValidTo;
-		}
-
-		public Long getEffecPID() {
-			return effecPID;
-		}
-
-		public Long getEffecId() {
-			return effecId;
 		}
 
 		public String getFixingString() {
