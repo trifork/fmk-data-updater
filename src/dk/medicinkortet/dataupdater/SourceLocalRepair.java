@@ -129,8 +129,7 @@ public class SourceLocalRepair {
 						boolean isPack = rs.getBoolean("isPack");
 						boolean isPackagedDrug = rs.getBoolean("isPackedDrug");
 						boolean isPlanned = rs.getBoolean("isPlanned");
-
-
+						
 						if (isDm) {
 							long dmPID = rs.getLong("dm.DrugMedicationPID");
 							long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
@@ -303,7 +302,7 @@ public class SourceLocalRepair {
 						long workingPID = rs.getLong("workingPID");
 						update.setPerson(person);
 						update.setDrugPID(drugPID);
-						update.setAtcCode(formCode);
+						update.setFormCode(formCode);
 						update.setWorkingPID(workingPID);
 
 						itemsToFix.add(update);
@@ -472,8 +471,8 @@ public class SourceLocalRepair {
 					countExceptions++;
 					countTotal++;
 					logger.error("Error repairing older version! - " +
-							item.getPerson().toString() + " : " + item.getDrugPID() +
-							" : " + item.getDmIdentifier() + " : " + item.getFixingString(), e);
+							item.getPerson().toString() + " Drug: " + item.getDrugPID() +
+							" LinkedTo: " + item.getDrugLinkedToTable() + " WithPID: " + item.getWorkingPID() + " " + item.getFixingString(), e);
 				}
 			}
 		}
