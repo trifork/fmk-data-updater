@@ -385,13 +385,13 @@ public class SourceLocalRepair {
 						MyPatientDataFacade patientDF = new MyPatientDataFacade(daoHolder, item.getPerson(), stamdataFacade, timeService.currentLocalDateTime());
 						ModificatorVO modifiedBy = makeDataUpdaterModificator(LocalDateTime.now());
 
-						//StamdataDrugUpdater will already fix a lot of the errors, but we'll override these just to be sure.
 						MedicineCardDataFacade mc = patientDF.getCurrentMedicineCard();
 
-						Collection<DrugMedicationOverview> dms = mc.getDrugMedications();
+						DrugMedicationOverview drugMedicationOverview = patientDF.getDrugMedicationFacade()
+								.getDrugMedicationByIdentifier(item.getDmIdentifier(),
+										null, timeService.currentLocalDateTime(), timeService.currentLocalDateTime(),
+										true);
 
-						DrugMedicationOverview drugMedicationOverview = dms.stream()
-								.filter(dm -> dm.getIdentifier().equals(item.getDmIdentifier())).findFirst().get();
 						MedicineCardModificationFacade mcModFacade = patientDF.prepareModification(modifiedBy, null, true, "");
 
 						//Do fixes
