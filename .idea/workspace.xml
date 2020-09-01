@@ -7,19 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d91c9441-d8b7-474b-b2d5-7669c92a3393" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/fmk_data_updater_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/fmk_data_updater_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/applicationcontext-test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/applicationcontext-test.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecpr2-service.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ecpr2-service.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fmk-data-updater.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fmk-fixedversion.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dk/medicinkortet/dataupdater/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dk/medicinkortet/dataupdater/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dk/medicinkortet/dataupdater/NonClinicalModificatorRepair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dk/medicinkortet/dataupdater/NonClinicalModificatorRepair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dk/medicinkortet/dataupdater/applicationcontext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/dk/medicinkortet/dataupdater/applicationcontext.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fmk-data-updater.log" beforeDir="false" afterPath="$PROJECT_DIR$/fmk-data-updater.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dk/medicinkortet/dataupdater/SourceLocalRepair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dk/medicinkortet/dataupdater/SourceLocalRepair.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fmk-fixedversion/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/../fmk-fixedversion/.classpath" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fmk-fixedversion/src/advis-client.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../fmk-fixedversion/subprojects/fmk-dbreporter/fmk-dbreporter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../fmk-fixedversion/subprojects/fmk-dbreporter/fmk-dbreporter.iml" afterDir="false" />
@@ -1441,6 +1431,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../fmk-fixedversion/test" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15820312" />
@@ -1456,23 +1447,7 @@
       <recent name="C:\Users\Steven\Documents\Trifork\fmk-data-updater" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
-      <option name="MAIN_CLASS_NAME" value="dk.medicinkortet.dataupdater.Main" />
-      <module name="fmk-data-updater" />
-      <option name="PROGRAM_PARAMETERS" value="nonClinicalRepair test" />
-      <shortenClasspath name="CLASSPATH_FILE" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dk.medicinkortet.dataupdater.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="TestNG.UpdaterTest">
     <configuration default="true" type="Application" factoryName="Application">
       <shortenClasspath name="MANIFEST" />
       <method v="2">
@@ -1481,6 +1456,7 @@
     </configuration>
     <configuration name="UpdaterTest" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="fmk-data-updater" />
+      <shortenClasspath name="MANIFEST" />
       <useClassPathOnly />
       <extension name="coverage">
         <pattern>
@@ -1505,8 +1481,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UpdaterTest.testNonClinicalRepair" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="UpdaterTest.testSourceLocalRepair (1)" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="fmk-data-updater" />
+      <shortenClasspath name="MANIFEST" />
       <useClassPathOnly />
       <extension name="coverage">
         <pattern>
@@ -1517,7 +1494,91 @@
       <option name="SUITE_NAME" value="" />
       <option name="PACKAGE_NAME" value="dk.medicinkortet.dataupdater" />
       <option name="MAIN_CLASS_NAME" value="dk.medicinkortet.dataupdater.UpdaterTest" />
-      <option name="METHOD_NAME" value="testNonClinicalRepair" />
+      <option name="METHOD_NAME" value="testSourceLocalRepair" />
+      <option name="GROUP_NAME" value="" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <option name="PARAMETERS" value="0" />
+      <option name="OUTPUT_DIRECTORY" value="" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="PROPERTIES_FILE" value="" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UpdaterTest.testSourceLocalRepair" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="fmk-data-updater" />
+      <shortenClasspath name="MANIFEST" />
+      <useClassPathOnly />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dk.medicinkortet.dataupdater.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SUITE_NAME" value="" />
+      <option name="PACKAGE_NAME" value="dk.medicinkortet.dataupdater" />
+      <option name="MAIN_CLASS_NAME" value="dk.medicinkortet.dataupdater.UpdaterTest" />
+      <option name="METHOD_NAME" value="testSourceLocalRepair" />
+      <option name="GROUP_NAME" value="" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <option name="PARAMETERS" value="" />
+      <option name="OUTPUT_DIRECTORY" value="" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="PROPERTIES_FILE" value="" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UpdaterTest.testSourceLocalRepairLatestVersionIsExpired" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="fmk-data-updater" />
+      <shortenClasspath name="MANIFEST" />
+      <useClassPathOnly />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dk.medicinkortet.dataupdater.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SUITE_NAME" value="" />
+      <option name="PACKAGE_NAME" value="dk.medicinkortet.dataupdater" />
+      <option name="MAIN_CLASS_NAME" value="dk.medicinkortet.dataupdater.UpdaterTest" />
+      <option name="METHOD_NAME" value="testSourceLocalRepairLatestVersionIsExpired" />
+      <option name="GROUP_NAME" value="" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <option name="PARAMETERS" value="" />
+      <option name="OUTPUT_DIRECTORY" value="" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="PROPERTIES_FILE" value="" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UpdaterTest.testSourceLocalRepairNotLatestVersion" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="fmk-data-updater" />
+      <shortenClasspath name="MANIFEST" />
+      <useClassPathOnly />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dk.medicinkortet.dataupdater.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SUITE_NAME" value="" />
+      <option name="PACKAGE_NAME" value="dk.medicinkortet.dataupdater" />
+      <option name="MAIN_CLASS_NAME" value="dk.medicinkortet.dataupdater.UpdaterTest" />
+      <option name="METHOD_NAME" value="testSourceLocalRepairNotLatestVersion" />
       <option name="GROUP_NAME" value="" />
       <option name="TEST_OBJECT" value="METHOD" />
       <option name="PARAMETERS" value="" />
@@ -1533,7 +1594,7 @@
       </method>
     </configuration>
     <configuration default="true" type="TestNG">
-      <module name="fmk-fixedversion" />
+      <shortenClasspath name="MANIFEST" />
       <useClassPathOnly />
       <option name="SUITE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="" />
@@ -1552,18 +1613,23 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Main" />
       <item itemvalue="TestNG.UpdaterTest" />
-      <item itemvalue="TestNG.UpdaterTest.testNonClinicalRepair" />
+      <item itemvalue="TestNG.UpdaterTest.testSourceLocalRepairLatestVersionIsExpired" />
+      <item itemvalue="TestNG.UpdaterTest.testSourceLocalRepairNotLatestVersion" />
+      <item itemvalue="TestNG.UpdaterTest.testSourceLocalRepair" />
+      <item itemvalue="TestNG.UpdaterTest.testSourceLocalRepair (1)" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
-        <item itemvalue="TestNG.UpdaterTest.testNonClinicalRepair" />
         <item itemvalue="TestNG.UpdaterTest" />
+        <item itemvalue="TestNG.UpdaterTest.testSourceLocalRepair (1)" />
+        <item itemvalue="TestNG.UpdaterTest.testSourceLocalRepair" />
+        <item itemvalue="TestNG.UpdaterTest.testSourceLocalRepairLatestVersionIsExpired" />
+        <item itemvalue="TestNG.UpdaterTest.testSourceLocalRepairNotLatestVersion" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -1585,38 +1651,43 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="709" y="147" key="#&lt;template&gt;_of_Application/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592398331522" />
+    <state x="709" y="128" key="#&lt;template&gt;_of_TestNG" timestamp="1595842777515">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="709" y="128" key="#&lt;template&gt;_of_TestNG/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1595842777515" />
     <state x="-1974" y="127" width="1502" height="918" key="#Project_Structure" timestamp="1592393923709">
       <screen x="-2560" y="0" width="2560" height="1400" />
     </state>
-    <state x="440" y="94" key="#Project_Structure/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587035456119" />
     <state x="-1974" y="127" key="#Project_Structure/0.0.2048.1112/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1592393923709" />
     <state x="469" y="101" width="1502" height="918" key="#Project_Structure/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592392436754" />
-    <state x="442" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592403672910">
+    <state x="712" y="157" key="#UpdaterTest" timestamp="1595848260178">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587035468049" />
+    <state x="712" y="157" key="#UpdaterTest/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1595848260178" />
+    <state x="442" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595842805708">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
     <state x="-2008" y="236" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2048.1112/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1592394824516" />
-    <state x="442" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592403672910" />
-    <state x="725" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1587042723508">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="725" y="322" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587042723508" />
-    <state x="816" y="242" key="#com.intellij.ide.util.MemberChooser" timestamp="1592296340012">
+    <state x="442" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1595842805708" />
+    <state x="816" y="242" key="#com.intellij.ide.util.MemberChooser" timestamp="1596012735224">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587026066648" />
-    <state x="816" y="242" key="#com.intellij.ide.util.MemberChooser/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592296340012" />
+    <state x="1020" y="305" key="#com.intellij.ide.util.MemberChooser/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1595591860043" />
+    <state x="816" y="242" key="#com.intellij.ide.util.MemberChooser/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1596012735224" />
     <state x="736" y="331" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1592552590050">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="690" y="310" key="#com.intellij.ide.util.TreeClassChooserDialog/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1586962673775" />
     <state x="-1640" y="417" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.2048.1112/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1592395949808" />
     <state x="736" y="331" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592552590050" />
     <state x="29" y="0" width="754" height="690" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog" timestamp="1592300026336">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="27" y="0" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587034850953" />
     <state x="29" y="0" width="754" height="690" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592300026336" />
+    <state x="300" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1595940802642">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="405" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1595594449386" />
+    <state x="300" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1595940802642" />
     <state x="719" y="281" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1592488833779">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
@@ -1632,72 +1703,87 @@
     <state x="789" y="245" key="FileChooserDialogImpl" timestamp="1592555073455">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="740" y="229" key="FileChooserDialogImpl/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587035295844" />
     <state x="-1574" y="308" key="FileChooserDialogImpl/0.0.2048.1112/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1592394999887" />
     <state x="789" y="245" key="FileChooserDialogImpl/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592555073455" />
-    <state width="2005" height="272" key="GridCell.Tab.0.bottom" timestamp="1592404568616">
-      <screen x="0" y="0" width="2048" height="1112" />
+    <state width="2517" height="492" key="GridCell.Tab.0.bottom" timestamp="1598962306291">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1871" height="358" key="GridCell.Tab.0.bottom/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587042494543" />
-    <state width="2517" height="358" key="GridCell.Tab.0.bottom/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1587137517597" />
-    <state width="2005" height="272" key="GridCell.Tab.0.bottom/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592404568616" />
-    <state width="2005" height="272" key="GridCell.Tab.0.center" timestamp="1592404568613">
-      <screen x="0" y="0" width="2048" height="1112" />
+    <state width="2517" height="492" key="GridCell.Tab.0.bottom/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1598962306291" />
+    <state width="2005" height="332" key="GridCell.Tab.0.bottom/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1596030157676" />
+    <state width="2517" height="492" key="GridCell.Tab.0.center" timestamp="1598962306291">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1871" height="358" key="GridCell.Tab.0.center/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587042494543" />
-    <state width="2517" height="358" key="GridCell.Tab.0.center/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1587137517597" />
-    <state width="2005" height="272" key="GridCell.Tab.0.center/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592404568613" />
-    <state width="2005" height="272" key="GridCell.Tab.0.left" timestamp="1592404568611">
-      <screen x="0" y="0" width="2048" height="1112" />
+    <state width="2517" height="492" key="GridCell.Tab.0.center/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1598962306291" />
+    <state width="2005" height="332" key="GridCell.Tab.0.center/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1596030157675" />
+    <state width="2517" height="492" key="GridCell.Tab.0.left" timestamp="1598962306291">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1871" height="358" key="GridCell.Tab.0.left/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587042494543" />
-    <state width="2517" height="358" key="GridCell.Tab.0.left/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1587137517597" />
-    <state width="2005" height="272" key="GridCell.Tab.0.left/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592404568611" />
-    <state width="2005" height="272" key="GridCell.Tab.0.right" timestamp="1592404568614">
-      <screen x="0" y="0" width="2048" height="1112" />
+    <state width="2517" height="492" key="GridCell.Tab.0.left/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1598962306291" />
+    <state width="2005" height="332" key="GridCell.Tab.0.left/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1596030157675" />
+    <state width="2517" height="492" key="GridCell.Tab.0.right" timestamp="1598962306291">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1871" height="358" key="GridCell.Tab.0.right/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587042494543" />
-    <state width="2517" height="358" key="GridCell.Tab.0.right/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1587137517597" />
-    <state width="2005" height="272" key="GridCell.Tab.0.right/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592404568614" />
+    <state width="2517" height="492" key="GridCell.Tab.0.right/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1598962306291" />
+    <state width="2005" height="332" key="GridCell.Tab.0.right/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1596030157675" />
+    <state width="2517" height="492" key="GridCell.Tab.1.bottom" timestamp="1598962306292">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="492" key="GridCell.Tab.1.bottom/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1598962306292" />
+    <state width="2517" height="492" key="GridCell.Tab.1.center" timestamp="1598962306291">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="492" key="GridCell.Tab.1.center/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1598962306291" />
+    <state width="2517" height="492" key="GridCell.Tab.1.left" timestamp="1598962306291">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="492" key="GridCell.Tab.1.left/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1598962306291" />
+    <state width="2517" height="492" key="GridCell.Tab.1.right" timestamp="1598962306291">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="492" key="GridCell.Tab.1.right/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1598962306291" />
     <state x="667" y="240" width="1096" height="711" key="NewModule_or_Project.wizard" timestamp="1592398019735">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="625" y="224" key="NewModule_or_Project.wizard/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1586959658434" />
     <state x="667" y="240" width="1096" height="711" key="NewModule_or_Project.wizard/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592398019735" />
     <state x="308" y="77" width="1489" height="953" key="SettingsEditor" timestamp="1592555120650">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="440" y="94" key="SettingsEditor/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587035273620" />
     <state x="-1947" y="219" width="1453" height="902" key="SettingsEditor/0.0.2048.1112/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1592396044767" />
     <state x="308" y="77" width="1489" height="953" key="SettingsEditor/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592555120650" />
     <state x="742" y="232" key="VCS.ChangeListViewerDialog" timestamp="1592402408395">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="696" y="217" key="VCS.ChangeListViewerDialog/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587034281814" />
     <state x="742" y="232" key="VCS.ChangeListViewerDialog/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592402408395" />
     <state x="-1623" y="513" key="classpath-attribute-editor" timestamp="1592395005338">
       <screen x="-2560" y="0" width="2560" height="1400" />
     </state>
     <state x="-1623" y="513" key="classpath-attribute-editor/0.0.2048.1112/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1592395005338" />
-    <state x="710" y="272" width="989" height="568" key="find.popup" timestamp="1592830712244">
+    <state x="632" y="167" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1595843088600">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="667" y="255" width="856" height="530" key="find.popup/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587034055185" />
-    <state x="889" y="343" width="1142" height="714" key="find.popup/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1587113467083" />
-    <state x="710" y="272" width="989" height="568" key="find.popup/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592830712244" />
+    <state x="632" y="167" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1595843088600" />
+    <state x="1587" y="428" key="extract.method.dialog" timestamp="1598959157792">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1587" y="428" key="extract.method.dialog/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1598959157792" />
+    <state x="755" y="307" key="extract.method.dialog/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1595849323097" />
+    <state x="710" y="272" width="989" height="568" key="find.popup" timestamp="1595843127254">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="889" y="343" width="1142" height="714" key="find.popup/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1595588943012" />
+    <state x="710" y="272" width="989" height="568" key="find.popup/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1595843127254" />
     <state x="627" y="147" key="new project wizard" timestamp="1592397980404">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="627" y="147" key="new project wizard/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592397980404" />
-    <state x="666" y="277" key="refactoring.ChangeSignatureDialog" timestamp="1587044224778">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="666" y="277" key="refactoring.ChangeSignatureDialog/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587044224778" />
-    <state x="654" y="182" width="716" height="723" key="search.everywhere.popup" timestamp="1592827804320">
+    <state x="867" y="314" key="refactoring.ChangeSignatureDialog" timestamp="1595941302249">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="613" y="170" width="670" height="676" key="search.everywhere.popup/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1587036498195" />
-    <state x="817" y="229" width="894" height="910" key="search.everywhere.popup/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1587113469903" />
-    <state x="654" y="182" width="716" height="723" key="search.everywhere.popup/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1592827804320" />
+    <state x="867" y="314" key="refactoring.ChangeSignatureDialog/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1595941302249" />
+    <state x="817" y="229" width="894" height="910" key="search.everywhere.popup" timestamp="1598958028475">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="817" y="229" width="894" height="910" key="search.everywhere.popup/-1920.0.1280.693/0.0.2560.1400@0.0.2560.1400" timestamp="1598958028475" />
+    <state x="654" y="182" width="716" height="723" key="search.everywhere.popup/0.0.2048.1112/-2560.0.2560.1400@0.0.2048.1112" timestamp="1596005961915" />
   </component>
 </project>
