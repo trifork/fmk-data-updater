@@ -54,14 +54,14 @@ public class SourceLocalRepair {
 
 	//SQL selects
 	private static final String sqlDmBase = "SELECT "
-			+ " d.*,"
+			+ " d.DrugPID, d.DrugId, d.ATCCode, d.DrugFormCode,"
 			//Select Person
 			+ " ipidDm.PersonIdentifier as personIdentifier,"
 			+ " ipidDm.PersonIdentifierSource as personIdentifierSource,"
 			//Select PID working on
 			+ " dm.DrugMedicationPID as workingPID,"
 			//Get DM in case we need to update+advis
-			+ " dm.* "
+			+ " dm.DrugMedicationPID, dm.DrugMedicationIdentifier, dm.Version, dm.ValidTo "
 			//Start with problem table
 			+ " FROM Drugs d "
 			//Is it a DrugMedication?
@@ -70,7 +70,7 @@ public class SourceLocalRepair {
 			+ " INNER JOIN InternalPersonIds ipidDm on mcdm.InternalPersonId = ipidDm.InternalPersonId ";
 
 	private static final String sqlEffBase = "SELECT "
-			+ " d.*,"
+			+ " d.DrugPID, d.DrugId, d.ATCCode, d.DrugFormCode,"
 			//Select Person
 			+ " ipidEff.PersonIdentifier as personIdentifier,"
 			+ " ipidEff.PersonIdentifierSource as personIdentifierSource,"
@@ -85,7 +85,7 @@ public class SourceLocalRepair {
 			+ " INNER JOIN InternalPersonIds ipidEff on mcEff.InternalPersonId = ipidEff.InternalPersonId";
 
 	private static final String sqlPackBase = "SELECT "
-			+ " d.*,"
+			+ " d.DrugPID, d.DrugId, d.ATCCode, d.DrugFormCode,"
 			//Select Person
 			+ " ipidEffPack.PersonIdentifier as personIdentifier,"
 			+ " ipidEffPack.PersonIdentifierSource as personIdentifierSource,"
@@ -101,7 +101,7 @@ public class SourceLocalRepair {
 			+ " INNER JOIN InternalPersonIds ipidEffPack on mcEffPack.InternalPersonId = ipidEffPack.InternalPersonId ";
 
 	private static final String sqlPackagedBase = "SELECT "
-			+ " d.*,"
+			+ " d.DrugPID, d.DrugId, d.ATCCode, d.DrugFormCode,"
 			//Select Person
 			+ " ipidDD.PersonIdentifier as personIdentifier,"
 			+ " ipidDD.PersonIdentifierSource as personIdentifierSource,"
@@ -117,7 +117,7 @@ public class SourceLocalRepair {
 			+ " INNER JOIN InternalPersonIds ipidDD on ddCard.InternalPersonId = ipidDD.InternalPersonId ";
 
 	private static final String sqlPlannedBase = "SELECT "
-			+ " d.*,"
+			+ " d.DrugPID, d.DrugId, d.ATCCode, d.DrugFormCode,"
 			//Select Person
 			+ " ipidDD2.PersonIdentifier as personIdentifier,"
 			+ " ipidDD2.PersonIdentifierSource as personIdentifierSource,"
@@ -139,6 +139,8 @@ public class SourceLocalRepair {
 		countExceptions = 0;
 
 		List<LocalUpdate> itemsToFix = new ArrayList<>();
+
+		setupTempTables();
 
 		logger.info("1. Checking DrugIds for incorrect source local");
 		for (Workingtable value : Workingtable.values()) {
@@ -166,13 +168,15 @@ public class SourceLocalRepair {
 		logger.info("3.1 currently " + itemsToFix.size() + " items to repair");
 
 		//Find DrugMedications with wrong source local on Indication
-		String sqlIndication = "select ipid.PersonIdentifier, ipid.PersonIdentifierSource, dm.*, d.*"
+		String sqlIndication = "select ipid.PersonIdentifier, ipid.PersonIdentifierSource,"
+				 +" dm.DrugMedicationPID, dm.DrugMedicationIdentifier, dm.Version, dm.ValidTo, dm.IndicationCode,"
+				+ " d.DrugPID"
 				+ " FROM DrugMedications dm "
-				+ " INNER JOIN MedicineCards mc on dm.MedicineCardPID=mc.MedicineCardPID "
+				+ " INNER JOIN MedicineCards mc on dm.MedicineCardPID = mc.MedicineCardPID "
 				+ " INNER JOIN InternalPersonIds ipid on mc.InternalPersonId = ipid.InternalPersonId "
 				+ " INNER JOIN Drugs d on dm.DrugPID = d.DrugPID "
-				+ " WHERE dm.IndicationCode IS NOT NULL AND dm.IndicationCodeSource = 'Local' AND dm.IndicationCode IN (SELECT DISTINCT(IndikationKode) FROM "
-				+ jdbcTemplate.getSdmDatabase() + ".Indikation)";
+				+ " INNER JOIN tempIndication t ON t.IndikationKode = dm.IndicationCode"
+				+ " WHERE dm.IndicationCode IS NOT NULL AND dm.IndicationCodeSource = 'Local'";
 
 		logger.info("4. Checking Indication for incorrect source local");
 
@@ -223,25 +227,39 @@ public class SourceLocalRepair {
 
 	}
 
+	private void setupTempTables() {
+		logger.info("0.0 Setting up temporary tables");
+		//Create temporary tables to join on, which only contains the distinct values we need to check exists in SDM
+		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempDrugId SELECT DISTINCT(DrugId) FROM " + jdbcTemplate.getSdmDatabase() + ".Laegemiddel");
+		logger.info("0.1 Setup temp table for DrugId Completed");
+		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempAtc SELECT DISTINCT(ATC) FROM " + jdbcTemplate.getSdmDatabase() + ".ATC");
+		logger.info("0.2 Setup temp table for ATC Completed");
+		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempFormCode SELECT DISTINCT(Kode) FROM " + jdbcTemplate.getSdmDatabase() + ".Formbetegnelse");
+		logger.info("0.3 Setup temp table for FormCode Completed");
+		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempIndication SELECT DISTINCT(IndikationKode) FROM " + jdbcTemplate.getSdmDatabase() + ".Indikation");
+		logger.info("0.4 Setup temp table for Indication Completed");
+	}
+
 	private void fetchWrongFormCode(List<LocalUpdate> itemsToFix, Workingtable value) {
-		String where = " WHERE d.DrugFormCode IS NOT NULL AND d.DrugFormCodeSource = 'Local' AND d.DrugId IN (SELECT DISTINCT(Kode) FROM " + jdbcTemplate.getSdmDatabase() + ".Formbetegnelse)";
+		String joinTemp = " INNER JOIN tempFormCode t ON t.Kode = d.DrugFormCode";
+		String where = " WHERE d.DrugFormCode IS NOT NULL AND d.DrugFormCodeSource = 'Local'";
 		String sqlFormCode;
 
 		switch (value) {
 			case DrugMedication:
-				sqlFormCode = sqlDmBase + where;
+				sqlFormCode = sqlDmBase + joinTemp + where;
 				break;
 			case Effectuation:
-				sqlFormCode = sqlEffBase + where;
+				sqlFormCode = sqlEffBase + joinTemp + where;
 				break;
 			case Package:
-				sqlFormCode = sqlPackBase + where;
+				sqlFormCode = sqlPackBase + joinTemp + where;
 				break;
 			case PlannedDispensing:
-				sqlFormCode = sqlPlannedBase + where;
+				sqlFormCode = sqlPlannedBase + joinTemp + where;
 				break;
 			case PackagedDrug:
-				sqlFormCode = sqlPackagedBase + where;
+				sqlFormCode = sqlPackagedBase + joinTemp + where;
 				break;
 			default:
 				//Shouldn't be possible to get to here
@@ -313,22 +331,23 @@ public class SourceLocalRepair {
 
 	private void fetchWrongATC(List<LocalUpdate> itemsToFix, Workingtable value) {
 		String sqlATC;
-		String where = " WHERE d.ATCCode IS NOT NULL AND d.ATCCodeSource = 'Local' AND d.ATCCode IN (SELECT DISTINCT(ATC) FROM " + jdbcTemplate.getSdmDatabase() + ".ATC)";
+		String joinTemp = " INNER JOIN tempAtc t ON t.ATC = d.ATCCode";
+		String where = " WHERE d.ATCCode IS NOT NULL AND d.ATCCodeSource = 'Local'";
 		switch (value) {
 			case DrugMedication:
-				sqlATC = sqlDmBase + where;
+				sqlATC = sqlDmBase + joinTemp + where;
 				break;
 			case Effectuation:
-				sqlATC = sqlEffBase + where;
+				sqlATC = sqlEffBase + joinTemp + where;
 				break;
 			case Package:
-				sqlATC = sqlPackBase + where;
+				sqlATC = sqlPackBase + joinTemp + where;
 				break;
 			case PlannedDispensing:
-				sqlATC = sqlPlannedBase + where;
+				sqlATC = sqlPlannedBase + joinTemp + where;
 				break;
 			case PackagedDrug:
-				sqlATC = sqlPackagedBase + where;
+				sqlATC = sqlPackagedBase + joinTemp + where;
 				break;
 			default:
 				logger.error("Unsupported value for WorkingTable: " + value.name());
@@ -399,22 +418,23 @@ public class SourceLocalRepair {
 
 	private void fetchWrongDrugId(List<LocalUpdate> itemsToFix, Workingtable value) {
 		String sqlDrugId;
-		String where = " WHERE d.DrugId IS NOT NULL AND d.DrugIdSource = 'Local' AND d.DrugId IN (SELECT DISTINCT(DrugID) FROM " + jdbcTemplate.getSdmDatabase() + ".Laegemiddel)";
+		String joinTemp = " INNER JOIN tempDrugId t ON t.DrugId = d.DrugId";
+		String where = " WHERE d.DrugId IS NOT NULL AND d.DrugIdSource = 'Local'";
 		switch (value) {
 			case DrugMedication:
-				sqlDrugId = sqlDmBase + where;
+				sqlDrugId = sqlDmBase + joinTemp + where;
 				break;
 			case Effectuation:
-				sqlDrugId = sqlEffBase + where;
+				sqlDrugId = sqlEffBase + joinTemp + where;
 				break;
 			case Package:
-				sqlDrugId = sqlPackBase + where;
+				sqlDrugId = sqlPackBase + joinTemp + where;
 				break;
 			case PlannedDispensing:
-				sqlDrugId = sqlPlannedBase + where;
+				sqlDrugId = sqlPlannedBase + joinTemp + where;
 				break;
 			case PackagedDrug:
-				sqlDrugId = sqlPackagedBase + where;
+				sqlDrugId = sqlPackagedBase + joinTemp + where;
 				break;
 			default:
 				logger.error("Unsupported value for WorkingTable: " + value.name());
