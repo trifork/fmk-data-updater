@@ -228,15 +228,20 @@ public class SourceLocalRepair {
 	}
 
 	private void setupTempTables() {
-		logger.info("0.0 Setting up temporary tables");
+		logger.info("0.0 Setting up temporary tables, removing old");
+		jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempDrugId");
+		jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempAtc");
+		jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempFormCode");
+		jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempIndication");
+		logger.info("0.0 Setting up temporary tables, making new");
 		//Create temporary tables to join on, which only contains the distinct values we need to check exists in SDM
-		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempDrugId SELECT DISTINCT(DrugId) FROM " + jdbcTemplate.getSdmDatabase() + ".Laegemiddel");
+		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempDrugId (Primary key (DrugId)) SELECT DISTINCT(DrugId) FROM " + jdbcTemplate.getSdmDatabase() + ".Laegemiddel");
 		logger.info("0.1 Setup temp table for DrugId Completed");
-		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempAtc SELECT DISTINCT(ATC) FROM " + jdbcTemplate.getSdmDatabase() + ".ATC");
+		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempAtc (Primary key (ATC)) SELECT DISTINCT(ATC) FROM " + jdbcTemplate.getSdmDatabase() + ".ATC");
 		logger.info("0.2 Setup temp table for ATC Completed");
-		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempFormCode SELECT DISTINCT(Kode) FROM " + jdbcTemplate.getSdmDatabase() + ".Formbetegnelse");
+		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempFormCode (Primary key (Kode)) SELECT DISTINCT(Kode) FROM " + jdbcTemplate.getSdmDatabase() + ".Formbetegnelse");
 		logger.info("0.3 Setup temp table for FormCode Completed");
-		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempIndication SELECT DISTINCT(IndikationKode) FROM " + jdbcTemplate.getSdmDatabase() + ".Indikation");
+		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempIndication (Primary key (IndikationKode)) SELECT DISTINCT(IndikationKode) FROM " + jdbcTemplate.getSdmDatabase() + ".Indikation");
 		logger.info("0.4 Setup temp table for Indication Completed");
 	}
 
