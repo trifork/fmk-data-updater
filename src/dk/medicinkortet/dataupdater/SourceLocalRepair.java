@@ -169,7 +169,7 @@ public class SourceLocalRepair {
 
 		//Find DrugMedications with wrong source local on Indication
 		String sqlIndication = "select ipid.PersonIdentifier, ipid.PersonIdentifierSource,"
-				 +" dm.DrugMedicationPID, dm.DrugMedicationIdentifier, dm.Version, dm.ValidTo, dm.IndicationCode,"
+				+" dm.DrugMedicationPID, dm.DrugMedicationIdentifier, dm.Version, dm.ValidTo, dm.IndicationCode,"
 				+ " d.DrugPID"
 				+ " FROM DrugMedications dm "
 				+ " INNER JOIN MedicineCards mc on dm.MedicineCardPID = mc.MedicineCardPID "
@@ -290,66 +290,69 @@ public class SourceLocalRepair {
 				return;
 		}
 
+		try {
+			jdbcTemplate.query(sqlFormCode,
+					rs -> {
+						long drugPID = rs.getLong("d.DrugPID");
+						String formCode = rs.getString("d.DrugFormCode");
 
-		jdbcTemplate.query(sqlFormCode,
-				rs -> {
-					long drugPID = rs.getLong("d.DrugPID");
-					String formCode = rs.getString("d.DrugFormCode");
+						LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
+						if (currentUpdate != null) {
+							currentUpdate.setFormCode(formCode);
+						} else {
+							LocalUpdate update = new LocalUpdate();
 
-					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
-					if (currentUpdate != null) {
-						currentUpdate.setFormCode(formCode);
-					} else {
-						LocalUpdate update = new LocalUpdate();
+							switch (value) {
+								case DrugMedication:
+									long dmPID = rs.getLong("dm.DrugMedicationPID");
+									long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
+									long dmVersion = rs.getLong("dm.Version");
+									LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
+									update.setDmPID(dmPID);
+									update.setDmIdentifier(dmIdentifier);
+									update.setDmVersion(dmVersion);
+									update.setDmValidTo(dmValidTo);
+									update.setDrugLinkedToTable("DrugMedications");
+									break;
+								case Effectuation:
+									update.setDrugLinkedToTable("Effectuations");
+									break;
+								case Package:
+									update.setDrugLinkedToTable("Packages");
+									break;
+								case PlannedDispensing:
+									update.setDrugLinkedToTable("PlannedDispensings");
+									break;
+								case PackagedDrug:
+									update.setDrugLinkedToTable("PackagedDrug");
+									break;
+								default:
+									return;
+							}
 
-						switch (value) {
-							case DrugMedication:
-								long dmPID = rs.getLong("dm.DrugMedicationPID");
-								long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
-								long dmVersion = rs.getLong("dm.Version");
-								LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
-								update.setDmPID(dmPID);
-								update.setDmIdentifier(dmIdentifier);
-								update.setDmVersion(dmVersion);
-								update.setDmValidTo(dmValidTo);
-								update.setDrugLinkedToTable("DrugMedications");
-								break;
-							case Effectuation:
-								update.setDrugLinkedToTable("Effectuations");
-								break;
-							case Package:
-								update.setDrugLinkedToTable("Packages");
-								break;
-							case PlannedDispensing:
-								update.setDrugLinkedToTable("PlannedDispensings");
-								break;
-							case PackagedDrug:
-								update.setDrugLinkedToTable("PackagedDrug");
-								break;
-							default:
+							String personIdentifier = rs.getString("personIdentifier");
+							String source = rs.getString("personIdentifierSource");
+
+							if (personIdentifier == null || source == null) {
+								logger.info("Person not found!, PID: " + drugPID + " : " + value.name());
 								return;
+							}
+
+							PersonIdentifierVO person = new PersonIdentifierVO(personIdentifier,
+									PersonIdentifierVO.Source.fromValue(source));
+
+							long workingPID = rs.getLong("workingPID");
+							update.setPerson(person);
+							update.setDrugPID(drugPID);
+							update.setFormCode(formCode);
+							update.setWorkingPID(workingPID);
+
+							itemsToFix.add(update);
 						}
-
-						String personIdentifier = rs.getString("personIdentifier");
-						String source = rs.getString("personIdentifierSource");
-
-						if (personIdentifier == null || source == null) {
-							logger.info("Person not found!, PID: " + drugPID + " : " + value.name());
-							return;
-						}
-
-						PersonIdentifierVO person = new PersonIdentifierVO(personIdentifier,
-								PersonIdentifierVO.Source.fromValue(source));
-
-						long workingPID = rs.getLong("workingPID");
-						update.setPerson(person);
-						update.setDrugPID(drugPID);
-						update.setFormCode(formCode);
-						update.setWorkingPID(workingPID);
-
-						itemsToFix.add(update);
-					}
-				});
+					});
+		} catch (Exception e) {
+			logger.error("Failed query for FormCode linked to table: " + value.name(), e);
+		}
 	}
 
 	private void fetchWrongATC(List<LocalUpdate> itemsToFix, Workingtable value) {
@@ -377,66 +380,70 @@ public class SourceLocalRepair {
 				return;
 		}
 
-		jdbcTemplate.query(sqlATC,
-				rs -> {
-					long drugPID = rs.getLong("d.DrugPID");
-					String atc = rs.getString("d.ATCCode");
+		try {
+			jdbcTemplate.query(sqlATC,
+					rs -> {
+						long drugPID = rs.getLong("d.DrugPID");
+						String atc = rs.getString("d.ATCCode");
 
-					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
-					if (currentUpdate != null) {
-						currentUpdate.setAtcCode(atc);
-					} else {
-						LocalUpdate update = new LocalUpdate();
+						LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
+						if (currentUpdate != null) {
+							currentUpdate.setAtcCode(atc);
+						} else {
+							LocalUpdate update = new LocalUpdate();
 
-						switch (value) {
-							case DrugMedication:
-								long dmPID = rs.getLong("dm.DrugMedicationPID");
-								long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
-								long dmVersion = rs.getLong("dm.Version");
-								LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
-								update.setDmPID(dmPID);
-								update.setDmIdentifier(dmIdentifier);
-								update.setDmVersion(dmVersion);
-								update.setDmValidTo(dmValidTo);
-								update.setDrugLinkedToTable("DrugMedications");
-								break;
-							case Effectuation:
-								update.setDrugLinkedToTable("Effectuations");
-								break;
-							case Package:
-								update.setDrugLinkedToTable("Packages");
-								break;
-							case PlannedDispensing:
-								update.setDrugLinkedToTable("PlannedDispensings");
-								break;
-							case PackagedDrug:
-								update.setDrugLinkedToTable("PackagedDrug");
-								break;
-							default:
+							switch (value) {
+								case DrugMedication:
+									long dmPID = rs.getLong("dm.DrugMedicationPID");
+									long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
+									long dmVersion = rs.getLong("dm.Version");
+									LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
+									update.setDmPID(dmPID);
+									update.setDmIdentifier(dmIdentifier);
+									update.setDmVersion(dmVersion);
+									update.setDmValidTo(dmValidTo);
+									update.setDrugLinkedToTable("DrugMedications");
+									break;
+								case Effectuation:
+									update.setDrugLinkedToTable("Effectuations");
+									break;
+								case Package:
+									update.setDrugLinkedToTable("Packages");
+									break;
+								case PlannedDispensing:
+									update.setDrugLinkedToTable("PlannedDispensings");
+									break;
+								case PackagedDrug:
+									update.setDrugLinkedToTable("PackagedDrug");
+									break;
+								default:
+									return;
+							}
+
+							String personIdentifier = rs.getString("personIdentifier");
+							String source = rs.getString("personIdentifierSource");
+							logger.info("Found work for person: " + personIdentifier + ":" + source);
+
+							if (personIdentifier == null || source == null) {
+								logger.info("Person not found!, PID: " + drugPID + " : " + value.name());
 								return;
+							}
+
+							PersonIdentifierVO person = new PersonIdentifierVO(personIdentifier,
+									PersonIdentifierVO.Source.fromValue(source));
+
+							long workingPID = rs.getLong("workingPID");
+							update.setPerson(person);
+							update.setDrugPID(drugPID);
+							update.setAtcCode(atc);
+							update.setWorkingPID(workingPID);
+
+							itemsToFix.add(update);
 						}
-
-						String personIdentifier = rs.getString("personIdentifier");
-						String source = rs.getString("personIdentifierSource");
-						logger.info("Found work for person: " + personIdentifier + ":" + source);
-
-						if (personIdentifier == null || source == null) {
-							logger.info("Person not found!, PID: " + drugPID + " : " + value.name());
-							return;
-						}
-
-						PersonIdentifierVO person = new PersonIdentifierVO(personIdentifier,
-								PersonIdentifierVO.Source.fromValue(source));
-
-						long workingPID = rs.getLong("workingPID");
-						update.setPerson(person);
-						update.setDrugPID(drugPID);
-						update.setAtcCode(atc);
-						update.setWorkingPID(workingPID);
-
-						itemsToFix.add(update);
-					}
-				});
+					});
+		} catch (Exception e) {
+			logger.error("Failed query for FormCode linked to table: " + value.name(), e);
+		}
 	}
 
 	private void fetchWrongDrugId(List<LocalUpdate> itemsToFix, Workingtable value) {
@@ -464,66 +471,70 @@ public class SourceLocalRepair {
 				return;
 		}
 
-		jdbcTemplate.query(sqlDrugId,
-				rs -> {
-					long drugPID = rs.getLong("d.DrugPID");
+		try {
+			jdbcTemplate.query(sqlDrugId,
+					rs -> {
+						long drugPID = rs.getLong("d.DrugPID");
 
-					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
-					if (currentUpdate != null) {
-						logger.warn("FOUND Duplicate: " + currentUpdate.getDrugPID());
-					} else {
-						LocalUpdate update = new LocalUpdate();
+						LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
+						if (currentUpdate != null) {
+							logger.warn("FOUND Duplicate: " + currentUpdate.getDrugPID());
+						} else {
+							LocalUpdate update = new LocalUpdate();
 
-						switch (value) {
-							case DrugMedication:
-								long dmPID = rs.getLong("dm.DrugMedicationPID");
-								long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
-								long dmVersion = rs.getLong("dm.Version");
-								LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
-								update.setDmPID(dmPID);
-								update.setDmIdentifier(dmIdentifier);
-								update.setDmVersion(dmVersion);
-								update.setDmValidTo(dmValidTo);
-								update.setDrugLinkedToTable("DrugMedications");
-								break;
-							case Effectuation:
-								update.setDrugLinkedToTable("Effectuations");
-								break;
-							case Package:
-								update.setDrugLinkedToTable("Packages");
-								break;
-							case PlannedDispensing:
-								update.setDrugLinkedToTable("PlannedDispensings");
-								break;
-							case PackagedDrug:
-								update.setDrugLinkedToTable("PackagedDrug");
-								break;
-							default:
+							switch (value) {
+								case DrugMedication:
+									long dmPID = rs.getLong("dm.DrugMedicationPID");
+									long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
+									long dmVersion = rs.getLong("dm.Version");
+									LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
+									update.setDmPID(dmPID);
+									update.setDmIdentifier(dmIdentifier);
+									update.setDmVersion(dmVersion);
+									update.setDmValidTo(dmValidTo);
+									update.setDrugLinkedToTable("DrugMedications");
+									break;
+								case Effectuation:
+									update.setDrugLinkedToTable("Effectuations");
+									break;
+								case Package:
+									update.setDrugLinkedToTable("Packages");
+									break;
+								case PlannedDispensing:
+									update.setDrugLinkedToTable("PlannedDispensings");
+									break;
+								case PackagedDrug:
+									update.setDrugLinkedToTable("PackagedDrug");
+									break;
+								default:
+									return;
+							}
+
+							String personIdentifier = rs.getString("personIdentifier");
+							String source = rs.getString("personIdentifierSource");
+							logger.info("Found work for person: " + personIdentifier + ":" + source);
+
+							if (personIdentifier == null || source == null) {
+								logger.info("Person not found!, PID: " + drugPID + " : " + value.name());
 								return;
+							}
+
+							PersonIdentifierVO person = new PersonIdentifierVO(personIdentifier,
+									PersonIdentifierVO.Source.fromValue(source));
+
+							long drugId = rs.getLong("d.DrugId");
+							long workingPID = rs.getLong("workingPID");
+							update.setPerson(person);
+							update.setDrugPID(drugPID);
+							update.setDrugId(drugId);
+							update.setWorkingPID(workingPID);
+
+							itemsToFix.add(update);
 						}
-
-						String personIdentifier = rs.getString("personIdentifier");
-						String source = rs.getString("personIdentifierSource");
-						logger.info("Found work for person: " + personIdentifier + ":" + source);
-
-						if (personIdentifier == null || source == null) {
-							logger.info("Person not found!, PID: " + drugPID + " : " + value.name());
-							return;
-						}
-
-						PersonIdentifierVO person = new PersonIdentifierVO(personIdentifier,
-								PersonIdentifierVO.Source.fromValue(source));
-
-						long drugId = rs.getLong("d.DrugId");
-						long workingPID = rs.getLong("workingPID");
-						update.setPerson(person);
-						update.setDrugPID(drugPID);
-						update.setDrugId(drugId);
-						update.setWorkingPID(workingPID);
-
-						itemsToFix.add(update);
-					}
-				});
+					});
+		} catch (Exception e) {
+			logger.error("Failed query for FormCode linked to table: " + value.name(), e);
+		}
 	}
 
 	public void updateSourceLocal(List<LocalUpdate> itemsToFix, List<PersonIdentifierVO> personsUpdated, boolean testMode) {
