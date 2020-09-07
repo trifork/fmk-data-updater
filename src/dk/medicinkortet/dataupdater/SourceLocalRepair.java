@@ -229,11 +229,29 @@ public class SourceLocalRepair {
 
 	private void setupTempTables() {
 		logger.info("0.0 Setting up temporary tables, removing old");
-		jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempDrugId");
-		jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempAtc");
-		jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempFormCode");
-		jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempIndication");
+		int update = jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempDrugId");
+		if (update > 0) {
+			logger.info("Removed " + update + " rows from tempDrugId");
+		}
+		update = jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempAtc");
+		if (update > 0) {
+			logger.info("Removed " + update + " rows from tempAtc");
+		}
+		update = jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempFormCode");
+		if (update > 0) {
+			logger.info("Removed " + update + " rows from tempFormCode");
+		}
+		update = jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempIndication");
+		if (update > 0) {
+			logger.info("Removed " + update + " rows from tempIndication");
+		}
 		logger.info("0.0 Setting up temporary tables, making new");
+		try {
+			logger.info("0.0.1 Sleeping 2 minutes to complete remove query before building new tables");
+			Thread.sleep(120000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		//Create temporary tables to join on, which only contains the distinct values we need to check exists in SDM
 		jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempDrugId (Primary key (DrugId)) SELECT DISTINCT(DrugId) FROM " + jdbcTemplate.getSdmDatabase() + ".Laegemiddel");
 		logger.info("0.1 Setup temp table for DrugId Completed");
