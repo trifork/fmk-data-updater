@@ -5,6 +5,7 @@ import dk.medicinkortet.authentication.SecurityCredentials;
 import dk.medicinkortet.authentication.ValidatedRole;
 import dk.medicinkortet.dao.vo.ModificateValue;
 import dk.medicinkortet.dao.vo.UpdateDrugmedicationVO;
+import dk.medicinkortet.exceptions.PersonDoesNotExistException;
 import dk.medicinkortet.persistence.auditlog.datafacade.AuditLoggerFacade;
 import dk.medicinkortet.persistence.mk.datafacade.MedicineCardDataFacade;
 import dk.medicinkortet.persistence.mk.datafacade.MedicineCardModificationFacade;
@@ -132,7 +133,7 @@ public class SourceLocalRepair {
 			+ " INNER JOIN InternalPersonIds ipidDD2 on ddCardPlanned.InternalPersonId = ipidDD2.InternalPersonId";
 
 	public void runRepair(boolean testMode) {
-		logger.info("Starting repair, testmode: " + testMode);
+		logger.info("Starting repair, testmode: " + testMode + " at time: " + timeService.currentLocalDateTime() + " : " + LocalDateTime.now());
 		countTotal = 0;
 		countUpdated = 0;
 		countFixed = 0;
@@ -145,6 +146,7 @@ public class SourceLocalRepair {
 		logger.info("1. Checking DrugIds for incorrect source local");
 		for (Workingtable value : Workingtable.values()) {
 			logger.info("Checking Wrong DrugIdSource linked to table: " + value.name());
+			refreshTempTable(true, false, false, false);
 			fetchWrongDrugId(itemsToFix, value);
 			logger.info("Finished finding wrong DrugIdSource linked to table: " + value.name());
 		}
@@ -153,6 +155,7 @@ public class SourceLocalRepair {
 		logger.info("2. Checking ATC for incorrect source local");
 		for (Workingtable value : Workingtable.values()) {
 			logger.info("Checking Wrong AtcCodeSource linked to table: " + value.name());
+			refreshTempTable(false, true, false, false);
 			fetchWrongATC(itemsToFix, value);
 			logger.info("Finished finding wrong AtcCodeSource linked to table: " + value.name());
 		}
@@ -162,6 +165,7 @@ public class SourceLocalRepair {
 		//Find Drugs with wrong source local on FormCode
 		for (Workingtable value : Workingtable.values()) {
 			logger.info("Checking Wrong FormCodeSource linked to table: " + value.name());
+			refreshTempTable(false, false, true, false);
 			fetchWrongFormCode(itemsToFix, value);
 			logger.info("Finished finding wrong FormCodeSource linked to table: " + value.name());
 		}
@@ -180,35 +184,42 @@ public class SourceLocalRepair {
 
 		logger.info("4. Checking Indication for incorrect source local");
 
-		jdbcTemplate.query(sqlIndication,
-				rs -> {
-					PersonIdentifierVO person = new PersonIdentifierVO(rs.getString("PersonIdentifier"), PersonIdentifierVO.Source.fromValue(rs.getString("PersonIdentifierSource")));
-					long dmPID = rs.getLong("dm.DrugMedicationPID");
-					long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
-					long dmVersion = rs.getLong("dm.Version");
-					LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
-					long drugPID = rs.getLong("d.DrugPID");
-					Integer indication = rs.getInt("dm.IndicationCode");
-					LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
-					if (currentUpdate != null) {
-						currentUpdate.setIndicationCode(indication);
-					} else {
-						LocalUpdate update = new LocalUpdate();
-						update.setPerson(person);
-						update.setDmPID(dmPID);
-						update.setDmIdentifier(dmIdentifier);
-						update.setDmVersion(dmVersion);
-						update.setDmValidTo(dmValidTo);
-						update.setDrugPID(drugPID);
-						update.setIndicationCode(indication);
-						update.setWorkingPID(dmPID);
-						update.setDrugLinkedToTable("DrugMedications");
-						itemsToFix.add(update);
-					}
-				});
+		try {
+			refreshTempTable(false, false, false, true);
+			jdbcTemplate.query(sqlIndication,
+					rs -> {
+						PersonIdentifierVO person = new PersonIdentifierVO(rs.getString("PersonIdentifier"), PersonIdentifierVO.Source.fromValue(rs.getString("PersonIdentifierSource")));
+						long dmPID = rs.getLong("dm.DrugMedicationPID");
+						long dmIdentifier = rs.getLong("dm.DrugMedicationIdentifier");
+						long dmVersion = rs.getLong("dm.Version");
+						LocalDateTime dmValidTo = rs.getTimestamp("dm.ValidTo").toLocalDateTime();
+						long drugPID = rs.getLong("d.DrugPID");
+						Integer indication = rs.getInt("dm.IndicationCode");
+						LocalUpdate currentUpdate = itemsToFix.stream().filter(e -> e.getDrugPID() == drugPID).findFirst().orElse(null);
+						if (currentUpdate != null) {
+							currentUpdate.setIndicationCode(indication);
+						} else {
+							LocalUpdate update = new LocalUpdate();
+							update.setPerson(person);
+							update.setDmPID(dmPID);
+							update.setDmIdentifier(dmIdentifier);
+							update.setDmVersion(dmVersion);
+							update.setDmValidTo(dmValidTo);
+							update.setDrugPID(drugPID);
+							update.setIndicationCode(indication);
+							update.setWorkingPID(dmPID);
+							update.setDrugLinkedToTable("DrugMedications");
+							itemsToFix.add(update);
+						}
+					});
+
+		} catch (Exception e) {
+			logger.error("Failed query for Indication", e);
+		}
+
 		logger.info("4.1 currently " + itemsToFix.size() + " items to repair");
 
-		logger.info("SourceLocalRepair, found a total of " + itemsToFix.size() + " items to repair.");
+		logger.info("SourceLocalRepair, found a total of " + itemsToFix.size() + " items to repair. time: " + timeService.currentLocalDateTime() + " : " + LocalDateTime.now());
 
 		List<PersonIdentifierVO> personsUpdated = new ArrayList<>();
 
@@ -224,7 +235,22 @@ public class SourceLocalRepair {
 		logger.info("Updated: " + countUpdated);
 		logger.info("Fixed: " + countFixed);
 		logger.info("Exceptions: " + countExceptions);
+		logger.info("Program terminating at: " + timeService.currentLocalDateTime() + " : " + LocalDateTime.now());
+	}
 
+	private void refreshTempTable(boolean drugId, boolean atc, boolean form, boolean indication) {
+		if (drugId) {
+			jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempDrugId (Primary key (DrugId)) SELECT DISTINCT(DrugId) FROM " + jdbcTemplate.getSdmDatabase() + ".Laegemiddel");
+		}
+		if (atc) {
+			jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempAtc (Primary key (ATC)) SELECT DISTINCT(ATC) FROM " + jdbcTemplate.getSdmDatabase() + ".ATC");
+		}
+		if (form) {
+			jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempFormCode (Primary key (Kode)) SELECT DISTINCT(Kode) FROM " + jdbcTemplate.getSdmDatabase() + ".Formbetegnelse");
+		}
+		if (indication) {
+			jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempIndication (Primary key (IndikationKode)) SELECT DISTINCT(IndikationKode) FROM " + jdbcTemplate.getSdmDatabase() + ".Indikation");
+		}
 	}
 
 	private void setupTempTables() {
@@ -556,7 +582,13 @@ public class SourceLocalRepair {
 						logger.info("Fixing latest version of DM: " + item.getDmIdentifier() + ":" + item.getDmVersion() +
 								" creating new version and sending advis.");
 
-						MyPatientDataFacade patientDF = new MyPatientDataFacade(daoHolder, item.getPerson(), stamdataFacade, timeService.currentLocalDateTime());
+						MyPatientDataFacade patientDF = null;
+						try {
+							patientDF = new MyPatientDataFacade(daoHolder, item.getPerson(), stamdataFacade, timeService.currentLocalDateTime());
+						} catch (PersonDoesNotExistException e) {
+							Thread.sleep(1000);
+							patientDF = new MyPatientDataFacade(daoHolder, item.getPerson(), stamdataFacade, LocalDateTime.now());
+						}
 						ModificatorVO modifiedBy = makeDataUpdaterModificator(LocalDateTime.now());
 
 						MedicineCardDataFacade mc = patientDF.getCurrentMedicineCard();
@@ -565,6 +597,10 @@ public class SourceLocalRepair {
 								.getDrugMedicationByIdentifier(item.getDmIdentifier(),
 										null, timeService.currentLocalDateTime(), timeService.currentLocalDateTime(),
 										true);
+
+						if (drugMedicationOverview == null) {
+							throw new IllegalStateException("DrugMedication overview was null!");
+						}
 
 						MedicineCardModificationFacade mcModFacade = patientDF.prepareModification(modifiedBy, null, true, "");
 
@@ -621,7 +657,7 @@ public class SourceLocalRepair {
 				} catch (Exception e) {
 					countExceptions++;
 					countTotal++;
-					logger.error("Error creating new DM version! - " +
+					logger.error("Error creating new DM version, aborting update of current version! - " +
 							item.getPerson().toString() + " : " + item.getDrugPID() +
 							" : " + item.getDmIdentifier() + " : " + item.getFixingString(), e);
 					continue; //Don't try and repair the current version, that'll cause problems
@@ -746,18 +782,18 @@ public class SourceLocalRepair {
 		}
 		//Fix FormCode if needed
 		if (item.getFormCode() != null) {
-			TextAndCodeVO form = stamdataFacade.getFormbetegnelse(timeService.currentLocalDateTime(), item.getAtcCode());
+			TextAndCodeVO form = stamdataFacade.getFormbetegnelse(timeService.currentLocalDateTime(), item.getFormCode());
 			if (form != null) {
 				form.setSource(new PriceListSourceVO(form.getValidFrom(), medicinePrices));
 				drug.setForm(form);
 			} else {
-				List<TextAndCodeVO> formList = stamDataDAO.getFormbetegnelseList(item.getAtcCode(), true);
+				List<TextAndCodeVO> formList = stamDataDAO.getFormbetegnelseList(item.getFormCode(), true);
 				if (formList != null && formList.size() > 0) {
 					form = formList.stream().max(Comparator.comparing(TextAndCodeVO::getValidFrom)).orElse(null);
 					form.setSource(new PriceListSourceVO(form.getValidFrom(), medicinePrices));
 					drug.setForm(form);
 				} else {
-					logger.warn("Unable to fix FormCode for DrugPID: " + item.getDrugPID() + " couldn't find FormCode: " + item.getAtcCode());
+					logger.warn("Unable to fix FormCode for DrugPID: " + item.getDrugPID() + " couldn't find FormCode: " + item.getFormCode());
 				}
 			}
 		}
