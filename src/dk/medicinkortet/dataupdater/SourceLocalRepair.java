@@ -240,15 +240,19 @@ public class SourceLocalRepair {
 
 	private void refreshTempTable(boolean drugId, boolean atc, boolean form, boolean indication) {
 		if (drugId) {
+			jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempDrugId");
 			jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempDrugId (Primary key (DrugId)) SELECT DISTINCT(DrugId) FROM " + jdbcTemplate.getSdmDatabase() + ".Laegemiddel");
 		}
 		if (atc) {
+			jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempAtc");
 			jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempAtc (Primary key (ATC)) SELECT DISTINCT(ATC) FROM " + jdbcTemplate.getSdmDatabase() + ".ATC");
 		}
 		if (form) {
+			jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempFormCode");
 			jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempFormCode (Primary key (Kode)) SELECT DISTINCT(Kode) FROM " + jdbcTemplate.getSdmDatabase() + ".Formbetegnelse");
 		}
 		if (indication) {
+			jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempIndication");
 			jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempIndication (Primary key (IndikationKode)) SELECT DISTINCT(IndikationKode) FROM " + jdbcTemplate.getSdmDatabase() + ".Indikation");
 		}
 	}
