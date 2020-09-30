@@ -584,11 +584,12 @@ public class SourceLocalRepair {
 				try {
 					jdbcTemplate.query("SELECT o.* FROM PatientRelations p" +
 							" INNER JOIN Organisations o ON p.OrganisationPID = o.OrganisationPID" +
-							" WHERE p.Type = 'VISITERET_TIL_MEDICINADMINISTRATION' AND p.ValidTo > now()", rs -> {
+							" INNER JOIN InternalPersonIds id ON p.InternalPersonId = id.InternalPersonId" +
+							" WHERE p.Type = 'VISITERET_TIL_MEDICINADMINISTRATION' AND p.ValidTo > now() AND id.PersonIdentifier = ?", rs -> {
 						logger.warn("Patient ved medicin-administration ved: " +
 								rs.getString("o.OrganisationName") +
 								" ID: " + rs.getString("o.Identifier") + " Type: " + rs.getString("o.Type"));
-					});
+					}, item.getPerson().getIdentifier());
 				} catch (Exception e) {
 					logger.error("Failed to check for patient relations: ", e);
 				}
