@@ -277,8 +277,8 @@ public class SourceLocalRepair {
 		}
 		logger.info("0.0 Setting up temporary tables, making new");
 		try {
-			logger.info("0.0.1 Sleeping 2 minutes to complete remove query before building new tables");
-			Thread.sleep(120000);
+			logger.info("0.0.1 Sleeping 10 seconds to complete remove query before building new tables");
+			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -571,11 +571,29 @@ public class SourceLocalRepair {
 
 		for (LocalUpdate item : itemsToFix) {
 
+			boolean isLatestDmVersion = item.getDmValidTo() != null && item.getDmIdentifier() != null && item.getDmValidTo().isAfter(timeService.currentLocalDateTime());
+
 			logger.info("Person: " +item.getPerson().toString() +
 					" Work item: "  +
-					" DrugPID: " + item.getDrugPID() + " " +
+					" DrugPID: " + item.getDrugPID() +
+					" Latest DM Version? " + isLatestDmVersion +
 					" LinkedTo: " + item.getDrugLinkedToTable() + " with PID: " + item.getWorkingPID() + " " +
 					item.getFixingString());
+
+			if (testMode && isLatestDmVersion) {
+				try {
+					jdbcTemplate.query("SELECT o.* FROM PatientRelations p" +
+							" INNER JOIN Organisations o ON p.OrganisationPID = o.OrganisationPID" +
+							" WHERE p.Type = 'VISITERET_TIL_MEDICINADMINISTRATION' AND p.ValidTo > now()", rs -> {
+						logger.warn("Patient ved medicin-administration ved: " +
+								rs.getString("o.OrganisationName") +
+								" ID: " + rs.getString("o.Identifier") + " Type: " + rs.getString("o.Type"));
+					});
+				} catch (Exception e) {
+					logger.error("Failed to check for patient relations: ", e);
+				}
+			}
+
 
 			if (!testMode) {
 				try {
