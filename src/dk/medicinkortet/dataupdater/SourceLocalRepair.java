@@ -17,6 +17,7 @@ import dk.medicinkortet.persistence.stamdata.mysql_impl.dao.StamDataDAO;
 import dk.medicinkortet.requestcontext.RequestContext;
 import dk.medicinkortet.services.vo.*;
 import dk.medicinkortet.services.vo.PersonBaseVO.PersonIdentifierVO;
+import dk.medicinkortet.services.vo.dosage.DosageTimesVO;
 import dk.medicinkortet.utils.TimeService;
 import dk.medicinkortet.ws.requestpurpose.RequestPurposeVO;
 import dk.medicinkortet.ws.whitelisting.WhitelistingVO;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -241,19 +243,49 @@ public class SourceLocalRepair {
 	private void refreshTempTable(boolean drugId, boolean atc, boolean form, boolean indication) {
 		if (drugId) {
 			jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempDrugId");
+			try {
+				logger.info("Sleeping 3 second to ensure temp tables show in next query");
+				Thread.sleep(3000);
+			} catch (Exception e) {
+				logger.error("Failed to sleep 3, temp table might not create properly.");
+			}
 			jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempDrugId (Primary key (DrugId)) SELECT DISTINCT(DrugId) FROM " + jdbcTemplate.getSdmDatabase() + ".Laegemiddel");
 		}
 		if (atc) {
 			jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempAtc");
+			try {
+				logger.info("Sleeping 3 second to ensure temp tables show in next query");
+				Thread.sleep(3000);
+			} catch (Exception e) {
+				logger.error("Failed to sleep 3, temp table might not create properly.");
+			}
 			jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempAtc (Primary key (ATC)) SELECT DISTINCT(ATC) FROM " + jdbcTemplate.getSdmDatabase() + ".ATC");
 		}
 		if (form) {
 			jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempFormCode");
+			try {
+				logger.info("Sleeping 3 second to ensure temp tables show in next query");
+				Thread.sleep(3000);
+			} catch (Exception e) {
+				logger.error("Failed to sleep 3, temp table might not create properly.");
+			}
 			jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempFormCode (Primary key (Kode)) SELECT DISTINCT(Kode) FROM " + jdbcTemplate.getSdmDatabase() + ".Formbetegnelse");
 		}
 		if (indication) {
 			jdbcTemplate.update("DROP TEMPORARY TABLE IF EXISTS tempIndication");
+			try {
+				logger.info("Sleeping 3 second to ensure temp tables show in next query");
+				Thread.sleep(3000);
+			} catch (Exception e) {
+				logger.error("Failed to sleep 3, temp table might not create properly.");
+			}
 			jdbcTemplate.update("CREATE TEMPORARY TABLE IF NOT EXISTS tempIndication (Primary key (IndikationKode)) SELECT DISTINCT(IndikationKode) FROM " + jdbcTemplate.getSdmDatabase() + ".Indikation");
+		}
+		try {
+			logger.info("Sleeping 5 seconds to ensure temp tables show in next query");
+			Thread.sleep(5000);
+		} catch (Exception e) {
+			logger.error("Failed to sleep 5, temp table might not show.");
 		}
 	}
 
@@ -569,6 +601,7 @@ public class SourceLocalRepair {
 
 	public void updateSourceLocal(List<LocalUpdate> itemsToFix, List<PersonIdentifierVO> personsUpdated, boolean testMode) {
 
+		PersonIdentifierVO lastPerson = null;
 		for (LocalUpdate item : itemsToFix) {
 
 			boolean isLatestDmVersion = item.getDmValidTo() != null && item.getDmIdentifier() != null && item.getDmValidTo().isAfter(timeService.currentLocalDateTime());
@@ -605,6 +638,16 @@ public class SourceLocalRepair {
 						logger.info("Fixing latest version of DM: " + item.getDmIdentifier() + ":" + item.getDmVersion() +
 								" creating new version and sending advis.");
 
+						if (lastPerson != null && lastPerson.equals(item.getPerson())){
+							try {
+								logger.info("Sleeping 1 second since updating same person as previous item.");
+								Thread.sleep(1000);
+							} catch (Exception e) {
+								logger.error("Failed to sleep to avoid same time updates");
+							}
+						}
+						lastPerson = item.getPerson();
+
 						MyPatientDataFacade patientDF = null;
 						try {
 							patientDF = new MyPatientDataFacade(daoHolder, item.getPerson(), stamdataFacade, timeService.currentLocalDateTime());
@@ -620,6 +663,12 @@ public class SourceLocalRepair {
 								.getDrugMedicationByIdentifier(item.getDmIdentifier(),
 										null, timeService.currentLocalDateTime(), timeService.currentLocalDateTime(),
 										true);
+
+						//Structured dosages arn't collected
+						Collection<DosageTimesVOWithPid> dosages = patientDF.getDrugMedicationFacade().getDosages(drugMedicationOverview, drugMedicationOverview.getVersion().getVersionNumber());
+						if (dosages != null) {
+							drugMedicationOverview.getDosageVO().setDosageTimesCollection(new ArrayList<DosageTimesVO>(dosages));
+						}
 
 						if (drugMedicationOverview == null) {
 							throw new IllegalStateException("DrugMedication overview was null!");
