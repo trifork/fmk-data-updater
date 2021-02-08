@@ -618,7 +618,7 @@ public class SourceLocalRepair {
 					jdbcTemplate.query("SELECT o.* FROM PatientRelations p" +
 							" INNER JOIN Organisations o ON p.OrganisationPID = o.OrganisationPID" +
 							" INNER JOIN InternalPersonIds id ON p.InternalPersonId = id.InternalPersonId" +
-							" WHERE p.Type = 'VISITERET_TIL_MEDICINADMINISTRATION' AND p.ValidTo > now() AND id.PersonIdentifier = ?", rs -> {
+							" WHERE p.Type = 'VISITERET_TIL_MEDICINADMINISTRATION' AND p.ValidTo > now() AND id.PersonIdentifier = ? AND p.HashedRemovedByPID IS NULL", rs -> {
 						logger.warn("Patient ved medicin-administration ved: " +
 								rs.getString("o.OrganisationName") +
 								" ID: " + rs.getString("o.Identifier") + " Type: " + rs.getString("o.Type"));
@@ -894,7 +894,7 @@ public class SourceLocalRepair {
 		RequestContext.get().setRequestedRole("System");
 		RequestContext.get().setLevel(0);
 		RequestContext.get().setRemoteAddress("LocalSystem");
-		RequestContext.get().setServiceVersion("1.0.0");
+		RequestContext.get().setServiceVersion(FMKVersion.fmkV144.getVersion());
 		RequestContext.get().setMinlogCriticality(null);
 
 		for (PersonIdentifierVO entry : personsUpdated) {
